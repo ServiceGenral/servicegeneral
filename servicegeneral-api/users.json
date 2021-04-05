@@ -1,0 +1,22 @@
+[
+    {
+        "firstName": "Maxwel",
+        "lastName": "Moro",
+        "password": "123",
+        "address": "100 Clifton Pl",
+        "phoneNumber": "2016809211",
+        "type": "provider",
+        "email": "dmelloselwyn@gmail.com",
+        "username": "max"
+    },
+    {
+        "firstName": "Selwyn",
+        "lastName": "Dmello",
+        "email": "dmelloselwyn@gmail.com",
+        "username": "dmellos",
+        "password": "12345",
+        "address": "100 Clifton Pl",
+        "phoneNumber": "2016809211",
+        "type": "provider"
+    }
+]
