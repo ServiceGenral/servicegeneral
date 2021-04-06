@@ -2,10 +2,16 @@ package org.service.general.controller;
 
 import java.util.List;
 
+import javax.ws.rs.Consumes;
+import javax.ws.rs.OPTIONS;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+
 import org.service.general.entity.Login;
 import org.service.general.entity.User;
 import org.service.general.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/user")
+@CrossOrigin(origins = {"http://127.0.0.1:9090","http://127.0.0.1:8080"})
 public class UserController {
 
 	@Autowired
@@ -31,7 +38,9 @@ public class UserController {
 	}
 	
 	@PostMapping
+	@Produces(MediaType.TEXT_PLAIN)
 	public String registerUser(@RequestBody User user) {
+		System.out.println("Inside register");
 		return service.registerUserFromService(user);
 	}
 	
