@@ -3,8 +3,10 @@ package org.service.general.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.service.general.entity.Feedback;
 import org.service.general.entity.Login;
 import org.service.general.entity.User;
+import org.service.general.repository.FeedbackRepo;
 import org.service.general.repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +16,9 @@ public class UserService {
 
 	@Autowired
 	private UserRepo repo;
+	
+	@Autowired
+	private FeedbackRepo feedbackRepo;
 	
 	public List<User> getUsersFromService(){
 		return repo.findAll();
@@ -28,7 +33,7 @@ public class UserService {
 		return "Registered";
 	}
 
-	public String loginInfoFromService(Login login) {
+	public User loginInfoFromService(Login login) {
 		List<User> loginList = repo.findAll()
 				.stream()
 				.filter(u ->
@@ -41,8 +46,14 @@ public class UserService {
 				.collect(Collectors.toList());
 				
 				if(loginList.size()>0) {
-					return "Login successful";
+					 return loginList.get(0);
+					
 				}
-				return "Failed Login";
+				return null;
 		}
+
+	public String feedbackInfoFromService(Feedback feedback) {
+		feedbackRepo.save(feedback);
+		return "Successfully submit feedback";
+	}
 }

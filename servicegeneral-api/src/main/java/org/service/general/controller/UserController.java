@@ -7,8 +7,10 @@ import javax.ws.rs.OPTIONS;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import org.service.general.entity.Feedback;
 import org.service.general.entity.Login;
 import org.service.general.entity.User;
+import org.service.general.repository.UserRepo;
 import org.service.general.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -26,6 +28,9 @@ public class UserController {
 
 	@Autowired
 	private UserService service;
+	
+	@Autowired
+	private UserRepo repo;
 	
 	@GetMapping
 	public List<User> getAllUsers(){
@@ -45,9 +50,17 @@ public class UserController {
 	}
 	
 	@PostMapping("/login")
-	public String userLoginInfo(@RequestBody Login login) {
+	public User userLoginInfo(@RequestBody Login login) {
 		return service.loginInfoFromService(login);
 	}
 	
+	@PostMapping("/feedback")
+	public String userfeedbackInfo(@RequestBody Feedback feedback) {
+		return service.feedbackInfoFromService(feedback);
+	}
 	
+	@GetMapping("/{firstName}/{lastName}")
+	public User getUserByFL(@PathVariable String firstName,@PathVariable String lastName ) {
+		return repo.findByFirstNameAndLastName(firstName, lastName);
+	}
 }

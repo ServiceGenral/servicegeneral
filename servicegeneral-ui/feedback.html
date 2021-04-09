@@ -80,10 +80,7 @@
 								<!-- ================ -->
 								<div class="header-top-dropdown">
 									<div class="btn-group dropdown">
-										<button onclick=" window.open('feedback.html', '_blank');" style="color: beige!important;" class="btn dropdown-toggle" data-toggle="dropdown"><u>Feedback</u></button>
-									</div>
-									<div class="btn-group dropdown">
-										<button onclick=" window.open('register.html', '_blank');" style="color: beige!important;" class="btn dropdown-toggle" data-toggle="dropdown"><u>Resister as a professional</u></button>
+										<button style="color: beige!important;" class="btn dropdown-toggle" data-toggle="dropdown"><u>Resister as a professional</u></button>
 									</div>
 									<div class="btn-group dropdown">
 										<button style="color: beige!important;" type="button" class="btn dropdown-toggle" data-toggle="dropdown"><i class="fa fa-plus"></i> More</button>
@@ -112,41 +109,32 @@
 										<button style="color: beige!important;" type="button" class="btn dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> Login</button>
 										<ul class="dropdown-menu dropdown-menu-right dropdown-animation">
 											<li>
-												<form class="login-form" id="login-Form" action="login(e)">
+												<form class="login-form">
 													<div class="form-group form-check">
-														<input type="radio" name="service-login" class="form-check-input" id="customer" checked/>
+														<input type="radio" name="service-login" class="form-check-input" checked/>
 														<label class="control-label">I need service</label>
 													</div>
 													<div class="form-group form-check">
-														<input type="radio" name="service-login" class="form-check-input" id="provider" />
+														<input type="radio" name="service-login" class="form-check-input" />
 														<label class="control-label">I provide service</label>
 													</div>
 													<div class="form-group has-feedback">
 														<label class="control-label">Username</label>
-														<input type="text" class="form-control" placeholder="" id="username">
+														<input type="text" class="form-control" placeholder="">
 														<i class="fa fa-user form-control-feedback"></i>
-													</div>
-													<div class="form-group">
-														<label class="control-label" id="usernamemsg"></label>
 													</div>
 													<div class="form-group has-feedback">
 														<label class="control-label">Password</label>
-														<input type="password" class="form-control" placeholder="" id="password">
+														<input type="password" class="form-control" placeholder="">
 														<i class="fa fa-lock form-control-feedback"></i>
-													</div>
-													<div class="form-group">
-														<label class="control-label" id="passwordmsg"></label>
 													</div>
 													<button type="submit" class="btn btn-group btn-dark btn-sm">Log In</button>
 													<span>or</span>
-													<button type="submit" onclick=" window.open('register.html', '_blank');" class="btn btn-group btn-default btn-sm">Sign Up</button>
+													<button type="submit" class="btn btn-group btn-default btn-sm">Sign Up</button>
 
 													<ul>
 														<li><a href="#">Forgot your password?</a></li>
 													</ul>
-													<div class="form-group">
-														<label class="control-label" id="message"></label>
-													</div>
 													
 													<!--
 													<div class="divider"></div>
@@ -560,254 +548,29 @@
 			</div>
 			<!-- banner end -->
 			
-			<!--search-start-->
-			<div>
-				<div class="main-search-bar" style="padding: 0;border: none;background-color: #454343;">
-					<div class="container">
-						<form style="padding-top: 2%;"role="search" class="search-box">
-							<div class="form-group has-feedback">
-								<input type="text" class="form-control" placeholder="Search">
-								<i class="fa fa-search form-control-feedback"></i>
-							</div>
-						</form>
-					</div>
+			<!-- Form Start -->
+
+			<div class="container">
+			<h2>Review</h2>
+			<form id = "feedback-form" action="feedback()">
+				<div class="form-group">
+					<label>Name:</label>
+					<input type="text" class="form-control" id="name" placeholder="Enter Name" name="Name">
 				</div>
+				<div class="form-group">
+					<label>Feedback:</label>
+					<input type="text" class="form-control" id="feedback" placeholder="Enter Feedback" name="feedback">
+				</div>
+				<div class="form-group">
+					<label class="control-label" id="message"></label>
+				</div>
+				<button type="submit" id="submit" class="btn btn-default">Submit</button>
+			</form>
 			</div>
-			<!--search-end-->
-
-
-
-			<!-- page-top start-->
-			<!-- ================ -->
-			<div>
 			
-				
-				<div class="sorting-filters" style="background-color: #454343!important;color: beige;border: none;">
-					<div class="container">
-						<form class="form-inline">
-							<div class="form-group">
-								<label>Sort by</label>
-								<select class="form-control">
-									<option selected="selected">Date</option>
-									<option>Price</option>
-								</select>
-							</div>
-							
-							<div class="form-group">
-								<label>Price $ (min/max)</label>
-								<div class="row grid-space-10">
-									<div class="col-sm-6">
-										<input type="text" class="form-control">
-									</div>
-									<div class="col-sm-6">
-										<input type="text" class="form-control col-xs-6">
-									</div>
-								</div>
-							</div>
-							<div class="form-group">
-								<label>Category</label>
-								<select class="form-control">
-									<option selected="selected">INTERNET SERVICE PROVIDER</option>
-									<option>MOBILE REPAIR</option>
-									<option>HOUSE PAINTER</option>
-									<option>LOCKSMITH</option>
-									<option>MOVERS AND PACKERS</option>
-									<option>DRY CLEANING</option>
-								</select>
-							</div>
-							<div class="form-group">
-								<label>Zipcode</label>
-								<div>
-									<div>
-										<input type="text" class="form-control col-xs-6">
-									</div>
-								</div>
-							</div>
-							<div class="form-group">
-								<a href="#" class="btn btn-default">Filter</a>
-							</div>
-						</form>
-					</div>
-				</div>
-				
-			</div>
-			<!-- page-top end -->
 			
 
-			<!-- main-container start -->
-			<!-- ================ -->
-			<section class="main-container gray-bg">
-			
-
-				<!-- main start -->
-				<!-- ================ -->
-				<div class="main">
-					<div class="container">
-						<div class="row">
-							<div class="col-md-12">
-								<h1 class="text-center title">We provide...</h1>
-								<div class="row">
-									<div class="col-sm-4">
-										<div class="box-style-1 white-bg object-non-visible" data-animation-effect="fadeInUpSmall" data-effect-delay="0" style="height:360px;">
-											<div style="height:65%;">
-											<img src="images/block-ISP.jpg" style="width:100%;height:100%">
-											</div>
-											<div style="height:20%;">
-											<h2>INTERNET SERVICE PROVIDER</h2>
-											</div>
-											<a href="#" class="btn-default btn">Read More</a>
-										</div>
-									</div>
-									<div class="col-sm-4">
-										<div class="box-style-1 white-bg object-non-visible" data-animation-effect="fadeInUpSmall" data-effect-delay="200" style="height:360px;">
-											<div style="height:65%;">
-											<img src="images/block-mobile.jpg" style="width:100%;height:100%">
-											</div>
-											<div style="height:20%;">
-											<h2>PHONE AND MOBILE REPAIRER</h2>
-											</div>
-											<a href="#" class="btn-default btn">Read More</a>
-										</div>
-									</div>
-									<div class="col-sm-4">
-										<div class="box-style-1 white-bg object-non-visible" data-animation-effect="fadeInUpSmall" data-effect-delay="400" style="height: 360px;">
-											<div style="height:65%;">
-												<img src="images/block-painter.jpg" style="width:100%;height:100%">
-											</div>
-											<div style="height:20%;">
-												<h2>LOCAL HOUSE PAINTERS</h2>
-											</div>
-											<a href="#" class="btn-default btn">Read More</a>
-										</div>
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-sm-4">
-										<div class="box-style-1 white-bg object-non-visible" data-animation-effect="fadeInUpSmall" data-effect-delay="0" style="height: 360px;">
-										<div style="height:65%;">
-											<img src="images/block-locksmith.jpg" style="width:100%;height:100%">
-										</div>
-										<div style="height:20%;">
-											<h2>LOCKSMITH</h2>
-										</div>
-											<a href="#" class="btn-default btn">Read More</a>
-										</div>
-									</div>
-									<div class="col-sm-4">
-										<div class="box-style-1 white-bg object-non-visible" data-animation-effect="fadeInUpSmall" data-effect-delay="200"style="height: 360px;">
-										<div style="height:65%;">
-											<img src="images/block-movers.jpg" style="width:100%;height:100%">
-										</div>
-										<div style="height:20%;">
-											<h2>MOVERS AND PACKERS</h2>
-										</div>
-											<a href="#" class="btn-default btn">Read More</a>
-										</div>
-									</div>
-									<div class="col-sm-4">
-										<div class="box-style-1 white-bg object-non-visible" data-animation-effect="fadeInUpSmall" data-effect-delay="400" style="height:360px;">
-										<div style="height:65%;">
-											<img src="images/block-dryer.jpg" style="width:100%;height:100%">
-										</div>
-										<div style="height:20%;">
-											<h2>DRY CLEANING</h2>
-										</div>
-											<a href="#" class="btn-default btn">Read More</a>
-										</div>
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-sm-4">
-										<div class="box-style-1 white-bg object-non-visible" data-animation-effect="fadeInUpSmall" data-effect-delay="0" style="height:360px;">
-											<div style="height:65%;">
-											<img src="images/block-plumbing.jpg" style="width:100%;height:100%">
-											</div>
-											<div style="height:20%;">
-											<h2>Plumbing</h2>
-											</div>
-											<a href="#" class="btn-default btn">Read More</a>
-										</div>
-									</div>
-									<div class="col-sm-4">
-										<div class="box-style-1 white-bg object-non-visible" data-animation-effect="fadeInUpSmall" data-effect-delay="200" style="height:360px;">
-											<div style="height:65%;">
-											<img src="images/block-roofing.jpg" style="width:100%;height:100%">
-											</div>
-											<div style="height:20%;">
-											<h2>Roofing</h2>
-											</div>
-											
-											<a href="#" class="btn-default btn">Read More</a>
-										</div>
-									</div>
-									<div class="col-sm-4">
-										<div class="box-style-1 white-bg object-non-visible" data-animation-effect="fadeInUpSmall" data-effect-delay="400" style="height:360px;">
-										<div style="height:65%;">
-											<img src="images/block-salon.jpg" style="width:100%;height:100%">
-										</div>
-										<div style="height:20%;">
-											<h2>Salon</h2>
-										</div>
-											<a href="#" class="btn-default btn">Read More</a>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<!-- main end -->
-
-			</section>
-			
-			<section class="main-container gray-bg">
-				<div>
-					<h1 class="text-center title">Customers opinion</h1>
-				</div>
-				
-				<div class="container">
-					<div class="row" style="margin: 0px 0% 5% 0px;">
-						<div class="col-lg-3" align="center">
-							<div class="row" style="margin: 0px 5% 3% 0px;">
-								<img style="border: 2px solid grey;" class="customer-image" src="images/feedback-client1.jpg"/>
-							</div>
-							<div class="row customername">
-								John Taylor
-							</div>
-							
-						</div>
-						<div class="col-lg-9">
-							<div class="row customername">
-								Easy to get a service.
-							</div>
-							<div class="row" style="font-family: 'FontAwesome';font-size: 18px;">
-								Before Service General, selecting a service provider was like throwing darts blind folded. Those who report on Service General have helped me make informed, logical, educated decisions. I am truly grateful.
-							</div>
-						</div>
-					</div>
-					<div class="row" style="margin: 0px 0% 5% 0px;">
-						<div class="col-lg-3" align="center">
-							<div class="row" style="margin: 0px 5% 3% 0px;">
-								<img style="border: 2px solid grey;" class="customer-image" src="images/feedback-client2.jpg"/>
-							</div>
-							<div class="row customername">
-								Skyrah
-							</div>
-							
-						</div>
-						<div class="col-lg-9">
-							<div class="row customername">
-								Happy with service.
-							</div>
-							<div class="row" style="font-family: 'FontAwesome';font-size: 18px;">
-								Service General took the stress out of a very stressful situation.
-							</div>
-						</div>
-					</div>	
-				</div>
-			</section>
-			<!-- main-container end -->
-
+			<!-- Form Start -->
  
 
 			<!-- footer start (Add "light" class to #footer in order to enable light footer) -->
@@ -883,64 +646,32 @@
 		<!-- Custom Scripts -->
 		<script src="js/custom.js"></script>
 		<script>
-			document.getElementById('login-Form').addEventListener('submit', login);
+		
+		document.getElementById('feedback-form').addEventListener('submit', feedback);
 	
-		function login(e){
-		var x, y, passwordCheck=null, usernameCheck=null;
-
-			  // Get the value of the input field with id="numb"
-			  var username = document.getElementById('username').value;
-			  var password = document.getElementById('password').value;
-			  // If x is Not a Number or less than one or greater than 10
-			  if (username == "") {
-				usernameCheck = "Username should not be empty";
-				document.getElementById("usernamemsg").innerHTML = usernameCheck;
-				console.log(usernameCheck);
-			  } 
-			  
-			  if (password == "") {
-				passwordCheck = "Password should not be empty";
-				document.getElementById("passwordmsg").innerHTML = passwordCheck;
-				console.log(passwordCheck);
-			  } 
-			
+		function feedback(e){
 			e.preventDefault();
-			if (usernameCheck == null && passwordCheck == null) {
 			
-			var provider = document.getElementById('provider');
-			var customer = document.getElementById('customer');
-			var type = null;
-			if(document.getElementById('provider').checked == true){
-				type="provider";
-			} else {
-				type="customer";
-			}
-			console.log(username);
-			console.log(password);
+			var name = document.getElementById('name').value;
+			var feedback = document.getElementById('feedback').value;
+			
 			var data = 
 					{
-						"username" : username,
-						"password":password,
-						"type": type
+						"name" : name,
+						"message" : feedback
 					};
 			
 			var xhr = new XMLHttpRequest();			
 			xhr.onreadystatechange = function() {
-				
-					if (this.readyState == 4 && this.status == 200) {
+				if (this.readyState == 4 && this.status == 200) {
 					console.log(this.responseText);
-					var user = JSON.parse(this.responseText);
-					document.getElementById('message').innerHTML = "Welcome " + user.firstName;
-				}
-				else{
 					document.getElementById('message').innerHTML = this.responseText;
 				}
-				
 			};
 			var json = JSON.stringify(data);
 			
 			console.log("Inside register 2")
-			xhr.open("POST","http://127.0.0.1:9090/servicegeneral/api/user/login");
+			xhr.open("POST","http://127.0.0.1:9090/servicegeneral/api/user/feedback");
 			xhr.setRequestHeader("Content-Type", "application/json");
 			xhr.setRequestHeader('Access-Control-Allow-Origin','*');
 			xhr.setRequestHeader('Access-Control-Allow-Methods','POST, GET');
@@ -948,10 +679,7 @@
 			console.log("Inside register 3")
 			xhr.send(json);
 			}
-			}
-		
 		</script>
-		
 
 	</body>
 </html>
