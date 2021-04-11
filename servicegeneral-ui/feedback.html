@@ -46,7 +46,7 @@
 			"boxed": boxed layout mode e.g. <body class="boxed">
 			"pattern-1 ... pattern-9": background patterns for boxed layout mode e.g. <body class="boxed pattern-1">
 	-->
-	<body class="front">
+	<body class="front" id="body">
 		<!-- scrollToTop -->
 		<!-- ================ -->
 		<div class="scrollToTop"><i class="fa fa-angle-up"></i></div>
@@ -79,8 +79,8 @@
 								<!-- header top dropdowns start -->
 								<!-- ================ -->
 								<div class="header-top-dropdown">
-									<div class="btn-group dropdown">
-										<button style="color: beige!important;" class="btn dropdown-toggle" data-toggle="dropdown"><u>Resister as a professional</u></button>
+									<div class="btn-group dropdown" id="register-div">
+										<button onclick=" window.open('register.html', '_self');" style="color: beige!important;" class="btn dropdown-toggle" data-toggle="dropdown"><u>Resister as a professional</u></button>
 									</div>
 									<div class="btn-group dropdown">
 										<button style="color: beige!important;" type="button" class="btn dropdown-toggle" data-toggle="dropdown"><i class="fa fa-plus"></i> More</button>
@@ -105,51 +105,66 @@
 											</li>
 										</ul>
 									</div>
-									<div class="btn-group dropdown">
+									<div class="btn-group dropdown" id="login-div">
 										<button style="color: beige!important;" type="button" class="btn dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> Login</button>
 										<ul class="dropdown-menu dropdown-menu-right dropdown-animation">
 											<li>
-												<form class="login-form">
+												<form class="login-form" id="login-Form" action="login(e)">
 													<div class="form-group form-check">
-														<input type="radio" name="service-login" class="form-check-input" checked/>
+														<input type="radio" name="service-login" class="form-check-input" id="customer" checked/>
 														<label class="control-label">I need service</label>
 													</div>
 													<div class="form-group form-check">
-														<input type="radio" name="service-login" class="form-check-input" />
+														<input type="radio" name="service-login" class="form-check-input" id="provider" />
 														<label class="control-label">I provide service</label>
 													</div>
 													<div class="form-group has-feedback">
 														<label class="control-label">Username</label>
-														<input type="text" class="form-control" placeholder="">
+														<input type="text" class="form-control" placeholder="" id="username">
 														<i class="fa fa-user form-control-feedback"></i>
+													</div>
+													<div class="form-group">
+														<label class="control-label" id="usernamemsg"></label>
 													</div>
 													<div class="form-group has-feedback">
 														<label class="control-label">Password</label>
-														<input type="password" class="form-control" placeholder="">
+														<input type="password" class="form-control" placeholder="" id="password">
 														<i class="fa fa-lock form-control-feedback"></i>
+													</div>
+													<div class="form-group">
+														<label class="control-label" id="passwordmsg"></label>
 													</div>
 													<button type="submit" class="btn btn-group btn-dark btn-sm">Log In</button>
 													<span>or</span>
-													<button type="submit" class="btn btn-group btn-default btn-sm">Sign Up</button>
+													<button type="submit" onclick=" window.open('register.html', '_self');" class="btn btn-group btn-default btn-sm">Sign Up</button>
 
 													<ul>
 														<li><a href="#">Forgot your password?</a></li>
 													</ul>
-													
-													<!--
-													<div class="divider"></div>
-													<span class="text-center">Login with</span>
-													<ul class="social-links clearfix">
-														<li class="facebook"><a href="#"><i class="fa fa-facebook"></i></a></li>
-														<li class="twitter"><a href="#"><i class="fa fa-twitter"></i></a></li>
-														<li class="googleplus"><a href="#"><i class="fa fa-google-plus"></i></a></li>
-													</ul>-->
+													<div class="form-group">
+														<label class="control-label" id="message"></label>
+													</div>
 													
 												</form>
 											</li>
 										</ul>
 									</div>
 
+									<div class="btn-group dropdown" id="logout-div">
+										<button id="logout-button" style="color: beige!important;" type="button" class="btn dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i></button>
+										<ul class="dropdown-menu dropdown-menu-right dropdown-animation">
+											<li id="user-profile"></li>
+											<li>
+												<a href="/servicegeneral/servicegeneral-ui/index.html"><i class="fa fa-home"></i> Home</a>
+											</li>
+											<li>
+												<a href="/servicegeneral/servicegeneral-ui/profile.html">Profile</a>
+											</li>
+											<li>
+												<a onclick="logout()">Logout</a>
+											</li>
+										</ul>
+									</div>
 
 								</div>
 								<!--  header top dropdowns end -->
@@ -161,35 +176,6 @@
 					</div>
 				</div>
 			</div>
-			<!-- header-top end -->
-
-			<!-- header start classes:
-				fixed: fixed navigation mode (sticky menu) e.g. <header class="header fixed clearfix">
-				 dark: dark header version e.g. <header class="header dark clearfix">
-			================ -->
-			<!--<header class="header fixed clearfix">
-				<div class="container">
-					<div class="row">
-						<div class="col-md-12">
-
-							<!-- header-left start -->
-							<!-- ================ 
-							<div class="header-left clearfix">
-
-								<!-- logo 
-								<div class="logo header-text">
-                                    Service General									
-								</div>
-
-							</div>
-							<!-- header-left end 
-
-						</div>
-	
-					</div>
-				</div>
-			</header>-->
-			<!-- header end -->
 
 			<!-- banner start -->
 			<!-- ================ -->
@@ -551,7 +537,7 @@
 			<!-- Form Start -->
 
 			<div class="container">
-			<h2>Review</h2>
+			<h2>Submit your Review</h2>
 			<form id = "feedback-form" action="feedback()">
 				<div class="form-group">
 					<label>Name:</label>
@@ -565,6 +551,7 @@
 					<label class="control-label" id="message"></label>
 				</div>
 				<button type="submit" id="submit" class="btn btn-default">Submit</button>
+				<label id="feedback-message"></button>
 			</form>
 			</div>
 			
@@ -583,7 +570,7 @@
 					<div class="container">
 						<div class="row">
 							<div class="col-md-6">
-								<p style="color: beige"> <b>Service Genearl</b>  |     Copyright &copy; 2021. All Rights Reserved</p>
+								<p style="color: beige"> <b>Service General</b>  |     Copyright &copy; 2021. All Rights Reserved</p>
 							</div>
 							<div class="col-md-6">
 								<nav class="navbar navbar-default">
@@ -646,7 +633,51 @@
 		<!-- Custom Scripts -->
 		<script src="js/custom.js"></script>
 		<script>
-		
+		function logout(){
+			clearCookie();
+			location.reload();
+			window.location.href = "http://127.0.0.1:8080/servicegeneral/servicegeneral-ui/index.html";
+		}
+
+		function clearCookie() {
+			document.cookie = "username=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+			document.cookie = "firstName=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+		    document.cookie = "lastName=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+			document.cookie = "address=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+			document.cookie = "email=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+			document.cookie = "phoneNumber=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+			document.cookie = "type=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+		}
+
+		document.getElementById('login-Form').addEventListener('submit', login);
+		document.getElementById("body").onload = function() {checkLoggedInUser()};
+
+		function checkLoggedInUser() {
+			var cookie = document.cookie;
+
+			var userCookie = {};
+			cookie.split(/\s*;\s*/).forEach(function(pair) {
+			  pair = pair.split(/\s*=\s*/);
+			  userCookie[pair[0]] = pair.splice(1).join('=');
+			});
+
+			var userJson = JSON.parse(JSON.stringify(userCookie, null, 4));
+
+			if(userJson.username !=null){
+				document.getElementById("login-div").style.display = "none";
+				document.getElementById("register-div").style.display = "none";
+				document.getElementById("user-profile").innerHTML = "Hi "+userJson.firstName + " " + userJson.lastName + " !";
+				document.getElementById('name').value = userJson.username;
+				document.getElementById('name').disabled = true;
+
+			} else {
+				document.getElementById("logout-div").style.display = "none";
+				document.getElementById("submit").disabled = true;
+				document.getElementById("feedback-message").innerHTML = "Please login to provide feedback!";	
+			}
+		}
+
+
 		document.getElementById('feedback-form').addEventListener('submit', feedback);
 	
 		function feedback(e){
@@ -666,6 +697,7 @@
 				if (this.readyState == 4 && this.status == 200) {
 					console.log(this.responseText);
 					document.getElementById('message').innerHTML = this.responseText;
+					document.getElementById("feedback-message").innerHTML = "Your feedback is valuable. Thanks for your time.";
 				}
 			};
 			var json = JSON.stringify(data);
@@ -679,6 +711,88 @@
 			console.log("Inside register 3")
 			xhr.send(json);
 			}
+
+
+			function login(e){
+			var x, y, passwordCheck=null, usernameCheck=null;
+
+			// Get the value of the input field with id="numb"
+			var username = document.getElementById('username').value;
+			var password = document.getElementById('password').value;
+			// If x is Not a Number or less than one or greater than 10
+			if (username == "") {
+				usernameCheck = "Username should not be empty";
+				document.getElementById("usernamemsg").innerHTML = usernameCheck;
+				
+			} 
+
+			if (password == "") {
+				passwordCheck = "Password should not be empty";
+				document.getElementById("passwordmsg").innerHTML = passwordCheck;
+			
+			} 
+			
+			e.preventDefault();
+			if (usernameCheck == null && passwordCheck == null) {
+			
+				var provider = document.getElementById('provider');
+				var customer = document.getElementById('customer');
+				var type = null;
+				if(document.getElementById('provider').checked == true){
+					type="provider";
+				} else {
+					type="customer";
+				}
+			
+				var data = 
+				{
+					"username" : username,
+					"password":password,
+					"type": type
+				};
+				
+				var xhr = new XMLHttpRequest();			
+				var json = JSON.stringify(data);
+				xhr.open("POST","http://127.0.0.1:9090/servicegeneral/api/user/login");
+				xhr.setRequestHeader("Content-Type", "application/json");
+				xhr.setRequestHeader('Access-Control-Allow-Origin','*');
+				xhr.setRequestHeader('Access-Control-Allow-Methods','POST, GET');
+				xhr.setRequestHeader('Access-Control-Allow-Headers','X-Auth-Token,Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With');
+				xhr.send(json);
+				
+				xhr.onreadystatechange = function() {	
+
+					if (this.readyState == 4 && this.status == 200 && this.responseText!="") {
+						console.log("Response:"+this.responseText);
+
+						var user = JSON.parse(this.responseText);
+						var usernameCookie = "username="+user.username+";";
+					    var firstNameCookie = "firstName="+user.firstName+";";
+					    var lastNameCookie = "lastName="+user.lastName+";";
+					    var addressCookie = "address="+user.address+";";
+					    var emailCookie = "email="+user.email+";";
+					    var phoneNumberCookie = "phoneNumber="+user.phoneNumber+";";
+					    var typeCookie = "type="+user.type+";";
+					
+						document.cookie = usernameCookie;
+						document.cookie = firstNameCookie;
+					    document.cookie = lastNameCookie;
+						document.cookie = addressCookie;
+						document.cookie = emailCookie;
+						document.cookie = phoneNumberCookie;
+						document.cookie = typeCookie;
+
+						document.getElementById('message').innerHTML = "";
+						location.reload();
+						window.location.href = "http://127.0.0.1:8080/servicegeneral/servicegeneral-ui/feedback.html";
+					}
+					else if (this.responseText == null || this.responseText == ""){
+						document.getElementById('message').innerHTML = "Incorrect credentials. Please login again.";
+					}
+				};
+				
+			}
+		}
 		</script>
 
 	</body>
