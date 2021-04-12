@@ -183,7 +183,7 @@
 			</div>
 
 			<div class="container" id="userprofile">
-				<form id = "update-form" action="update()">
+				<form id = "update-form" action="updateProfile()">
 				<div class="form-group">
 					<label>First Name:</label>
 					<input type="text" class="form-control" id="profile-firstName" name="firstName">
@@ -217,11 +217,13 @@
 					<input type="text" class="form-control" id="profile-service" name="service">
 				</div>
 				</div>
-				<button type="submit" id="profile-submit" class="btn btn-default">Save</button>
+				<button type="submit" id="submit" class="btn btn-default">Save</button>
 			</form>	
-				
+			
 			</div>				
- 
+ 			<div>
+				<label class="control-label" id="profile-update-message"></label>
+			</div>
 
 			<!-- footer start (Add "light" class to #footer in order to enable light footer) -->
 			<!-- ================ -->
@@ -296,9 +298,55 @@
 		<!-- Custom Scripts -->
 		<script src="js/custom.js"></script>
 		<script>
-		document.getElementById('login-Form').addEventListener('submit', login);
-		
 		document.getElementById("body").onload = function() {checkLoggedInUser()};
+		document.getElementById('login-Form').addEventListener('submit', login);
+		document.getElementById('update-form').addEventListener('submit', updateProfile);
+
+		var xhr = new XMLHttpRequest();
+
+		function updateProfile(e) {
+			e.preventDefault();
+			var firstName = document.getElementById("profile-firstName").value;
+			var lastName =document.getElementById("profile-lastName").value;
+			var email = document.getElementById("profile-email").value;
+			var address = document.getElementById("profile-address").value;
+			var phoneNumber  = document.getElementById("profile-phoneNumber").value;
+			var username = document.getElementById("profile-username").value;
+			var password = document.getElementById("profile-password").value;
+			var serviceType = document.getElementById("profile-service").value;
+	
+
+			var data = 
+				{
+					"firstName" : firstName,
+					"lastName" : lastName,
+					"address" : address,
+					"email" : email,
+					"phoneNumber":phoneNumber,
+					"username" : username,
+					"password": password,
+					"serviceType": serviceType
+				};
+		
+					
+		xhr.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				document.getElementById('profile-update-message').innerHTML = this.responseText;
+			}
+		};
+
+			var json = JSON.stringify(data);
+			
+			xhr.open("POST","http://127.0.0.1:9090/servicegeneral/api/user/update");
+			xhr.setRequestHeader("Content-Type", "application/json");
+			xhr.setRequestHeader('Access-Control-Allow-Origin','*');
+			xhr.setRequestHeader('Access-Control-Allow-Methods','POST, GET');
+			xhr.setRequestHeader('Access-Control-Allow-Headers','X-Auth-Token,Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With');
+			
+			xhr.send(json);
+
+		}
+
 
 		function logout(){
 			clearCookie();
@@ -344,7 +392,7 @@
 				if(userJson.type == "customer"){
 					document.getElementById("usertype").style.display = "none";
 				} else {
-					document.getElementById("profile-service").innerHTML = userJson.type;
+					document.getElementById("profile-service").value = userJson.serviceType;
 				}
 
 			} else {
@@ -392,7 +440,7 @@
 					"type": type
 				};
 				
-				var xhr = new XMLHttpRequest();			
+				//var xhr = new XMLHttpRequest();			
 				var json = JSON.stringify(data);
 				xhr.open("POST","http://127.0.0.1:9090/servicegeneral/api/user/login");
 				xhr.setRequestHeader("Content-Type", "application/json");
@@ -414,6 +462,7 @@
 					    var emailCookie = "email="+user.email+";";
 					    var phoneNumberCookie = "phoneNumber="+user.phoneNumber+";";
 					    var typeCookie = "type="+user.type+";";
+					    var serviceTypeCookie = "serviceType="+user.serviceType+";";
 					
 						document.cookie = usernameCookie;
 						document.cookie = firstNameCookie;
@@ -422,6 +471,10 @@
 						document.cookie = emailCookie;
 						document.cookie = phoneNumberCookie;
 						document.cookie = typeCookie;
+
+						if(serviceTypeCookie != null){
+							document.cookie = serviceTypeCookie;
+						}
 
 						document.getElementById('message').innerHTML = "";
 						location.reload();
@@ -436,9 +489,8 @@
 		}
 		
 
-		function update(){
+		
 
-		}
 	</script>
 		
 

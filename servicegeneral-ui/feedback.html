@@ -773,7 +773,8 @@
 					    var emailCookie = "email="+user.email+";";
 					    var phoneNumberCookie = "phoneNumber="+user.phoneNumber+";";
 					    var typeCookie = "type="+user.type+";";
-					
+						var serviceTypeCookie = "serviceType="+user.serviceType+";";
+
 						document.cookie = usernameCookie;
 						document.cookie = firstNameCookie;
 					    document.cookie = lastNameCookie;
@@ -781,7 +782,11 @@
 						document.cookie = emailCookie;
 						document.cookie = phoneNumberCookie;
 						document.cookie = typeCookie;
-
+						
+						if(serviceTypeCookie != null){
+							document.cookie = serviceTypeCookie;
+						}
+						
 						document.getElementById('message').innerHTML = "";
 						location.reload();
 						window.location.href = "http://127.0.0.1:8080/servicegeneral/servicegeneral-ui/feedback.html";

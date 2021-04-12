@@ -48,6 +48,13 @@ public class UserController {
 		System.out.println("Inside register");
 		return service.registerUserFromService(user);
 	}
+
+	@PostMapping(value="/update")
+	@Produces(MediaType.TEXT_PLAIN)
+	public String updateUser(@RequestBody User user) {
+		System.out.println("Inside register");
+		return service.updateUserInfo(user);
+	}
 	
 	@PostMapping("/login")
 	public User userLoginInfo(@RequestBody Login login) {

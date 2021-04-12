@@ -534,7 +534,7 @@
 			<!-- Form Start -->
 
 			<div class="container" id="register-form-div">
-			<h2>Service Provider Info</h2>
+			<h2>Register here!</h2>
 			<form id = "register-form" action="register()">
 				<div class="form-group">
 					<label>First Name:</label>
@@ -558,19 +558,32 @@
 				</div>
 				<div class="form-group">
 					<label>Username:</label>
-					<input type="text" class="form-control" id="username" placeholder="Enter Username" name="username">
+					<input type="text" class="form-control" id="inputUsername" placeholder="Enter Username" name="inputUsername">
 				</div>
 				<div class="form-group">
 					<label>Password:</label>
-					<input type="password" class="form-control" id="password" placeholder="Enter password" name="password">
+					<input type="password" class="form-control" id="inputPassword" placeholder="Enter password" name="inputPassword">
 				</div>
 				<div class="form-group form-check">
-					<input type="radio" name="service-login" class="form-check-input" id="customer" checked/>
+					<input type="radio" name="service-login" class="form-check-input" id="inputCustomer"/>
 					<label class="control-label">I need service</label>
 				</div>
 				<div class="form-group form-check">
-					<input type="radio" name="service-login" class="form-check-input" id="provider" />
+					<input type="radio" name="service-login" class="form-check-input" id="inputProvider" 
+					 checked/>
 					<label class="control-label">I provide service</label>
+				</div>
+				<div class="form-group" id="div-service-type">
+					<label class="control-label">Which service do you want to provide?</label>
+					<br>
+					<select class="form-control" name="input-service-type" id="input-service-type">
+					  <option name="Internet Service" value="Internet Service">Internet Service</option>
+					  <option name="Painting" value="Painting">Painting</option>
+					  <option name="Repairing Electronics" value="Repairing Electronics">Repairing Electronics</option>
+					  <option name="Moving and Packing" value="Moving and Packing">Moving and Packing</option>
+					  <option name="Laundary" value="Laundary">Laundary</option>
+					  <option name="Locksmith" value="Locksmith">Locksmith</option>
+					</select>
 				</div>
 				<button type="submit" id="submit" class="btn btn-default">Submit</button>
 			</form>
@@ -656,7 +669,17 @@
 		<!-- Custom Scripts -->
 		<script src="js/custom.js"></script>
 		<script>
-		
+
+			$(function() {
+				$("input[name='service-login']").click(function(){
+					if($("#inputProvider").is(":checked")) {
+						$("#div-service-type").show();
+					} else {
+						$("#div-service-type").hide();
+					}
+				})
+			})
+
 		function logout(){
 			clearCookie();
 			location.reload();
@@ -711,14 +734,18 @@
 			var email = document.getElementById('email').value;
 			var address = document.getElementById('address').value;
 			var phoneNumber = document.getElementById('phoneNumber').value;
-			var username = document.getElementById('username').value;
-			var password = document.getElementById('password').value;
-			var provider = document.getElementById('provider');
-			var customer = document.getElementById('customer');
-			var type = null;
+			var username = document.getElementById('inputUsername').value;
+			var password = document.getElementById('inputPassword').value;
+			var provider = document.getElementById('inputProvider');
+			var customer = document.getElementById('inputCustomer');
 			
-			if(document.getElementById('provider').checked == true){
+
+			var type = null; 
+			var serviceType = null;
+			if(document.getElementById('inputProvider').checked == true){
 				type="provider";
+				serviceType = document.getElementById('input-service-type').selectedOptions[0].value;
+				console.log("service:" + serviceType);
 			} else {
 				type="customer";
 			}
@@ -732,7 +759,8 @@
 						"phoneNumber":phoneNumber,
 						"username" : username,
 						"password":password,
-						"type": type
+						"type": type,
+						"serviceType": serviceType
 					};
 			
 			var xhr = new XMLHttpRequest();			
@@ -742,6 +770,7 @@
 					document.getElementById('register-message').innerHTML = this.responseText;
 				}
 			};
+			
 			var json = JSON.stringify(data);
 			
 			xhr.open("POST","http://127.0.0.1:9090/servicegeneral/api/user");
@@ -815,7 +844,8 @@
 					    var emailCookie = "email="+user.email+";";
 					    var phoneNumberCookie = "phoneNumber="+user.phoneNumber+";";
 					    var typeCookie = "type="+user.type+";";
-					
+						var serviceTypeCookie = "serviceType="+user.serviceType+";";
+
 						document.cookie = usernameCookie;
 						document.cookie = firstNameCookie;
 					    document.cookie = lastNameCookie;
@@ -823,6 +853,10 @@
 						document.cookie = emailCookie;
 						document.cookie = phoneNumberCookie;
 						document.cookie = typeCookie;
+
+						if(serviceTypeCookie != null){
+							document.cookie = serviceTypeCookie;
+						}
 
 						document.getElementById('message').innerHTML = "";
 						location.reload();

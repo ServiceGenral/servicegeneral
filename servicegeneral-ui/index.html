@@ -963,7 +963,8 @@
 					    var emailCookie = "email="+user.email+";";
 					    var phoneNumberCookie = "phoneNumber="+user.phoneNumber+";";
 					    var typeCookie = "type="+user.type+";";
-					
+						var serviceTypeCookie = "serviceType="+user.serviceType+";";
+
 						document.cookie = usernameCookie;
 						document.cookie = firstNameCookie;
 					    document.cookie = lastNameCookie;
@@ -971,6 +972,7 @@
 						document.cookie = emailCookie;
 						document.cookie = phoneNumberCookie;
 						document.cookie = typeCookie;
+						document.cookie = serviceTypeCookie;
 
 						document.getElementById('message').innerHTML = "";
 						location.reload();
