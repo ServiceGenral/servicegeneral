@@ -154,10 +154,10 @@
 									</div>
 
 									<div class="btn-group dropdown" id="logout-div">
-										<button id="logout-button" style="color: beige!important;" type="button" class="btn dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i></button>
+										<button id="logout-button" style="color: beige!important;" type="button" class="btn dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i><label id="user-profile"></label></button>
 										<ul class="dropdown-menu dropdown-menu-right dropdown-animation">
 											
-											<li id="user-profile">
+											<li >
 												
 											</li>
 											<li>
@@ -214,7 +214,7 @@
 				</div>
 				<div class="form-group" id="usertype">
 					<label>Service Provided</label>
-					<input type="text" class="form-control" id="profile-service" name="service">
+					<input type="text" class="form-control" id="profile-service" name="service" disabled>
 				</div>
 				</div>
 				<button type="submit" id="submit" class="btn btn-default">Save</button>
@@ -482,6 +482,8 @@
 					}
 					else if (this.responseText == null || this.responseText == ""){
 						document.getElementById('message').innerHTML = "Incorrect credentials. Please login again.";
+						document.getElementById('username').value ="";
+						document.getElementById('password').value = "";
 					}
 				};
 				

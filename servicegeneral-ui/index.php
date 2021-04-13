@@ -1,3 +1,9 @@
+<?php 
+	header('Access-Control-Allow-Origin: *');
+	header('Access-Control-Allow-Methods: GET, POST');
+	header("Access-Control-Allow-Headers: X-Requested-With");
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -57,125 +63,12 @@
 
 			<!-- header-top start (Add "dark" class to .header-top in order to enable dark header-top e.g <div class="header-top dark">) -->
 			<!-- ================ -->
-			<div class="header-top">
-				<div class="container">
-					<div class="row">
-						<div class="col-xs-2  col-sm-6" style="margin-top: 5px;">
-							<div>
-								<div class="logo-title">
-								<span><a href="/servicegeneral/servicegeneral-ui/index.html"><font color="orange">Service</font> General</span></a>
-									<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="grey" class="bi bi-hammer" viewBox="0 0 16 16">
-										  <path d="M9.972 2.508a.5.5 0 0 0-.16-.556l-.178-.129a5.009 5.009 0 0 0-2.076-.783C6.215.862 4.504 1.229 2.84 3.133H1.786a.5.5 0 0 0-.354.147L.146 4.567a.5.5 0 0 0 0 .706l2.571 2.579a.5.5 0 0 0 .708 0l1.286-1.29a.5.5 0 0 0 .146-.353V5.57l8.387 8.873A.5.5 0 0 0 14 14.5l1.5-1.5a.5.5 0 0 0 .017-.689l-9.129-8.63c.747-.456 1.772-.839 3.112-.839a.5.5 0 0 0 .472-.334z"/>
-										</svg>
-								</div>
-							</div>
-						</div>
-						<div class="col-xs-10 col-sm-6" style="margin-top: 5px;">
 
-							<!-- header-top-second start -->
-							<!-- ================ -->
-							<div id="header-top-second"  class="clearfix">
 
-								<!-- header top dropdowns start -->
-								<!-- ================ -->
-								<div class="header-top-dropdown">
-									<div class="btn-group dropdown">
-										<button onclick=" window.open('feedback.html', '_self');" style="color: beige!important;" class="btn dropdown-toggle" data-toggle="dropdown"><u>Feedback</u></button>
-									</div>
-									<div class="btn-group dropdown" id="register-div">
-										<button onclick=" window.open('register.html', '_self');" style="color: beige!important;" class="btn dropdown-toggle" data-toggle="dropdown"><u>Resister as a professional</u></button>
-									</div>
-									<div class="btn-group dropdown">
-										<button style="color: beige!important;" type="button" class="btn dropdown-toggle" data-toggle="dropdown"><i class="fa fa-plus"></i> More</button>
-										<ul class="dropdown-menu dropdown-menu-right dropdown-animation">
-											<li>
-												<a href="#">Blog</a>
-											</li>
-											<li>
-												<a href="#">About us</a>
-											</li>
-											<li>
-												<a href="#">Contact us</a>
-											</li>
-											<li>
-												<a href="#">Terms of use</a>
-											</li>
-											<li>
-												<a href="#">Privacy policy</a>
-											</li>
-											<li>
-												<a href="#">Customer Support</a>
-											</li>
-										</ul>
-									</div>
-									<div class="btn-group dropdown" id="login-div">
-										<button id="login-button" style="color: beige!important;" type="button" class="btn dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> Login</button>
-										<ul class="dropdown-menu dropdown-menu-right dropdown-animation">
-											<li>
-												<form class="login-form" id="login-Form" action="login(e)">
-													<div class="form-group form-check">
-														<input type="radio" name="service-login" class="form-check-input" id="customer" checked/>
-														<label class="control-label">I need service</label>
-													</div>
-													<div class="form-group form-check">
-														<input type="radio" name="service-login" class="form-check-input" id="provider" />
-														<label class="control-label">I provide service</label>
-													</div>
-													<div class="form-group has-feedback">
-														<label class="control-label">Username</label>
-														<input type="text" class="form-control" placeholder="" id="username">
-														<i class="fa fa-user form-control-feedback"></i>
-													</div>
-													<div class="form-group">
-														<label class="control-label" id="usernamemsg"></label>
-													</div>
-													<div class="form-group has-feedback">
-														<label class="control-label">Password</label>
-														<input type="password" class="form-control" placeholder="" id="password">
-														<i class="fa fa-lock form-control-feedback"></i>
-													</div>
-													<div class="form-group">
-														<label class="control-label" id="passwordmsg"></label>
-													</div>
-													<button type="submit" class="btn btn-group btn-dark btn-sm">Log In</button>
-													<span>or</span>
-													<button type="submit" onclick=" window.open('register.html', '_self');" class="btn btn-group btn-default btn-sm">Sign Up</button>
+			<?php 
+				include 'header.php'; 
+			?>
 
-													<ul>
-														<li><a href="#">Forgot your password?</a></li>
-													</ul>
-													<div class="form-group">
-														<label class="control-label" id="message"></label>
-													</div>
-													
-												</form>
-											</li>
-										</ul>
-									</div>
-
-									<div class="btn-group dropdown" id="logout-div">
-										<button id="logout-button" style="color: beige!important;" type="button" class="btn dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i><label id="user-profile"></label></button>
-										<ul class="dropdown-menu dropdown-menu-right dropdown-animation">
-											<li>
-												<a href="/servicegeneral/servicegeneral-ui/index.html"><i class="fa fa-home"></i> Home</a>
-											</li>
-											<li>
-												<a href="/servicegeneral/servicegeneral-ui/profile.html">Profile</a>
-											</li>
-											<li>
-												<a onclick="logout()">Logout</a>
-											</li>
-										</ul>
-									</div>
-								<!--  header top dropdowns end -->
-
-							</div>
-							<!-- header-top-second end -->
-
-						</div>
-					</div>
-				</div>
-			</div>
 			
 			<!-- banner start -->
 			<!-- ================ -->
@@ -784,43 +677,9 @@
 
  
 
-			<!-- footer start (Add "light" class to #footer in order to enable light footer) -->
-			<!-- ================ -->
-			<footer id="footer">
-
-				<!-- .subfooter start -->
-				<!-- ================ -->
-				<div class="subfooter">
-					<div class="container">
-						<div class="row">
-							<div class="col-md-6">
-								<p style="color: beige"> <b>Service General</b>  |     Copyright &copy; 2021. All Rights Reserved</p>
-							</div>
-							<div class="col-md-6">
-								<nav class="navbar navbar-default">
-									<!-- Toggle get grouped for better mobile display -->
-									<div class="navbar-header">
-										<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-2">
-											<span class="sr-only">Toggle navigation</span>
-											<span class="icon-bar"></span>
-											<span class="icon-bar"></span>
-											<span class="icon-bar"></span>
-										</button>
-									</div>
-									<div class="collapse navbar-collapse" id="navbar-collapse-2">
-										<ul class="nav navbar-nav">
-											<li><a style="color:beige" href="#">Home</a></li>
-										</ul>
-									</div>
-								</nav>
-							</div>
-						</div>
-					</div>
-				</div>
-				<!-- .subfooter end -->
-
-			</footer>
-			<!-- footer end -->
+		<?php 
+			include 'footer.php';
+		?>
 
 		</div>
 		<!-- page-wrapper end -->
@@ -856,26 +715,9 @@
 
 		<!-- Custom Scripts -->
 		<script src="js/custom.js"></script>
+
+		<script src="servicegeneral.js"></script>
 		<script>
-		document.getElementById('login-Form').addEventListener('submit', login);
-		
-		document.getElementById("body").onload = function() {checkLoggedInUser()};
-
-		function logout(){
-			clearCookie();
-			location.reload();
-			window.location.href = "http://127.0.0.1:8080/servicegeneral/servicegeneral-ui/index.html";
-		}
-
-		function clearCookie() {
-			document.cookie = "username=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
-			document.cookie = "firstName=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
-		    document.cookie = "lastName=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
-			document.cookie = "address=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
-			document.cookie = "email=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
-			document.cookie = "phoneNumber=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
-			document.cookie = "type=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
-		}
 
 		function checkLoggedInUser() {
 			var cookie = document.cookie;
@@ -898,94 +740,6 @@
 			}
 		}
 
-		
-		function login(e){
-			var x, y, passwordCheck=null, usernameCheck=null;
-
-			// Get the value of the input field with id="numb"
-			var username = document.getElementById('username').value;
-			var password = document.getElementById('password').value;
-			// If x is Not a Number or less than one or greater than 10
-			if (username == "") {
-				usernameCheck = "Username should not be empty";
-				document.getElementById("usernamemsg").innerHTML = usernameCheck;
-				
-			} 
-
-			if (password == "") {
-				passwordCheck = "Password should not be empty";
-				document.getElementById("passwordmsg").innerHTML = passwordCheck;
-			
-			} 
-			
-			e.preventDefault();
-			if (usernameCheck == null && passwordCheck == null) {
-			
-				var provider = document.getElementById('provider');
-				var customer = document.getElementById('customer');
-				var type = null;
-				if(document.getElementById('provider').checked == true){
-					type="provider";
-				} else {
-					type="customer";
-				}
-			
-				var data = 
-				{
-					"username" : username,
-					"password":password,
-					"type": type
-				};
-				
-				var xhr = new XMLHttpRequest();			
-				var json = JSON.stringify(data);
-				xhr.open("POST","http://127.0.0.1:9090/servicegeneral/api/user/login");
-				xhr.setRequestHeader("Content-Type", "application/json");
-				xhr.setRequestHeader('Access-Control-Allow-Origin','*');
-				xhr.setRequestHeader('Access-Control-Allow-Methods','POST, GET');
-				xhr.setRequestHeader('Access-Control-Allow-Headers','X-Auth-Token,Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With');
-				xhr.send(json);
-				
-				xhr.onreadystatechange = function() {	
-
-					if (this.readyState == 4 && this.status == 200 && this.responseText!="") {
-						console.log("Response:"+this.responseText);
-
-						var user = JSON.parse(this.responseText);
-						var usernameCookie = "username="+user.username+";";
-					    var firstNameCookie = "firstName="+user.firstName+";";
-					    var lastNameCookie = "lastName="+user.lastName+";";
-					    var addressCookie = "address="+user.address+";";
-					    var emailCookie = "email="+user.email+";";
-					    var phoneNumberCookie = "phoneNumber="+user.phoneNumber+";";
-					    var typeCookie = "type="+user.type+";";
-						var serviceTypeCookie = "serviceType="+user.serviceType+";";
-
-						document.cookie = usernameCookie;
-						document.cookie = firstNameCookie;
-					    document.cookie = lastNameCookie;
-						document.cookie = addressCookie;
-						document.cookie = emailCookie;
-						document.cookie = phoneNumberCookie;
-						document.cookie = typeCookie;
-						document.cookie = serviceTypeCookie;
-
-						document.getElementById('message').innerHTML = "";
-						location.reload();
-						window.location.href = "http://127.0.0.1:8080/servicegeneral/servicegeneral-ui/index.html";
-					}
-					else if (this.responseText == null || this.responseText == ""){
-						document.getElementById('message').innerHTML = "Incorrect credentials. Please login again.";
-						document.getElementById('username').value ="";
-						document.getElementById('password').value = "";
-					}
-				};
-				
-			}
-		}
-		
 	</script>
-		
-
 	</body>
 </html>

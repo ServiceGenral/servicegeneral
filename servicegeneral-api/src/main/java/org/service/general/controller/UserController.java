@@ -2,8 +2,6 @@ package org.service.general.controller;
 
 import java.util.List;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.OPTIONS;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
@@ -23,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/user")
-@CrossOrigin(origins = {"http://127.0.0.1:9090","http://127.0.0.1:8080"})
+@CrossOrigin(origins = {"http://127.0.0.1:9090","http://127.0.0.1:8080", "http://127.0.0.1"})
 public class UserController {
 
 	@Autowired

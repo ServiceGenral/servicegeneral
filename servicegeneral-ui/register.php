@@ -1,3 +1,8 @@
+<?php 
+	header('Access-Control-Allow-Origin: *');
+	header('Access-Control-Allow-Methods: GET, POST');
+	header("Access-Control-Allow-Headers: X-Requested-With");
+?>
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -57,121 +62,9 @@
 
 			<!-- header-top start (Add "dark" class to .header-top in order to enable dark header-top e.g <div class="header-top dark">) -->
 			<!-- ================ -->
-			<div class="header-top">
-				<div class="container">
-					<div class="row">
-						<div class="col-xs-2  col-sm-6" style="margin-top: 5px;">
-							<div>
-								<div class="logo-title">
-								<span><font color="orange">Service</font> General</span>
-									<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="grey" class="bi bi-hammer" viewBox="0 0 16 16">
-										  <path d="M9.972 2.508a.5.5 0 0 0-.16-.556l-.178-.129a5.009 5.009 0 0 0-2.076-.783C6.215.862 4.504 1.229 2.84 3.133H1.786a.5.5 0 0 0-.354.147L.146 4.567a.5.5 0 0 0 0 .706l2.571 2.579a.5.5 0 0 0 .708 0l1.286-1.29a.5.5 0 0 0 .146-.353V5.57l8.387 8.873A.5.5 0 0 0 14 14.5l1.5-1.5a.5.5 0 0 0 .017-.689l-9.129-8.63c.747-.456 1.772-.839 3.112-.839a.5.5 0 0 0 .472-.334z"/>
-										</svg>
-								</div>
-							</div>
-						</div>
-						<div class="col-xs-10 col-sm-6" style="margin-top: 5px;">
-
-							<!-- header-top-second start -->
-							<!-- ================ -->
-							<div id="header-top-second"  class="clearfix">
-
-								<!-- header top dropdowns start -->
-								<!-- ================ -->
-								<div class="header-top-dropdown">
-		
-									<div class="btn-group dropdown">
-										<button style="color: beige!important;" type="button" class="btn dropdown-toggle" data-toggle="dropdown"><i class="fa fa-plus"></i> More</button>
-										<ul class="dropdown-menu dropdown-menu-right dropdown-animation">
-											<li>
-												<a href="#">Blog</a>
-											</li>
-											<li>
-												<a href="#">About us</a>
-											</li>
-											<li>
-												<a href="#">Contact us</a>
-											</li>
-											<li>
-												<a href="#">Terms of use</a>
-											</li>
-											<li>
-												<a href="#">Privacy policy</a>
-											</li>
-											<li>
-												<a href="#">Customer Support</a>
-											</li>
-										</ul>
-									</div>
-									<div class="btn-group dropdown" id="login-div">
-										<button style="color: beige!important;" type="button" class="btn dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> Login</button>
-										<ul class="dropdown-menu dropdown-menu-right dropdown-animation">
-											<li>
-												<form class="login-form" id="login-Form" action="login(e)">
-													<div class="form-group form-check">
-														<input type="radio" name="service-login" class="form-check-input" id="customer" checked/>
-														<label class="control-label">I need service</label>
-													</div>
-													<div class="form-group form-check">
-														<input type="radio" name="service-login" class="form-check-input" id="provider" />
-														<label class="control-label">I provide service</label>
-													</div>
-													<div class="form-group has-feedback">
-														<label class="control-label">Username</label>
-														<input type="text" class="form-control" placeholder="" id="username">
-														<i class="fa fa-user form-control-feedback"></i>
-													</div>
-													<div class="form-group">
-														<label class="control-label" id="usernamemsg"></label>
-													</div>
-													<div class="form-group has-feedback">
-														<label class="control-label">Password</label>
-														<input type="password" class="form-control" placeholder="" id="password">
-														<i class="fa fa-lock form-control-feedback"></i>
-													</div>
-													<div class="form-group">
-														<label class="control-label" id="passwordmsg"></label>
-													</div>
-													<button type="submit" class="btn btn-group btn-dark btn-sm">Log In</button>
-													<span>or</span>
-													<button type="submit" onclick=" window.open('register.html', '_self');" class="btn btn-group btn-default btn-sm">Sign Up</button>
-
-													<ul>
-														<li><a href="#">Forgot your password?</a></li>
-													</ul>
-													<div class="form-group">
-														<label class="control-label" id="message"></label>
-													</div>
-													
-												</form>
-											</li>
-										</ul>
-									</div>
-									
-
-									<div class="btn-group dropdown" id="logout-div">
-										<button id="logout-button" style="color: beige!important;" type="button" class="btn dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i><label id="user-profile"></label></button>
-										<ul class="dropdown-menu dropdown-menu-right dropdown-animation">
-											<li>
-												<a href="/servicegeneral/servicegeneral-ui/index.html"><i class="fa fa-home"></i> Home</a>
-											</li>
-											<li>
-												<a href="/servicegeneral/servicegeneral-ui/profile.html">Profile</a>
-											</li>
-											<li>
-												<a onclick="logout()">Logout</a>
-											</li>
-										</ul>
-									</div>
-								<!--  header top dropdowns end -->
-
-							</div>
-							<!-- header-top-second end -->
-
-						</div>
-					</div>
-				</div>
-			</div>
+			<?php 
+				include 'header.php'; 
+			?>
 			
 			<!-- banner start -->
 			<!-- ================ -->
@@ -536,37 +429,37 @@
 			<h2>Register here!</h2>
 			<form id = "register-form" action="register(e)">
 				<div class="form-group">
-					<label>First Name:</label> <label class="control-label" id="register-firstnameMsg"></label>
+					<label>First Name:</label> <label class="control-label" id="register-firstnameMsg" style="color: red;"></label>
 					<input type="text" class="form-control" id="firstName" placeholder="Enter First Name" name="firstName">
 					
 				</div>
 				<div class="form-group">
-					<label>Last Name:</label> <label class="control-label" id="register-lastnameMsg"></label>
+					<label>Last Name:</label> <label class="control-label" id="register-lastnameMsg" style="color: red;"></label>
 					<input type="text" class="form-control" id="lastName" placeholder="Enter Last Name" name="lastName">
 					
 				</div>
 				<div class="form-group">
-					<label>Email:</label> <label class="control-label" id="register-emailMsg"></label>
+					<label>Email:</label> <label class="control-label" id="register-emailMsg" style="color: red;"></label>
 					<input type="text" class="form-control" id="email" placeholder="Enter Email Id" name="email">
 					
 				</div>
 				<div class="form-group">
-					<label>Address:</label> <label class="control-label" id="register-addressMsg"></label>
+					<label>Address:</label> <label class="control-label" id="register-addressMsg" style="color: red;"></label>
 					<input type="text" class="form-control" id="address" placeholder="Enter Address" name="address">
 					
 				</div>
 				<div class="form-group">
-					<label>Phone Number:</label> <label class="control-label" id="register-phonenumberMsg"></label>
+					<label>Phone Number:</label> <label class="control-label" id="register-phonenumberMsg" style="color: red;"></label>
 					<input type="text" class="form-control" id="phoneNumber" placeholder="Enter Phone" name="phoneNumber">
 					
 				</div>
 				<div class="form-group">
-					<label>Username:</label> <label class="control-label" id="register-usernameMsg"></label>
+					<label>Username:</label> <label class="control-label" id="register-usernameMsg" style="color: red;"></label>
 					<input type="text" class="form-control" id="inputUsername" placeholder="Enter Username" name="inputUsername">
 					
 				</div>
 				<div class="form-group">
-					<label>Password:</label> <label class="control-label" id="register-passwordMsg"></label>
+					<label>Password:</label> <label class="control-label" id="register-passwordMsg" style="color: red;"></label>
 					<input type="password" class="form-control" id="inputPassword" placeholder="Enter password" name="inputPassword">
 					
 				</div>
@@ -595,50 +488,15 @@
 			</form>
 			</div>
 			<div>
-				<label class="control-label" id="register-message"></label>
+				<label class="control-label" id="register-message" style="font-size: 1.5em;margin-left: 24%;"></label>
 			</div>
 			
 
 			<!-- Form Start -->
- 
 
-			<!-- footer start (Add "light" class to #footer in order to enable light footer) -->
-			<!-- ================ -->
-			<footer id="footer">
-
-				<!-- .subfooter start -->
-				<!-- ================ -->
-				<div class="subfooter">
-					<div class="container">
-						<div class="row">
-							<div class="col-md-6">
-								<p style="color: beige"> <b>Service General</b>  |     Copyright &copy; 2021. All Rights Reserved</p>
-							</div>
-							<div class="col-md-6">
-								<nav class="navbar navbar-default">
-									<!-- Toggle get grouped for better mobile display -->
-									<div class="navbar-header">
-										<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-2">
-											<span class="sr-only">Toggle navigation</span>
-											<span class="icon-bar"></span>
-											<span class="icon-bar"></span>
-											<span class="icon-bar"></span>
-										</button>
-									</div>
-									<div class="collapse navbar-collapse" id="navbar-collapse-2">
-										<ul class="nav navbar-nav">
-											<li><a style="color:beige" href="#">Home</a></li>
-										</ul>
-									</div>
-								</nav>
-							</div>
-						</div>
-					</div>
-				</div>
-				<!-- .subfooter end -->
-
-			</footer>
-			<!-- footer end -->
+		<?php 
+			include 'footer.php';
+		?>
 
 		</div>
 		<!-- page-wrapper end -->
@@ -674,7 +532,12 @@
 
 		<!-- Custom Scripts -->
 		<script src="js/custom.js"></script>
+
+		<script src="servicegeneral.js"></script>
+
 		<script>
+			document.getElementById('register-form').addEventListener('submit', register);
+
 
 			$(function() {
 				$("input[name='service-login']").click(function(){
@@ -684,28 +547,7 @@
 						$("#div-service-type").hide();
 					}
 				})
-			})
-
-		function logout(){
-			clearCookie();
-			location.reload();
-			window.location.href = "http://127.0.0.1:8080/servicegeneral/servicegeneral-ui/index.html";
-		}
-
-		function clearCookie() {
-			document.cookie = "username=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
-			document.cookie = "firstName=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
-		    document.cookie = "lastName=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
-			document.cookie = "address=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
-			document.cookie = "email=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
-			document.cookie = "phoneNumber=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
-			document.cookie = "type=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
-		}
-
-		document.getElementById('login-Form').addEventListener('submit', login);
-		document.getElementById("body").onload = function() {checkLoggedInUser()};
-		
-
+			});
 
 		function checkLoggedInUser() {
 			var cookie = document.cookie;
@@ -727,222 +569,6 @@
 				document.getElementById("user-profile").innerHTML = "Hi "+userJson.firstName + " " + userJson.lastName + " !";
 			} else{
 				document.getElementById("logout-div").style.display = "none";
-			}
-		}
-
-		document.getElementById('register-form').addEventListener('submit', register);
-
-		function register(e){
-			
-			e.preventDefault();
-
-			var firstnameCheck = null, lastnameCheck = null, emailCheck = null, addressCheck = null,phonenumberCheck = null, usernameCheck = null,passwordCheck = null;
-
-			var firstName = document.getElementById('firstName').value;
-			var lastName = document.getElementById('lastName').value;
-			var email = document.getElementById('email').value;
-			var address = document.getElementById('address').value;
-			var phoneNumber = document.getElementById('phoneNumber').value;
-			var username = document.getElementById('inputUsername').value;
-			var password = document.getElementById('inputPassword').value;
-
-			// If x is Not a Number or less than one or greater than 10
-			if (firstName == "" || firstName == null) {
-				firstnameCheck = " firstName should not be empty";
-				document.getElementById("register-firstnameMsg").innerHTML = firstnameCheck;
-								
-			}
-			else{
-				document.getElementById("register-firstnameMsg").innerHTML = "";
-
-			} 
-			if (lastName == "" || lastName == null) {
-				lastnameCheck = " lastName should not be empty";
-				document.getElementById("register-lastnameMsg").innerHTML = lastnameCheck;
-			
-			}
-			else{
-
-				document.getElementById("register-lastnameMsg").innerHTML = "";
-			}
-			if (email == "" || email == null) {
-				emailCheck = " email should not be empty";
-				document.getElementById("register-emailMsg").innerHTML = emailCheck;
-			
-			}else{
-				document.getElementById("register-emailMsg").innerHTML = "";
-			}
-			if (address == "" || address == null) {
-				addressCheck = " address should not be empty";
-				document.getElementById("register-addressMsg").innerHTML = addressCheck;
-			
-			}else{
-				document.getElementById("register-addressMsg").innerHTML = "";
-			}
-			if (phoneNumber == "" || phoneNumber == null) {
-				phonenumberCheck = " phoneNumber should not be empty";
-				document.getElementById("register-phonenumberMsg").innerHTML = phonenumberCheck;
-			
-			}else{
-				document.getElementById("register-phonenumberMsg").innerHTML = "";
-
-			}
-			if (username == "" || username == null) {
-				usernameCheck = " username should not be empty";
-				document.getElementById("register-usernameMsg").innerHTML = usernameCheck;
-			
-			} else{
-				document.getElementById("register-usernameMsg").innerHTML = "";
-			} 
-			if (password == "" || password == null) {
-				passwordCheck = " password should not be empty";
-				document.getElementById("register-passwordMsg").innerHTML = passwordCheck;
-			
-			}else{
-				document.getElementById("register-passwordMsg").innerHTML = "";
-			}
-
-			if( firstnameCheck == null && lastnameCheck == null && emailCheck == null && addressCheck == null && phonenumberCheck == null && usernameCheck == null && passwordCheck == null){
-
-
-				var provider = document.getElementById('inputProvider');
-				var customer = document.getElementById('inputCustomer');
-				
-
-				var type = null; 
-				var serviceType = null;
-				if(document.getElementById('inputProvider').checked == true){
-					type="provider";
-					serviceType = document.getElementById('input-service-type').selectedOptions[0].value;
-					console.log("service:" + serviceType);
-				} else {
-					type="customer";
-				}
-				console.log(username);
-				var data = 
-						{
-							"firstName" : firstName,
-							"lastName" : lastName,
-							"address" : address,
-							"email" : email,
-							"phoneNumber":phoneNumber,
-							"username" : username,
-							"password":password,
-							"type": type,
-							"serviceType": serviceType
-						};
-				
-				var xhr = new XMLHttpRequest();			
-				xhr.onreadystatechange = function() {
-					if (this.readyState == 4 && this.status == 200) {
-						console.log(this.responseText);
-						document.getElementById('register-message').innerHTML = this.responseText;
-					}
-				};
-				
-				var json = JSON.stringify(data);
-				
-				xhr.open("POST","http://127.0.0.1:9090/servicegeneral/api/user");
-				xhr.setRequestHeader("Content-Type", "application/json");
-				xhr.setRequestHeader('Access-Control-Allow-Origin','*');
-				xhr.setRequestHeader('Access-Control-Allow-Methods','POST, GET');
-				xhr.setRequestHeader('Access-Control-Allow-Headers','X-Auth-Token,Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With');
-				
-				xhr.send(json);
-
-			}
-
-			
-			
-			}
-		
-		
-		function login(e){
-			e.preventDefault();
-			var x, y, passwordCheck=null, usernameCheck=null;
-
-			// Get the value of the input field with id="numb"
-			var username = document.getElementById('username').value;
-			var password = document.getElementById('password').value;
-			// If x is Not a Number or less than one or greater than 10
-			if (username == "") {
-				usernameCheck = "Username should not be empty";
-				document.getElementById("usernamemsg").innerHTML = usernameCheck;
-				
-			} 
-
-			if (password == "") {
-				passwordCheck = "Password should not be empty";
-				document.getElementById("passwordmsg").innerHTML = passwordCheck;
-			
-			} 
-			
-			
-			if (usernameCheck == null && passwordCheck == null) {
-			
-				var provider = document.getElementById('provider');
-				var customer = document.getElementById('customer');
-				var type = null;
-				if(document.getElementById('provider').checked == true){
-					type="provider";
-				} else {
-					type="customer";
-				}
-			
-				var data = 
-				{
-					"username" : username,
-					"password":password,
-					"type": type
-				};
-				
-				var xhr = new XMLHttpRequest();			
-				var json = JSON.stringify(data);
-				xhr.open("POST","http://127.0.0.1:9090/servicegeneral/api/user/login");
-				xhr.setRequestHeader("Content-Type", "application/json");
-				xhr.setRequestHeader('Access-Control-Allow-Origin','*');
-				xhr.setRequestHeader('Access-Control-Allow-Methods','POST, GET');
-				xhr.setRequestHeader('Access-Control-Allow-Headers','X-Auth-Token,Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With');
-				xhr.send(json);
-				
-				xhr.onreadystatechange = function() {	
-
-					if (this.readyState == 4 && this.status == 200 && this.responseText!="") {
-						console.log("Response:"+this.responseText);
-
-						var user = JSON.parse(this.responseText);
-						var usernameCookie = "username="+user.username+";";
-					    var firstNameCookie = "firstName="+user.firstName+";";
-					    var lastNameCookie = "lastName="+user.lastName+";";
-					    var addressCookie = "address="+user.address+";";
-					    var emailCookie = "email="+user.email+";";
-					    var phoneNumberCookie = "phoneNumber="+user.phoneNumber+";";
-					    var typeCookie = "type="+user.type+";";
-						var serviceTypeCookie = "serviceType="+user.serviceType+";";
-
-						document.cookie = usernameCookie;
-						document.cookie = firstNameCookie;
-					    document.cookie = lastNameCookie;
-						document.cookie = addressCookie;
-						document.cookie = emailCookie;
-						document.cookie = phoneNumberCookie;
-						document.cookie = typeCookie;
-
-						if(serviceTypeCookie != null){
-							document.cookie = serviceTypeCookie;
-						}
-
-						document.getElementById('message').innerHTML = "";
-						location.reload();
-						window.location.href = "http://127.0.0.1:8080/servicegeneral/servicegeneral-ui/index.html";
-					}
-					else if (this.responseText == null || this.responseText == ""){
-						document.getElementById('message').innerHTML = "Incorrect credentials. Please login again.";
-						document.getElementById('username').value ="";
-						document.getElementById('password').value = "";
-					}
-				};
-				
 			}
 		}
 

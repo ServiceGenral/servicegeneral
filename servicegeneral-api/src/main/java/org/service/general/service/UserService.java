@@ -2,24 +2,36 @@ package org.service.general.service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
+import java.util.Random;
 
 import org.service.general.entity.Feedback;
 import org.service.general.entity.Login;
+import org.service.general.entity.ProviderService;
+import org.service.general.entity.Service;
 import org.service.general.entity.User;
 import org.service.general.repository.FeedbackRepo;
+import org.service.general.repository.ProviderServiceRepo;
+import org.service.general.repository.ServiceRepo;
 import org.service.general.repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-@Service
+@Component
 public class UserService {
 
 	@Autowired
 	private UserRepo repo;
 	
 	@Autowired
+	private ProviderServiceRepo providerServiceRepo;
+	
+	@Autowired
+	private ServiceRepo serviceRepo;
+	
+	@Autowired
 	private FeedbackRepo feedbackRepo;
+	
+	private Random random = new Random();
 	
 	public List<User> getUsersFromService(){
 		return repo.findAll();
@@ -33,16 +45,34 @@ public class UserService {
 		Optional<User> existing = repo.findById(user.getUsername());
 		if(!existing.isPresent()) {
 			repo.save(user);
-			return "Registered";
+			
+			ProviderService ps = new ProviderService();
+			ps.setUsername(user);
+			Service service = serviceRepo.findByServiceName(user.getServiceType());
+			ps.setServiceId(service);
+			providerServiceRepo.save(ps);
+			
+			return "Registration is completed. Please login now.";
 		} else {
-			return "Username not avaiable. Please use a different username: Suggestion: "+user.getUsername()
-			+ "-" + Math.abs(user.getLastName().hashCode()/100000);
+			return "Oops. This username is already taken. Here is a suggestion: " + user.getUsername() + (random.nextInt(900) + 100);
 		}
 	}
 	
 
 	public User loginInfoFromService(Login login) {
-		List<User> loginList = repo.findAll()
+		
+		Optional<User> existing = repo.findById(login.getUsername());
+		
+		if(existing.isPresent()) {
+			System.out.println("*********************************************************************");
+			if(existing.get().getPassword().equals(login.getPassword()) && existing.get().getType().equals(login.getType())) {
+				User userJson = new User(existing.get().getUsername(),existing.get().getFirstName(), existing.get().getLastName(), existing.get().getEmail(),
+						null, existing.get().getAddress(), existing.get().getPhoneNumber(), existing.get().getType(), existing.get().getServiceType(), 
+						null,null,null);
+				return userJson;
+			}
+		}
+/*		List<User> loginList = repo.findAll()
 				.stream()
 				.filter(u ->
 					u.getUsername().equals(login.getUsername())
@@ -57,7 +87,8 @@ public class UserService {
 					 return loginList.get(0);
 					
 				}
-				return null;
+*/				return null;
+		
 		}
 
 	public String feedbackInfoFromService(Feedback feedback) {
