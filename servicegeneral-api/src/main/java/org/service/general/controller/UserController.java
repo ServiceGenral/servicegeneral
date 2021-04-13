@@ -2,10 +2,16 @@ package org.service.general.controller;
 
 import java.util.List;
 
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+
+import org.service.general.entity.Feedback;
 import org.service.general.entity.Login;
 import org.service.general.entity.User;
+import org.service.general.repository.UserRepo;
 import org.service.general.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,10 +21,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/user")
+@CrossOrigin(origins = {"http://127.0.0.1:9090","http://127.0.0.1:8080", "http://127.0.0.1"})
 public class UserController {
 
 	@Autowired
 	private UserService service;
+	
+	@Autowired
+	private UserRepo repo;
 	
 	@GetMapping
 	public List<User> getAllUsers(){
@@ -31,14 +41,31 @@ public class UserController {
 	}
 	
 	@PostMapping
+	@Produces(MediaType.TEXT_PLAIN)
 	public String registerUser(@RequestBody User user) {
+		System.out.println("Inside register");
 		return service.registerUserFromService(user);
+	}
+
+	@PostMapping(value="/update")
+	@Produces(MediaType.TEXT_PLAIN)
+	public String updateUser(@RequestBody User user) {
+		System.out.println("Inside register");
+		return service.updateUserInfo(user);
 	}
 	
 	@PostMapping("/login")
-	public String userLoginInfo(@RequestBody Login login) {
+	public User userLoginInfo(@RequestBody Login login) {
 		return service.loginInfoFromService(login);
 	}
 	
+	@PostMapping("/feedback")
+	public String userfeedbackInfo(@RequestBody Feedback feedback) {
+		return service.feedbackInfoFromService(feedback);
+	}
 	
+	@GetMapping("/{firstName}/{lastName}")
+	public User getUserByFL(@PathVariable String firstName,@PathVariable String lastName ) {
+		return repo.findByFirstNameAndLastName(firstName, lastName);
+	}
 }
