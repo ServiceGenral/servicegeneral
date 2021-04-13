@@ -32,13 +32,19 @@ function login(e){
 		usernameCheck = "Username should not be empty";
 		document.getElementById("usernamemsg").innerHTML = usernameCheck;
 		
-	} 
+	}else{
+		usernameCheck = null
+		document.getElementById("usernamemsg").innerHTML = "";
+	}
 
 	if (password == ""|| username.trim() == '') {
 		passwordCheck = "Password should not be empty";
 		document.getElementById("passwordmsg").innerHTML = passwordCheck;
 	
-	} 
+	}else{
+		passwordCheck = null;
+		document.getElementById("passwordmsg").innerHTML = "";
+	}
 	
 	e.preventDefault();
 	if (usernameCheck == null && passwordCheck == null) {
@@ -206,12 +212,18 @@ var numbers = /[0-9]/g;
 	 }
 
 
+	var emailRegex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+	emailCheck = " email should be in proper format or not be empty";
 
 	if (email == "" || email == null || email.trim() == '') {
-		emailCheck = " email should not be empty";
+		
 		document.getElementById("profile-emailMsg").innerHTML = emailCheck;
 	
-	}else{
+	}else if(!email.match(emailRegex)) {
+		
+		document.getElementById("profile-emailMsg").innerHTML = emailCheck;
+	  }
+	else{
 		emailCheck = null;
 		document.getElementById("profile-emailMsg").innerHTML = "";
 	}
@@ -322,7 +334,7 @@ function register(e) {
 	  }
 	else {
 		firstnameCheck = null;
-		document.getElementById("register-firstnameMsg").innerHTML = "Looks good";
+		document.getElementById("register-firstnameMsg").innerHTML = "";
 	 }
 
 
@@ -340,16 +352,23 @@ function register(e) {
 	  }
 	else {
 		lastnameCheck = null;
-		document.getElementById("register-lastnameMsg").innerHTML = "Looks good";
+		document.getElementById("register-lastnameMsg").innerHTML = "";
 	 }
 
 
-
+	var emailRegex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+	
+	emailCheck = " email should be in proper format or not be empty";
 	if (email == "" || email == null || email.trim() == '') {
-		emailCheck = " email should not be empty";
+		
 		document.getElementById("register-emailMsg").innerHTML = emailCheck;
 	
-	}else{
+	}
+	else if(!email.match(emailRegex)) {
+		
+		document.getElementById("register-emailMsg").innerHTML = emailCheck;
+	  }
+	else{
 		emailCheck = null;
 		document.getElementById("register-emailMsg").innerHTML = "";
 	}

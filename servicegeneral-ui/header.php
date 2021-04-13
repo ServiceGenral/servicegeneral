@@ -68,7 +68,7 @@
 											<i class="fa fa-user form-control-feedback"></i>
 										</div>
 										<div class="form-group">
-											<label class="control-label" id="usernamemsg"></label>
+											<label class="control-label" id="usernamemsg" style="color: red;"></label>
 										</div>
 										<div class="form-group has-feedback">
 											<label class="control-label">Password</label>
@@ -76,7 +76,7 @@
 											<i class="fa fa-lock form-control-feedback"></i>
 										</div>
 										<div class="form-group">
-											<label class="control-label" id="passwordmsg"></label>
+											<label class="control-label" id="passwordmsg" style="color: red;"></label>
 										</div>
 										<button type="submit" class="btn btn-group btn-dark btn-sm">Log In</button>
 										<span>or</span>
@@ -86,7 +86,7 @@
 											<li><a href="#">Forgot your password?</a></li>
 										</ul>
 										<div class="form-group">
-											<label class="control-label" id="message"></label>
+											<label class="control-label" id="message" style="color: red;"></label>
 										</div>
 										
 									</form>
