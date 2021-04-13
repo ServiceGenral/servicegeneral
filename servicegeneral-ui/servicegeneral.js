@@ -35,16 +35,19 @@ function login(e){
 	}else{
 		usernameCheck = null
 		document.getElementById("usernamemsg").innerHTML = "";
-	}
-
-	if (password == ""|| username.trim() == '') {
+	
+		if (password == ""|| username.trim() == '') {
 		passwordCheck = "Password should not be empty";
 		document.getElementById("passwordmsg").innerHTML = passwordCheck;
 	
-	}else{
-		passwordCheck = null;
-		document.getElementById("passwordmsg").innerHTML = "";
+		}else{
+			passwordCheck = null;
+			document.getElementById("passwordmsg").innerHTML = "";
+		}
+
 	}
+
+	
 	
 	e.preventDefault();
 	if (usernameCheck == null && passwordCheck == null) {
@@ -177,7 +180,7 @@ function updateProfile(e) {
 
 var numbers = /[0-9]/g;
 	var specialcharacters = /\W|_/g;
- 	firstnameCheck = "First name cannot be empty or contain numbers, spaces or special characters";
+ 	firstnameCheck = "&nbsp;First name cannot be empty or contain numbers, spaces or special characters";
  	if (firstName == "" || firstName == null || firstName.trim() == '') {
 		document.getElementById("profile-firstNameMsg").innerHTML = firstnameCheck;		
 	}
@@ -191,10 +194,8 @@ var numbers = /[0-9]/g;
 	else {
 		firstnameCheck = null;
 		document.getElementById("profile-firstNameMsg").innerHTML = "";
-	 }
 
-
-	 lastnameCheck = "Last name cannot be empty or contain numbers, spaces or special characters";
+				 lastnameCheck = "&nbsp;Last name cannot be empty or contain numbers, spaces or special characters";
 
 	if (lastName == "" || lastName == null || lastName.trim() == '') {
 		document.getElementById("profile-lastNameMsg").innerHTML = lastnameCheck;		
@@ -209,56 +210,63 @@ var numbers = /[0-9]/g;
 	else {
 		lastnameCheck = null;
 		document.getElementById("profile-lastNameMsg").innerHTML = "";
+
+				var emailRegex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+				emailCheck = "Email should be in proper format or not be empty";
+
+				if (email == "" || email == null || email.trim() == '') {
+					
+					document.getElementById("profile-emailMsg").innerHTML = emailCheck;
+				
+				}else if(!email.match(emailRegex)) {
+					
+					document.getElementById("profile-emailMsg").innerHTML = emailCheck;
+				  }
+				else{
+					emailCheck = null;
+					document.getElementById("profile-emailMsg").innerHTML = "";
+
+							if (address == "" || address == null || address.trim() == '') {
+							addressCheck = "&nbsp;Address should not be empty";
+							document.getElementById("profile-addressMsg").innerHTML = addressCheck;
+						
+						}else{
+							addressCheck = null;
+							document.getElementById("profile-addressMsg").innerHTML = "";
+						
+								var alphabets = /[a-zA-Z]/g;
+								phonenumberCheck = "&nbsp;Phone Number cannot be empty or contain alphabets, spaces or special characters";
+
+								if (phoneNumber == "" || phoneNumber == null || phoneNumber.trim() == '') {
+									
+									document.getElementById("profile-phoneNumberMsg").innerHTML = phonenumberCheck;
+								
+								}
+								else if(phoneNumber.match(specialcharacters)) {
+								  	
+									document.getElementById("profile-phoneNumberMsg").innerHTML = phonenumberCheck;
+								  } 
+								else if(phoneNumber.match(alphabets)) {
+									document.getElementById("profile-phoneNumberMsg").innerHTML = phonenumberCheck;
+								  }
+								else{
+									phonenumberCheck = null;
+									document.getElementById("profile-phoneNumberMsg").innerHTML = "";
+								}
+						
+						}
+				}
+
+	 }
 	 }
 
 
-	var emailRegex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-	emailCheck = " email should be in proper format or not be empty";
-
-	if (email == "" || email == null || email.trim() == '') {
-		
-		document.getElementById("profile-emailMsg").innerHTML = emailCheck;
-	
-	}else if(!email.match(emailRegex)) {
-		
-		document.getElementById("profile-emailMsg").innerHTML = emailCheck;
-	  }
-	else{
-		emailCheck = null;
-		document.getElementById("profile-emailMsg").innerHTML = "";
-	}
 
 
 
-	if (address == "" || address == null || address.trim() == '') {
-		addressCheck = " address should not be empty";
-		document.getElementById("profile-addressMsg").innerHTML = addressCheck;
-	
-	}else{
-		addressCheck = null;
-		document.getElementById("profile-addressMsg").innerHTML = "";
-	}
 
 
-	var alphabets = /[a-zA-Z]/g;
-	phonenumberCheck = "Phone Number cannot be empty or contain alphabets, spaces or special characters";
 
-	if (phoneNumber == "" || phoneNumber == null || phoneNumber.trim() == '') {
-		
-		document.getElementById("profile-phoneNumberMsg").innerHTML = phonenumberCheck;
-	
-	}
-	else if(phoneNumber.match(specialcharacters)) {
-	  	
-		document.getElementById("profile-phoneNumberMsg").innerHTML = phonenumberCheck;
-	  } 
-	else if(phoneNumber.match(alphabets)) {
-		document.getElementById("profile-phoneNumberMsg").innerHTML = phonenumberCheck;
-	  }
-	else{
-		phonenumberCheck = null;
-		document.getElementById("profile-phoneNumberMsg").innerHTML = "";
-	}
 	if( firstnameCheck == null && lastnameCheck == null && 
 		emailCheck == null && addressCheck == null 
 		&& phonenumberCheck == null){
@@ -300,11 +308,6 @@ var numbers = /[0-9]/g;
 
 function register(e) {
 	e.preventDefault();
-
-
-
-		//document.getElementById("register-firstnameMsg").innerHTML = "";
-		//document.getElementById("register-lastnameMsg").innerHTML = "";
 		
 	var firstnameCheck = null, lastnameCheck = null, emailCheck = null, addressCheck = null,phonenumberCheck = null, usernameCheck = null,passwordCheck = null;
 	
@@ -326,19 +329,16 @@ function register(e) {
 		document.getElementById("register-firstnameMsg").innerHTML = firstnameCheck;		
 	}
 	else if(firstName.match(specialcharacters)) {
-	  	
 		document.getElementById("register-firstnameMsg").innerHTML = firstnameCheck;
-	  } 
+	} 
 	else if(firstName.match(numbers)) {
 		document.getElementById("register-firstnameMsg").innerHTML = firstnameCheck;
 	  }
 	else {
 		firstnameCheck = null;
 		document.getElementById("register-firstnameMsg").innerHTML = "";
-	 }
-
-
-	 lastnameCheck = "Last name cannot be empty or contain numbers, spaces or special characters";
+		
+	lastnameCheck = "Last name cannot be empty or contain numbers, spaces or special characters";
 
 	if (lastName == "" || lastName == null || lastName.trim() == '') {
 		document.getElementById("register-lastnameMsg").innerHTML = lastnameCheck;		
@@ -353,78 +353,74 @@ function register(e) {
 	else {
 		lastnameCheck = null;
 		document.getElementById("register-lastnameMsg").innerHTML = "";
-	 }
 
-
-	var emailRegex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+		var emailRegex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 	
-	emailCheck = " email should be in proper format or not be empty";
-	if (email == "" || email == null || email.trim() == '') {
+		emailCheck = " email should be in proper format or not be empty";
+		if (email == "" || email == null || email.trim() == '') {
+			
+			document.getElementById("register-emailMsg").innerHTML = emailCheck;
 		
-		document.getElementById("register-emailMsg").innerHTML = emailCheck;
-	
-	}
-	else if(!email.match(emailRegex)) {
+		}
+		else if(!email.match(emailRegex)) {
+			
+			document.getElementById("register-emailMsg").innerHTML = emailCheck;
+		  }
+		else{
+			emailCheck = null;
+			document.getElementById("register-emailMsg").innerHTML = "";
+
+				if (address == "" || address == null || address.trim() == '') {
+			addressCheck = " address should not be empty";
+			document.getElementById("register-addressMsg").innerHTML = addressCheck;
 		
-		document.getElementById("register-emailMsg").innerHTML = emailCheck;
-	  }
-	else{
-		emailCheck = null;
-		document.getElementById("register-emailMsg").innerHTML = "";
+		}else{
+			addressCheck = null;
+			document.getElementById("register-addressMsg").innerHTML = "";
+			
+			var alphabets = /[a-zA-Z]/g;
+			phonenumberCheck = "Phone Number cannot be empty or contain alphabets, spaces or special characters";
+
+			if (phoneNumber == "" || phoneNumber == null || phoneNumber.trim() == '') {
+				
+				document.getElementById("register-phonenumberMsg").innerHTML = phonenumberCheck;
+			
+			}
+			else if(phoneNumber.match(specialcharacters)) {
+			  	
+				document.getElementById("register-phonenumberMsg").innerHTML = phonenumberCheck;
+			  } 
+			else if(phoneNumber.match(alphabets)) {
+				document.getElementById("register-phonenumberMsg").innerHTML = phonenumberCheck;
+			  }
+			else{
+				phonenumberCheck = null;
+				document.getElementById("register-phonenumberMsg").innerHTML = "";
+
+				if (username == "" || username == null || username.trim() == '') {
+					usernameCheck = " username should not be empty";
+					document.getElementById("register-usernameMsg").innerHTML = usernameCheck;
+				
+				} else {
+					usernameCheck = null;
+					document.getElementById("register-usernameMsg").innerHTML = "";
+
+						if (password == "" || password == null || password.trim() == '') {
+						passwordCheck = " password should not be empty";
+						document.getElementById("register-passwordMsg").innerHTML = passwordCheck;
+					
+						}else{
+							passwordCheck = null;
+							document.getElementById("register-passwordMsg").innerHTML = "";
+						}
+					}
+				}
+			}
+		}
 	}
+}
 
 
-
-	if (address == "" || address == null || address.trim() == '') {
-		addressCheck = " address should not be empty";
-		document.getElementById("register-addressMsg").innerHTML = addressCheck;
-	
-	}else{
-		addressCheck = null;
-		document.getElementById("register-addressMsg").innerHTML = "";
-	}
-
-
-	var alphabets = /[a-zA-Z]/g;
-	phonenumberCheck = "Phone Number cannot be empty or contain alphabets, spaces or special characters";
-
-	if (phoneNumber == "" || phoneNumber == null || phoneNumber.trim() == '') {
-		
-		document.getElementById("register-phonenumberMsg").innerHTML = phonenumberCheck;
-	
-	}
-	else if(phoneNumber.match(specialcharacters)) {
-	  	
-		document.getElementById("register-phonenumberMsg").innerHTML = phonenumberCheck;
-	  } 
-	else if(phoneNumber.match(alphabets)) {
-		document.getElementById("register-phonenumberMsg").innerHTML = phonenumberCheck;
-	  }
-	else{
-		phonenumberCheck = null;
-		document.getElementById("register-phonenumberMsg").innerHTML = "";
-	}
-
-
-
-	if (username == "" || username == null || username.trim() == '') {
-		usernameCheck = " username should not be empty";
-		document.getElementById("register-usernameMsg").innerHTML = usernameCheck;
-	
-	} else{
-		usernameCheck = null;
-		document.getElementById("register-usernameMsg").innerHTML = "";
-	} 
-
-
-	if (password == "" || password == null || password.trim() == '') {
-		passwordCheck = " password should not be empty";
-		document.getElementById("register-passwordMsg").innerHTML = passwordCheck;
-	
-	}else{
-		passwordCheck = null;
-		document.getElementById("register-passwordMsg").innerHTML = "";
-	}
 
 	if( firstnameCheck == null && lastnameCheck == null && 
 		emailCheck == null && addressCheck == null 
@@ -470,6 +466,10 @@ function register(e) {
 						document.getElementById("inputUsername").disabled = true;
 						document.getElementById("inputPassword").disabled = true;
 						document.getElementById("input-service-type").disabled= true;
+						document.getElementById("inputCustomer").disabled= true;
+						document.getElementById("inputProvider").disabled= true;
+						document.getElementById("submit").disabled= true;
+						
 					}
 				}
 			}

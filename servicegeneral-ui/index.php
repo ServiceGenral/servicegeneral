@@ -455,8 +455,10 @@
 							<div class="form-group">
 								<label>Sort by</label>
 								<select class="form-control">
-									<option selected="selected">Date</option>
-									<option>Price</option>
+									<option selected="selected">Price - Low to High</option>
+									<option>Price - High to Low</option>
+									<option>Ratings</option>
+									<option>Most Viewed</option>
 								</select>
 							</div>
 							
@@ -472,14 +474,14 @@
 								</div>
 							</div>
 							<div class="form-group">
-								<label>Category</label>
+								<label>Service Type</label>
 								<select class="form-control">
-									<option selected="selected">INTERNET SERVICE PROVIDER</option>
+									<option selected="selected">INTERNET SERVICE</option>
 									<option>MOBILE REPAIR</option>
-									<option>HOUSE PAINTER</option>
+									<option>HOUSE PAINTING</option>
 									<option>LOCKSMITH</option>
-									<option>MOVERS AND PACKERS</option>
-									<option>DRY CLEANING</option>
+									<option>MOVING AND PACKING</option>
+									<option>LAUNDARY SERVICES</option>
 								</select>
 							</div>
 							<div class="form-group">

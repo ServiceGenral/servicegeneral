@@ -80,7 +80,7 @@
 										</div>
 										<button type="submit" class="btn btn-group btn-dark btn-sm">Log In</button>
 										<span>or</span>
-										<button type="submit" onclick=" window.open('register.php', '_self');" class="btn btn-group btn-default btn-sm">Sign Up</button>
+										<button type="reset" onclick="window.open('register.php', '_self');" class="btn btn-group btn-default btn-sm">Sign Up</button>
 
 										<ul>
 											<li><a href="#">Forgot your password?</a></li>

@@ -422,7 +422,8 @@
 			<!-- Form Start -->
 
 			<div class="container">
-			<h2>Submit your Review</h2>
+			<h2>We would love to hear from you!</h2>
+			<label id="feedback-message" style="font-size: 1.2em;"></label>
 			<form id = "feedback-form" action="feedback(e)">
 				<div class="form-group">
 					<label>Name:</label> <label class="control-label" id="feedback-nameMsg" style="color: red;"></label>
@@ -434,10 +435,10 @@
 					<textarea class="form-control" id="feedback" placeholder="Enter Feedback" name="feedback" rows="3"></textarea>
 				</div>
 				<div class="form-group">
-					<label class="control-label" id="message"></label>
+					<label class="control-label" id="message" style="font-size: 1.5em;margin-left: 2%;"></label>
 				</div>
 				<button type="submit" id="submit" class="btn btn-default">Submit</button>
-				<label id="feedback-message"></button>
+				
 			</form>
 			</div>
 			

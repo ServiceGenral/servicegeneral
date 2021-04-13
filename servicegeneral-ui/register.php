@@ -538,7 +538,6 @@
 		<script>
 			document.getElementById('register-form').addEventListener('submit', register);
 
-
 			$(function() {
 				$("input[name='service-login']").click(function(){
 					if($("#inputProvider").is(":checked")) {
