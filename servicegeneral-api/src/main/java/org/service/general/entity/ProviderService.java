@@ -37,7 +37,7 @@ public class ProviderService implements Serializable{
 	
 	@ManyToOne
 	@JoinColumn(name = "service_id")
-	private Service serviceId;
+	private ServiceEntity serviceId;
 
 	public Long getId() {
 		return id;
@@ -55,11 +55,11 @@ public class ProviderService implements Serializable{
 		this.username = username;
 	}
 
-	public Service getServiceId() {
+	public ServiceEntity getServiceId() {
 		return serviceId;
 	}
 
-	public void setServiceId(Service serviceId) {
+	public void setServiceId(ServiceEntity serviceId) {
 		this.serviceId = serviceId;
 	}
 	

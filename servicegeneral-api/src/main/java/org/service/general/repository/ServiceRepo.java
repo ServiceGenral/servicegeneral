@@ -1,12 +1,12 @@
 package org.service.general.repository;
 
-import org.service.general.entity.Service;
+import org.service.general.entity.ServiceEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ServiceRepo extends JpaRepository<Service, Long>{
+public interface ServiceRepo extends JpaRepository<ServiceEntity, Long>{
 
-	Service findByServiceName(String serviceType);
-
+	ServiceEntity findByServiceName(String serviceType);
+	
 }

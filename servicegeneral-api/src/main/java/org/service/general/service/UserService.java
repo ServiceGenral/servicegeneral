@@ -7,7 +7,7 @@ import java.util.Random;
 import org.service.general.entity.Feedback;
 import org.service.general.entity.Login;
 import org.service.general.entity.ProviderService;
-import org.service.general.entity.Service;
+import org.service.general.entity.ServiceEntity;
 import org.service.general.entity.User;
 import org.service.general.repository.FeedbackRepo;
 import org.service.general.repository.ProviderServiceRepo;
@@ -48,7 +48,7 @@ public class UserService {
 			
 			ProviderService ps = new ProviderService();
 			ps.setUsername(user);
-			Service service = serviceRepo.findByServiceName(user.getServiceType());
+			ServiceEntity service = serviceRepo.findByServiceName(user.getServiceType());
 			ps.setServiceId(service);
 			providerServiceRepo.save(ps);
 			
@@ -108,5 +108,22 @@ public class UserService {
 		} else {
 			return "Cannot update user information.";
 		}
+	}
+	
+	public String deleteUserInfo(String username) {
+		if(repo.findById(username).isPresent()) {
+			List<ProviderService> provideService = providerServiceRepo.findByUsername(repo.findById(username).get());
+			provideService.stream()
+			.forEach(s -> {
+				providerServiceRepo.deleteById(s.getId());
+			});
+			repo.deleteById(username.trim());
+			return "Deleted Successfully";
+		}
+		else
+		{
+			return "Account is not present";
+		}
+		
 	}
 }

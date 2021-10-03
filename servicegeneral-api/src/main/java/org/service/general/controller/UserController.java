@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -32,6 +33,7 @@ public class UserController {
 	
 	@GetMapping
 	public List<User> getAllUsers(){
+		
 		return service.getUsersFromService();
 	}
 	
@@ -67,5 +69,9 @@ public class UserController {
 	@GetMapping("/{firstName}/{lastName}")
 	public User getUserByFL(@PathVariable String firstName,@PathVariable String lastName ) {
 		return repo.findByFirstNameAndLastName(firstName, lastName);
+	}
+	@PostMapping("/delete/{username}")
+	public String deleteUserInfo(@PathVariable String username) {
+		return service.deleteUserInfo(username);
 	}
 }

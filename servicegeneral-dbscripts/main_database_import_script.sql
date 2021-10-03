@@ -14,13 +14,13 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Schema mydb
 -- -----------------------------------------------------
--- CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 ;
--- USE `mydb` ;
+CREATE SCHEMA IF NOT EXISTS `servicegeneral` DEFAULT CHARACTER SET utf8 ;
+USE `servicegeneral` ;
 
 -- -----------------------------------------------------
--- Table `mydb`.`User`
+-- Table `servicegeneral`.`User`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`User` (
+CREATE TABLE IF NOT EXISTS `servicegeneral`.`User` (
   `idUser` INT NOT NULL AUTO_INCREMENT,
   `UserFirstName` VARCHAR(45) NULL,
   `UserLastName` VARCHAR(45) NULL,
@@ -41,9 +41,9 @@ ENGINE = MyISAM;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`Service`
+-- Table `servicegeneral`.`Service`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`Service` (
+CREATE TABLE IF NOT EXISTS `servicegeneral`.`Service` (
   `idService` INT NOT NULL AUTO_INCREMENT,
   `ServiceName` VARCHAR(45) NULL,
   PRIMARY KEY (`idService`))
@@ -51,9 +51,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`ServiceProvider`
+-- Table `servicegeneral`.`ServiceProvider`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`ServiceProvider` (
+CREATE TABLE IF NOT EXISTS `servicegeneral`.`ServiceProvider` (
   `idServiceProvider` INT NOT NULL AUTO_INCREMENT,
   `Service_idService` INT NOT NULL,
   `User_idUser` INT NOT NULL,
@@ -62,21 +62,21 @@ CREATE TABLE IF NOT EXISTS `mydb`.`ServiceProvider` (
   INDEX `fk_ServiceProvider_User1_idx` (`User_idUser` ASC) VISIBLE,
   CONSTRAINT `fk_ServiceProvider_Service1`
     FOREIGN KEY (`Service_idService`)
-    REFERENCES `mydb`.`Service` (`idService`)
+    REFERENCES `servicegeneral`.`Service` (`idService`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_ServiceProvider_User1`
     FOREIGN KEY (`User_idUser`)
-    REFERENCES `mydb`.`User` (`idUser`)
+    REFERENCES `servicegeneral`.`User` (`idUser`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`Consumer`
+-- Table `servicegeneral`.`Consumer`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`Consumer` (
+CREATE TABLE IF NOT EXISTS `servicegeneral`.`Consumer` (
   `idConsumer` INT NOT NULL,
   `ConsumerName` VARCHAR(45) NULL,
   `User_idUser` INT NOT NULL,
@@ -84,16 +84,16 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Consumer` (
   INDEX `fk_Consumer_User1_idx` (`User_idUser` ASC) VISIBLE,
   CONSTRAINT `fk_Consumer_User1`
     FOREIGN KEY (`User_idUser`)
-    REFERENCES `mydb`.`User` (`idUser`)
+    REFERENCES `servicegeneral`.`User` (`idUser`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`CreditCard`
+-- Table `servicegeneral`.`CreditCard`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`CreditCard` (
+CREATE TABLE IF NOT EXISTS `servicegeneral`.`CreditCard` (
   `idCreditCard` INT NOT NULL,
   `CreditCardNumber` VARCHAR(16) NULL,
   `CreditCardType` ENUM("MASTER", "VISA") NULL,
@@ -104,16 +104,16 @@ CREATE TABLE IF NOT EXISTS `mydb`.`CreditCard` (
   INDEX `fk_CreditCard_User_idx` (`User_idUser` ASC) VISIBLE,
   CONSTRAINT `fk_CreditCard_User`
     FOREIGN KEY (`User_idUser`)
-    REFERENCES `mydb`.`User` (`idUser`)
+    REFERENCES `servicegeneral`.`User` (`idUser`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`ManagerAdmin`
+-- Table `servicegeneral`.`ManagerAdmin`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`ManagerAdmin` (
+CREATE TABLE IF NOT EXISTS `servicegeneral`.`ManagerAdmin` (
   `idManagerAdmin` INT NOT NULL,
   `ManagerAdminName` VARCHAR(45) NULL,
   `User_idUser` INT NOT NULL,
@@ -121,16 +121,16 @@ CREATE TABLE IF NOT EXISTS `mydb`.`ManagerAdmin` (
   INDEX `fk_ManagerAdmin_User1_idx` (`User_idUser` ASC) VISIBLE,
   CONSTRAINT `fk_ManagerAdmin_User1`
     FOREIGN KEY (`User_idUser`)
-    REFERENCES `mydb`.`User` (`idUser`)
+    REFERENCES `servicegeneral`.`User` (`idUser`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`Advertisement`
+-- Table `servicegeneral`.`Advertisement`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`Advertisement` (
+CREATE TABLE IF NOT EXISTS `servicegeneral`.`Advertisement` (
   `idAdvertisement` INT NOT NULL,
   `AdvertisementName` VARCHAR(45) NULL,
   `AdvertisementLength` VARCHAR(45) NULL,
@@ -142,16 +142,16 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Advertisement` (
   INDEX `fk_Advertisement_User1_idx` (`User_idUser` ASC) VISIBLE,
   CONSTRAINT `fk_Advertisement_User1`
     FOREIGN KEY (`User_idUser`)
-    REFERENCES `mydb`.`User` (`idUser`)
+    REFERENCES `servicegeneral`.`User` (`idUser`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`Subscription`
+-- Table `servicegeneral`.`Subscription`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`Subscription` (
+CREATE TABLE IF NOT EXISTS `servicegeneral`.`Subscription` (
   `idSubscription` INT NOT NULL,
   `SubscriptionExpiryAt` DATETIME NULL,
   `User_idUser` INT NOT NULL,
@@ -161,21 +161,21 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Subscription` (
   INDEX `fk_Subscription_Service1_idx` (`Service_idService` ASC) VISIBLE,
   CONSTRAINT `fk_Subscription_User1`
     FOREIGN KEY (`User_idUser`)
-    REFERENCES `mydb`.`User` (`idUser`)
+    REFERENCES `servicegeneral`.`User` (`idUser`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Subscription_Service1`
     FOREIGN KEY (`Service_idService`)
-    REFERENCES `mydb`.`Service` (`idService`)
+    REFERENCES `servicegeneral`.`Service` (`idService`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`Feedback`
+-- Table `servicegeneral`.`Feedback`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`Feedback` (
+CREATE TABLE IF NOT EXISTS `servicegeneral`.`Feedback` (
   `idFeedback` INT NOT NULL,
   `FeedbackMessage` TEXT NULL,
   `FeedbackCreatedOn` DATETIME NULL,
@@ -184,7 +184,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Feedback` (
   INDEX `fk_Feedback_Consumer1_idx` (`Consumer_idConsumer` ASC) VISIBLE,
   CONSTRAINT `fk_Feedback_Consumer1`
     FOREIGN KEY (`Consumer_idConsumer`)
-    REFERENCES `mydb`.`Consumer` (`idConsumer`)
+    REFERENCES `servicegeneral`.`Consumer` (`idConsumer`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;

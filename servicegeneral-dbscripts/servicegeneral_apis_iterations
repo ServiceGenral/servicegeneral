@@ -1,0 +1,68 @@
+1. GET LIST OF SERVICES
+
+GET /services/
+OUTPUT : List of service names
+[
+	"name 1",
+	"name 2",
+	"name 3"
+]
+
+
+2. GET A SERVICE BY SERVICE ID
+
+GET /services/{serviceId}
+OUTPUT : 
+
+
+3. GET LIST OF PROVIDERS OF A SPECIFIC SERVICE
+
+GET /users/{serviceId}/
+OUTPUT : List of user objects
+[
+	{
+		"userId" : 1010
+		"username" : "",
+		"services" : [1, 2, 3, 4],
+		"address" :  " ",
+		"phone" : ""
+	},
+	{
+		"userId" : 1010
+		"username" : "",
+		"services" : [1, 2, 3, 4],
+		"address" :  " ",
+		"phone" : ""
+	}
+
+]
+
+
+4. CHECK PROVIDER AVAILABILITY
+GET /users/checkAvailability/{userID}/{day}/{month}/{year}
+OUTPUT : "Avaiable" / "Not Available"
+
+
+Entity
+ProviderAvaiabiltys
+customerId	day month   year  providerID status(Accept, decline,pending)
+10 			02	02		2021   1  			''
+
+{
+day, "08",
+month, "12",
+year,"2020"
+
+}
+
+
+
+4.2 Submit Job Service Request 
+	
+	Select service type
+	select service provider
+	select date & time
+
+
+4.3 Accept Job Service Request
+4.4 Decline Job Service Request

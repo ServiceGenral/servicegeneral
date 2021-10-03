@@ -17,7 +17,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Table(name="service")
 @Audited
 @EntityListeners(AuditingEntityListener.class)
-public class Service implements Serializable{
+public class ServiceEntity implements Serializable{
 
 	/**
 	 * 
@@ -32,9 +32,9 @@ public class Service implements Serializable{
 	private String serviceName;
 
 	
-	@OneToMany(mappedBy = "serviceId")
-	Set<ProviderService> services;
-	
+//	@OneToMany(mappedBy = "serviceId")
+//	Set<ProviderService> services;
+//	
 	
 	public Long getServiceId() {
 		return serviceId;
@@ -52,13 +52,13 @@ public class Service implements Serializable{
 		this.serviceName = serviceName;
 	}
 
-	public Set<ProviderService> getServices() {
-		return services;
-	}
-
-	public void setServices(Set<ProviderService> services) {
-		this.services = services;
-	}
+//	public Set<ProviderService> getServices() {
+//		return services;
+//	}
+//
+//	public void setServices(Set<ProviderService> services) {
+//		this.services = services;
+//	}
 	
 	
 	
