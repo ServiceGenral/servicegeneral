@@ -501,7 +501,19 @@
 				
 			</div>
 			<!-- page-top end -->
-			
+
+			<section class="main-container gray-bg">
+				<div class="main">
+					<div class="container">
+						<div class="row">
+							<div class="col-md-12" id="service-metadata">
+							<h1 class="text-center title">We provide...</h1>	
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+				
 
 			<!-- main-container start -->
 			<!-- ================ -->
@@ -509,7 +521,7 @@
 			
 
 				<!-- main start -->
-				<!-- ================ -->
+				<!-- ================ 
 				<div class="main">
 					<div class="container">
 						<div class="row">
@@ -625,7 +637,7 @@
 						</div>
 					</div>
 				</div>
-				<!-- main end -->
+				main end -->
 
 			</section>
 			
@@ -720,6 +732,94 @@
 
 		<script src="servicegeneral.js"></script>
 		<script>
+
+
+
+
+		$(document).ready(function () {
+
+			var servicesList = [];
+			var xhr = new XMLHttpRequest();
+			xhr.open("GET","http://127.0.0.1:9090/servicegeneral/api/services/metadata");
+			xhr.send();
+			xhr.onreadystatechange = function() {	
+
+				if (this.readyState == 4 && this.status == 200 && this.responseText!="") {
+					console.log("Response:"+this.responseText);
+					servicesList = JSON.parse(this.responseText);
+				}
+			
+
+
+			console.log(servicesList);
+			var count = 0;
+
+		    // var servicesList = [
+			   //  {"serviceName":"cleaning","serviceTitle":"DRY CLEANING","serviceImgURL":"images/block-dryer.jpg"},
+			   //  {"serviceName":"isp","serviceTitle":"INTERNET SERVICE PROVIDER","serviceImgURL":"images/block-ISP.jpg"},
+			   //  {"serviceName":"locksmith","serviceTitle":"LOCKSMITH","serviceImgURL":"images/block-locksmith.jpg"},
+			   //  {"serviceName":"movers","serviceTitle":"MOVERS AND PACKERS","serviceImgURL":"images/block-movers.jpg"},
+			   //  {"serviceName":"painting","serviceTitle":"LOCAL HOUSE PAINTERS","serviceImgURL":"images/block-painter.jpg"},
+			   //  {"serviceName":"plumbing","serviceTitle":"Plumbing","serviceImgURL":"images/block-plumbing.jpg"},
+			   //  {"serviceName":"repair","serviceTitle":"PHONE AND MOBILE REPAIRER","serviceImgURL":"images/block-mobile.jpg"},
+			   //  {"serviceName":"roofing","serviceTitle":"Roofing","serviceImgURL":"images/block-roofing.jpg"},
+			   //  {"serviceName":"salon","serviceTitle":"Salon","serviceImgURL":"images/block-salon.jpg"}
+		    // ];
+		    
+		   
+
+	
+		    for (var i = 0; i < servicesList.length/3; i++) {
+		    	var rowElement = document.createElement("div");
+				rowElement.className = "row";
+			    rowElement.id = "serviceRow"+i;		
+
+				$("#service-metadata").append(rowElement);
+				
+			    for (var j = 0; j<3; j++) {
+
+			        var columnElement = document.createElement("div");
+			        columnElement.className = "col-sm-4";
+					
+					var boxElement = document.createElement("div");
+			        boxElement.className = "box-style-1 white-bg object-visible";
+			        boxElement.style = "height:360px;";
+
+			        var imgElement = document.createElement("div");
+			        imgElement.style = "height:65%";
+			        var imgTag = document.createElement("img");
+			        imgTag.src = servicesList[count].serviceImgURL;
+			        imgTag.style = "width:100%;height:100%";
+			        imgElement.append(imgTag);
+
+			        var titleTag = document.createElement("h2");
+			        titleTag.innerHTML = servicesList[count].serviceTitle;
+
+			        var titleElement = document.createElement("div");
+			        titleElement.style = "height:20%;";
+			        titleElement.append(titleTag);
+
+			        var aTag = document.createElement("a");
+			        aTag.href = "#";
+			        aTag.className = "btn-default btn";
+			        aTag.innerHTML = "Read More";
+
+			        boxElement.append(imgElement);
+			        boxElement.append(titleElement);
+			        boxElement.append(aTag);
+			        boxElement.setAttribute('data-animation-effect','fadeInUpSmall');
+			        boxElement.setAttribute('data-effect-delay','0');
+
+			        columnElement.append(boxElement);
+			        $("#serviceRow"+i).append(columnElement);
+			    	count++;
+			    }    
+			    
+			}
+		}
+		}
+		);
+	
 
 		function checkLoggedInUser() {
 			var cookie = document.cookie;
