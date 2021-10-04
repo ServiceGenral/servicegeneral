@@ -1,5 +1,8 @@
 var xhr = new XMLHttpRequest();
-document.getElementById("body").onload = function() {checkLoggedInUser()};
+document.getElementById("body").onload = function() {
+	checkLoggedInUser()
+	loadServiceList()
+	};
 document.getElementById('login-Form').addEventListener('submit', login);
 
 
@@ -500,3 +503,71 @@ function userJsonIndexPage() {
 	var userJson = JSON.parse(JSON.stringify(userCookie, null, 4));
 	return userJson;
 }
+
+
+
+
+
+function loadServiceList(){
+
+			var servicesList = [];
+			var xhr = new XMLHttpRequest();
+			xhr.open("GET","http://127.0.0.1:9090/servicegeneral/api/services/metadata");
+			xhr.send();
+			xhr.onreadystatechange = function() {	
+
+			if (this.readyState == 4 && this.status == 200 && this.responseText!="") {
+				console.log("Response:"+this.responseText);
+				servicesList = JSON.parse(this.responseText);
+			}
+			var count = 0;
+	
+		    for (var i = 0; i < servicesList.length/3; i++) {
+		    	var rowElement = document.createElement("div");
+				rowElement.className = "row";
+			    rowElement.id = "serviceRow"+i;		
+
+				$("#service-metadata").append(rowElement);
+				
+			    for (var j = 0; j<3; j++) {
+
+			        var columnElement = document.createElement("div");
+			        columnElement.className = "col-sm-4";
+					
+					var boxElement = document.createElement("div");
+			        boxElement.className = "box-style-1 white-bg object-visible";
+			        boxElement.style = "height:360px;";
+
+			        var imgElement = document.createElement("div");
+			        imgElement.style = "height:65%";
+			        var imgTag = document.createElement("img");
+			        imgTag.src = servicesList[count].serviceImgURL;
+			        imgTag.style = "width:100%;height:100%";
+			        imgElement.append(imgTag);
+
+			        var titleTag = document.createElement("h2");
+			        titleTag.innerHTML = servicesList[count].serviceTitle;
+
+			        var titleElement = document.createElement("div");
+			        titleElement.style = "height:20%;";
+			        titleElement.append(titleTag);
+
+			        var aTag = document.createElement("a");
+			        aTag.href = "#";
+			        aTag.className = "btn-default btn";
+			        aTag.innerHTML = "Read More";
+
+			        boxElement.append(imgElement);
+			        boxElement.append(titleElement);
+			        boxElement.append(aTag);
+			        boxElement.setAttribute('data-animation-effect','fadeInUpSmall');
+			        boxElement.setAttribute('data-effect-delay','0');
+
+			        columnElement.append(boxElement);
+			        $("#serviceRow"+i).append(columnElement);
+			    	count++;
+			    }    
+			    
+			}
+		}
+		}
