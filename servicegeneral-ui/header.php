@@ -106,6 +106,9 @@
 								<li>
 									<a onclick="logout()">Logout</a>
 								</li>
+								<li>
+									<a onclick="deleteAccount()">Delete Account</a>
+								</li>
 							</ul>
 						</div>
 					<!--  header top dropdowns end -->
@@ -117,3 +120,40 @@
 		</div>
 	</div>
 </div>
+
+
+
+<script type="text/javascript">
+	function deleteAccount() {
+		
+		if (confirm("Are you sure you want to Delete Account")) {
+			  
+			  var xhr = new XMLHttpRequest();
+			var cookie = document.cookie;
+					console.log("ON LOAD:" + cookie);
+
+					var userCookie = {};
+
+					cookie.split(/\s*;\s*/).forEach(function(pair) {
+					  pair = pair.split(/\s*=\s*/);
+					  userCookie[pair[0]] = pair.splice(1).join('=');
+					});
+
+					var userJson = JSON.parse(JSON.stringify(userCookie, null, 4));
+			
+				var username = userJson.username;
+				xhr.open("POST","http://127.0.0.1:9090/servicegeneral/api/user/delete/"+username);
+				xhr.send();
+				
+				xhr.onreadystatechange = function() {	
+
+					if (this.readyState == 4 && this.status == 200 && this.responseText!="") {
+						console.log(this.responseText);
+						logout();
+					}
+				}
+			}
+		}
+		
+			
+</script>

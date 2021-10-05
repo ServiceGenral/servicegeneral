@@ -5,9 +5,6 @@ document.getElementById("body").onload = function() {
 	};
 document.getElementById('login-Form').addEventListener('submit', login);
 
-
-
-
 function logout(){
 	clearCookie();
 	location.reload();
