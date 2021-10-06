@@ -50,47 +50,20 @@
 			?>
 		</div>
 
-			<div class="container" id="userprofile">
-				<form id = "update-form" action="updateProfile()">
-				<div class="form-group">
-					<label>First Name:</label><label class="control-label" id="profile-firstNameMsg" style="color: red;"></label>
-					<input type="text" class="form-control" id="profile-firstName" name="firstName">
+
+			<section class="main-container gray-bg">
+				<div class="main">
+					<div class="container">
+						<div class="row">
+							<div class="col-md-12" id="providerRow">
+								
+							</div>
+						</div>
+					</div>
 				</div>
-				<div class="form-group">
-					<label>Last Name:</label><label class="control-label" id="profile-lastNameMsg" style="color: red;"></label>
-					<input type="text" class="form-control" id="profile-lastName" name="lastName">
-				</div>
-				<div class="form-group">
-					<label>Email:</label><label class="control-label" id="profile-emailMsg" style="color: red;"></label>
-					<input type="text" class="form-control" id="profile-email" name="email">
-				</div>
-				<div class="form-group">
-					<label>Address:</label><label class="control-label" id="profile-addressMsg" style="color: red;"></label>
-					<input type="text" class="form-control" id="profile-address" name="address">
-				</div>
-				<div class="form-group">
-					<label>Phone Number:</label><label class="control-label" id="profile-phoneNumberMsg" style="color: red;"></label>
-					<input type="text" class="form-control" id="profile-phoneNumber" name="phoneNumber">
-				</div>
-				<div class="form-group">
-					<label>Username:</label>
-					<input type="text" class="form-control" id="profile-username" name="username" disabled>
-				</div>
-				<div class="form-group">
-					<label>Password:</label>
-					<input type="password" class="form-control" id="profile-password" name="password">
-				</div>
-				<div class="form-group" id="usertype">
-					<label>Service Provided</label>
-					<input type="text" class="form-control" id="profile-service" name="service" disabled>
-				</div>
-				</div>
-				<button style="margin-left: 12%;" type="submit" id="submit" class="btn btn-default">Save</button>
-			</form>	
-			</div>				
- 			<div>
-				<label style = "font-size: 1.5em;margin-left: 12%;" class="control-label" id="profile-update-message"></label>
-			</div>
+			</section>
+
+
 		<?php 
 			include 'footer.php';
 		?>
@@ -135,9 +108,8 @@
 		<script src="servicegeneral.js"></script>
 
 		<script>
-		document.getElementById('update-form').addEventListener('submit', updateProfile);
-
-		function checkLoggedInUser() {
+	
+function checkLoggedInUser() {
 			var cookie = document.cookie;
 			console.log("ON LOAD:" + cookie);
 
@@ -195,11 +167,11 @@
 				}
 
 			} else {
-				document.getElementById("userprofile").style.display = "none";
 				document.getElementById("logout-div").style.display = "none";
 			}
 		}
-	</script>
+
+	    </script>
 		
 
 	</body>

@@ -1,8 +1,11 @@
 var xhr = new XMLHttpRequest();
+
 document.getElementById("body").onload = function() {
 	checkLoggedInUser()
 	loadServiceList()
+	loadProviders()
 	};
+
 document.getElementById('login-Form').addEventListener('submit', login);
 
 function logout(){
@@ -549,10 +552,11 @@ function loadServiceList(){
 			        titleElement.style = "height:20%;";
 			        titleElement.append(titleTag);
 
-			        var aTag = document.createElement("a");
-			        aTag.href = "#";
+			        var aTag = document.createElement("button");
+			        /*aTag.href = "#";*/
 			        aTag.className = "btn-default btn";
 			        aTag.innerHTML = "Read More";
+			        aTag.setAttribute("onClick","loadListServiceProviders('" + servicesList[count].serviceName + "')")
 
 			        boxElement.append(imgElement);
 			        boxElement.append(titleElement);
@@ -568,3 +572,58 @@ function loadServiceList(){
 			}
 		}
 		}
+
+
+function loadListServiceProviders(serviceName){
+			
+			var xhr = new XMLHttpRequest();
+			xhr.open("GET","http://localhost:9090/servicegeneral/api/services/providers/"+ serviceName);
+			xhr.send();
+			xhr.onreadystatechange = function() {	
+			if (this.readyState == 4 && this.status == 200 && this.responseText!="") {
+				
+				console.log("Response:"+ this.responseText);
+
+				var providerCookie = "providers="+this.responseText;
+				document.cookie = providerCookie;
+				window.location.href = "http://127.0.0.1/servicegeneral/servicegeneral-ui/provider.php";
+				
+			}
+		}
+}
+
+
+
+
+function loadProviders(){
+
+	var providers = [];
+	
+	var cookie = document.cookie;
+	
+	var userCookie = {};
+	cookie.split(/\s*;\s*/).forEach(function(pair) {
+			  pair = pair.split(/\s*=\s*/);
+			  userCookie[pair[0]] = pair.splice(1).join('=');
+			});
+
+	var userJson = JSON.parse(JSON.stringify(userCookie, null, 4));
+
+	providers = JSON.parse(userJson.providers);
+
+
+
+	console.log("list of providers" +providers.length);
+
+	for (var j = 0; j < providers.length; j++) {
+
+		var providerName = document.createElement("h2");
+		providerName.innerHTML = providers[j].firstName + " " + providers[j].lastName
+
+		$("#providerRow").append(providerName);
+
+	}
+
+
+
+}

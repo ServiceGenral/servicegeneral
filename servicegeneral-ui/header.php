@@ -149,6 +149,7 @@
 
 					if (this.readyState == 4 && this.status == 200 && this.responseText!="") {
 						console.log(this.responseText);
+						alert("Account Deleted Successfully");
 						logout();
 					}
 				}

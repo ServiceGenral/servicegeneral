@@ -4,10 +4,13 @@ import java.util.List;
 
 import org.service.general.entity.ServiceEntity;
 import org.service.general.entity.ServiceMetaData;
+import org.service.general.entity.User;
 import org.service.general.service.ServicesService;
+import org.service.general.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,6 +21,9 @@ public class ServiceController {
 	
 	@Autowired
 	private ServicesService service;
+	
+	@Autowired
+	private UserService userService;
 	
 	@GetMapping("/")
 	public List<ServiceEntity> getAllServices(){
@@ -31,5 +37,11 @@ public class ServiceController {
 		
 	}
 	
-
+	@GetMapping("/providers/{serviceName}")
+	List<User> getAllProvders(@PathVariable String serviceName){
+		System.out.print(serviceName);
+		return userService.getServiceProviderByServiceName(serviceName);
+	}
+	
+	
 }

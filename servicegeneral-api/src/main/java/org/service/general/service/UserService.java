@@ -1,5 +1,6 @@
 package org.service.general.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
@@ -8,9 +9,11 @@ import org.service.general.entity.Feedback;
 import org.service.general.entity.Login;
 import org.service.general.entity.ProviderService;
 import org.service.general.entity.ServiceEntity;
+import org.service.general.entity.ServiceMetaData;
 import org.service.general.entity.User;
 import org.service.general.repository.FeedbackRepo;
 import org.service.general.repository.ProviderServiceRepo;
+import org.service.general.repository.ServiceMetadataRepo;
 import org.service.general.repository.ServiceRepo;
 import org.service.general.repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +32,9 @@ public class UserService {
 	private ServiceRepo serviceRepo;
 	
 	@Autowired
+	private ServiceMetadataRepo metadataRepo;
+	
+	@Autowired
 	private FeedbackRepo feedbackRepo;
 	
 	private Random random = new Random();
@@ -44,10 +50,23 @@ public class UserService {
 	public String registerUserFromService(User user) {
 		Optional<User> existing = repo.findById(user.getUsername());
 		if(!existing.isPresent()) {
+			
+			//String fullServiceName = user.getServiceType();	
+			
+			//System.out.print("%%%%%%%%%%%%%%%%%%");
+			//System.out.print(user.getServiceType());
+			
+			//ServiceMetaData serviceMetadata = metadataRepo.findByServiceTitle(fullServiceName);
+			
+			//System.out.print("%%%%%%%%%%%%%%%%%%");
+			//System.out.print(serviceMetadata);
+			
+			//user.setServiceType(serviceMetadata.getServiceName());
 			repo.save(user);
 			
 			ProviderService ps = new ProviderService();
 			ps.setUsername(user);
+			
 			ServiceEntity service = serviceRepo.findByServiceName(user.getServiceType());
 			ps.setServiceId(service);
 			providerServiceRepo.save(ps);
@@ -126,4 +145,23 @@ public class UserService {
 		}
 		
 	}
+	
+	public List<User> getServiceProviderByServiceName(String serviceName){
+			List<User> users = repo.findByServiceTypeAndType(serviceName, "provider");
+			users.stream().forEach(user -> {
+				user.setServices(null);
+			});
+			System.out.print(users.size());
+		return users;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+		
 }

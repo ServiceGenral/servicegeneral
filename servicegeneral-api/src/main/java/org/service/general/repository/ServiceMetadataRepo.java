@@ -7,4 +7,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ServiceMetadataRepo extends JpaRepository<ServiceMetaData, String>{
 
+	ServiceMetaData findByServiceTitle(String fullServiceName);
+
 }
