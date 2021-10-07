@@ -489,6 +489,10 @@
 		<script src="servicegeneral.js"></script>
 
 		<script>
+			document.getElementById("body").onload = function() {
+				checkLoggedInUser()
+			};
+
 		function checkLoggedInUser() {
 			var cookie = document.cookie;
 

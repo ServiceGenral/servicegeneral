@@ -537,6 +537,10 @@
 		<script src="servicegeneral.js"></script>
 
 		<script>
+
+			document.getElementById("body").onload = function() {
+				checkLoggedInUser()
+			};
 			document.getElementById('register-form').addEventListener('submit', register);
 
 			$(function() {

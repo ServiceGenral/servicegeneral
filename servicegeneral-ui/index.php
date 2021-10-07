@@ -734,7 +734,10 @@
 		<script>
 
 
-		
+		document.getElementById("body").onload = function() {
+			checkLoggedInUser()
+	    	loadServiceList()
+	 	};
 
 		//$(document).ready(function () {
 

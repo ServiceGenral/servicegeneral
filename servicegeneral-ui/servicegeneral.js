@@ -1,11 +1,5 @@
 var xhr = new XMLHttpRequest();
 
-document.getElementById("body").onload = function() {
-	checkLoggedInUser()
-	loadServiceList()
-	loadProviders()
-	};
-
 document.getElementById('login-Form').addEventListener('submit', login);
 
 function logout(){
@@ -584,8 +578,11 @@ function loadListServiceProviders(serviceName){
 				
 				console.log("Response:"+ this.responseText);
 
-				var providerCookie = "providers="+this.responseText;
+				var providerCookie = "providers=" +this.responseText;
+				var serviceNameCookie = "serviceName=" +serviceName;
+				
 				document.cookie = providerCookie;
+				document.cookie = serviceNameCookie;
 				window.location.href = "http://127.0.0.1/servicegeneral/servicegeneral-ui/provider.php";
 				
 			}
@@ -598,7 +595,172 @@ function loadListServiceProviders(serviceName){
 function loadProviders(){
 
 	var providers = [];
+	var serviceName;
+	var userJson = getCookie();
+
+	providers = JSON.parse(userJson.providers);
+	var customerId =  userJson.username;
+	serviceName = userJson.serviceName;
+
+
+	console.log("list of providers" +providers.length);
+	document.getElementById("service-provider-title").innerHTML = retreiveServiceNameFromId(serviceName);
 	
+	for (var j = 0; j < providers.length; j++) {
+		var providerDiv = document.createElement("div");
+		var providerName = document.createElement("h2");
+		
+		providerName.style = "color:deepskyblue;font-weight:bold;fontSize:15px;"
+		var checkBtn = document.createElement("button");
+		var requestBtn = document.createElement("button");
+		providerName.innerHTML = providers[j].firstName + " " + providers[j].lastName
+		var bookRequestId = "bookRequestId" + j;
+		checkBtn.innerHTML = "Check Availability";
+		checkBtn.style = "margin-left:0px;background-color:green;color:white;height:50px;width:200px;border:none";
+		checkBtn.setAttribute("onClick","checkAvailabilityOfProviders('" + providers[j].username + "','" + serviceName + "','" + bookRequestId + "')")
+		
+
+		requestBtn.innerHTML = "Book Service";
+		requestBtn.style = "margin-left:20px;background-color:lightblue;color:white;height:50px;width:200px;border:none";
+		requestBtn.disabled = true;
+		requestBtn.setAttribute("onClick","bookServiceProvider('"+ customerId + "','" + providers[j].username + "','" + serviceName + "')");
+		requestBtn.setAttribute("id", bookRequestId);
+
+		providerDiv.append(providerName);
+		
+		providerDiv.append(checkBtn);
+		providerDiv.append(requestBtn);
+		providerDiv.append(document.createElement("hr"));
+		providerDiv.className = "row";
+		providerDiv.style = "border-bottom: 1px solid gray;";
+		$("#providerRow").append(providerDiv);
+	}
+
+}
+
+
+
+function saveRequestsToCookie(status){
+	var xhr = new XMLHttpRequest();
+	xhr.open("GET","http://127.0.0.1:9090/servicegeneral/api/service/request/"+status);
+	xhr.send();
+	xhr.onreadystatechange = function() {	
+		if (this.readyState == 4 && this.status == 200 && this.responseText!="") {
+			console.log("Response:"+this.responseText);
+
+			var requestsCookie = status +"=" +this.responseText;
+			document.cookie = requestsCookie;
+		}	
+	}
+}
+
+function loadRequest(status){
+	var requests = [];
+	var requestCookie = getCookie();
+	if(requestCookie != undefined){
+		if(status == "PENDING" || status == "pending") {
+			requests = JSON.parse(requestCookie.PENDING);
+		} else if (status == "ACCEPT" || status == "accept"){
+				requests = JSON.parse(requestCookie.ACCEPT);
+		} else {
+				requests = JSON.parse(requestCookie.DECLINE);
+		}
+	
+	for (var j = 0; j < requests.length; j++) {
+		if((requestCookie.username == requests[j].customerId && requestCookie.type == "customer")
+			|| (requestCookie.username == requests[j].providerId && requestCookie.type == "provider")){
+				var requestName = document.createElement("h3");
+				requestName.style = "color:deepskyblue;font-weight:bold;fontSize:15px;"
+				requestName.innerHTML = retreiveServiceNameFromId(requests[j].serviceName) + " " + requests[j].customerId + " " + requests[j].providerId + " " +requests[j].date + " " + requests[j].status;
+				var hr = document.createElement("hr");
+				hr.style="border-top: 1px solid #a91515;"
+				$("#requests").append(requestName);
+				if(requestCookie.type == "provider"){
+					var acceptBtn = document.createElement("button");
+					acceptBtn.innerHTML = "Accept";
+					acceptBtn.style = "margin-left:20px;background-color:#0080008c;color:white;height:50px;width:200px;border:none";
+					acceptBtn.setAttribute("onClick", "takeActionOnRequest('"+requests[j].serviceRequestId +"','ACCEPT')");
+					var rejectBtn = document.createElement("button");
+					rejectBtn.innerHTML = "Decline";
+					rejectBtn.style = "margin-left:20px;background-color:#ff000069;color:white;height:50px;width:200px;border:none";
+					rejectBtn.setAttribute("onClick", "takeActionOnRequest('"+requests[j].serviceRequestId +"','DECLINE')");
+					$("#requests").append(acceptBtn);
+					$("#requests").append(rejectBtn);
+
+				}
+				$("#requests").append(hr);
+			}
+	}
+	}
+	
+}
+
+function takeActionOnRequest(reqId, action){
+	var xhr = new XMLHttpRequest();
+				xhr.open("POST","http://127.0.0.1:9090/servicegeneral/api/service/request/"+reqId+"/"+action);
+				xhr.send();
+				xhr.onreadystatechange = function() {	
+				if (this.readyState == 4 && this.status == 200 && this.responseText!="") {
+					console.log("Response:"+this.responseText);
+					document.cookie = "pending=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+					document.cookie = "accept=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+					document.cookie = "decline=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+					
+					saveRequestsToCookie(action);
+					loadRequest(action);
+					window.location.href = "http://127.0.0.1/servicegeneral/servicegeneral-ui/requests.php";
+				}
+			}
+}
+
+function checkAvailabilityOfProviders(providerId, serviceId, bookRequestId){
+	var date = document.getElementById("date-value").value
+	console.log(date +"," + providerId + ", " + serviceId)
+
+	var xhr = new XMLHttpRequest();
+			xhr.open("GET","http://127.0.0.1:9090/servicegeneral/api/service/request/"+providerId+"/"+serviceId+"/"+date);
+			xhr.send();
+			xhr.onreadystatechange = function() {	
+			var requestBtn = document.getElementById(bookRequestId);
+			if (this.readyState == 4 && this.status == 200 && this.responseText!="") {
+				console.log("Response:"+this.responseText);
+				if(this.responseText == "true"){
+					alert("Provide is available ");
+				}
+				else{
+					alert("Provide is not available");
+				}
+
+				if(getCookie().username !=null && this.responseText == "true") {
+					requestBtn.removeAttribute("disabled");
+					requestBtn.style = "margin-left:20px;background-color:blue;color:white;height:50px;width:200px;border:none";
+				}
+				else{
+					requestBtn.disabled = true;
+					requestBtn.style = "margin-left:20px;background-color:lightblue;color:white;height:50px;width:200px;border:none";
+				}
+				
+			}
+
+		}
+}
+
+
+function bookServiceProvider(customerId, providerId, serviceId){
+	var date = document.getElementById("date-value").value;
+	var xhr = new XMLHttpRequest();
+			xhr.open("POST","http://127.0.0.1:9090/servicegeneral/api/service/request/"+customerId+"/"+providerId+"/"+serviceId+"/"+date);
+			xhr.send();
+			xhr.onreadystatechange = function() {	
+			if (this.readyState == 4 && this.status == 200 && this.responseText!="") {
+				console.log("Response:"+this.responseText);
+				alert(this.responseText);
+			}
+		}
+}
+
+function getCookie(){
+
 	var cookie = document.cookie;
 	
 	var userCookie = {};
@@ -609,21 +771,36 @@ function loadProviders(){
 
 	var userJson = JSON.parse(JSON.stringify(userCookie, null, 4));
 
-	providers = JSON.parse(userJson.providers);
-
-
-
-	console.log("list of providers" +providers.length);
-
-	for (var j = 0; j < providers.length; j++) {
-
-		var providerName = document.createElement("h2");
-		providerName.innerHTML = providers[j].firstName + " " + providers[j].lastName
-
-		$("#providerRow").append(providerName);
-
-	}
-
-
-
+	return userJson;	
 }
+
+function retreiveServiceNameFromId(serviceId){
+	if(serviceId =="isp"){
+		return "INTERNET SERVICE PROVIDER";						
+	}
+	if(serviceId =="painting"){
+		return "LOCAL HOUSE PAINTERS";						
+	}
+	if(serviceId =="roofing"){
+		return "ROOFING";						
+	}
+	if(serviceId =="movers"){
+		return "MOVERS AND PACKERS";						
+	}
+	if(serviceId =="repair"){
+		return "PHONE AND MOBILE REPAIRER";						
+	}
+	if(serviceId =="locksmith"){
+		return "LOCKSMITH";						
+	}
+	if(serviceId =="salon"){
+		return "SALON";						
+	}
+	if(serviceId =="plumbing"){
+		return "PLUMBING";						
+	}
+	if(serviceId =="cleaning"){
+		return "DRY CLEANING";						
+	}
+}
+

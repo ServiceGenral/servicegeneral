@@ -51,26 +51,10 @@
 		</div>
 
 
-			<section class="main-container gray-bg" id="provider-section">
+			<section class="main-container gray-bg" id="request-details">
 				<div class="main">
 					<div class="container">
-						<h1 style ="margin-left: -15px;">
-							Please log in as customer to view all service providers
-						</h1>
-						
-						
-					</div>
-				</div>
-			</section>
-
-			<section class="main-container gray-bg" id="customer-section">
-				<div class="main">
-					<div class="container">
-						<h1 style ="margin-left: -15px;" id="service-provider-title"></h1>
-						<p style="margin-left:0">
-							<input style="margin-left:0px" id= "date-value" value="<?php echo date('Y-m-d');?>" type="date" />
-						</p>
-						<div id="providerRow">
+						<div id="requests">
 							
 						</div>
 					</div>
@@ -122,10 +106,23 @@
 		<script src="servicegeneral.js"></script>
 
 		<script>
-	
+
 		document.getElementById("body").onload = function() {
-			checkLoggedInUser()
-			loadProviders()
+			checkLoggedInUser();
+			saveRequestsToCookie('PENDING');
+			saveRequestsToCookie('ACCEPT');
+			saveRequestsToCookie('DECLINE');
+			
+			loadRequest('PENDING');
+			loadRequest('ACCEPT');
+			loadRequest('DECLINE');
+			
+			window.onload = function() {
+			    if(!window.location.hash) {
+			        window.location = window.location + '#loaded';
+			        window.location.reload();
+			    }
+			}
 		};
 
 function checkLoggedInUser() {
@@ -145,16 +142,10 @@ function checkLoggedInUser() {
 				document.getElementById("login-div").style.display = "none";
 				document.getElementById("user-profile").innerHTML = "Hi "+userJson.firstName + " " + userJson.lastName + " !";
 				
-				if(userJson.type == "provider"){
-					document.getElementById("customer-section").style.display = "none";
-				} else {
-					document.getElementById("provider-section").style.display = "none";
-				}
-
 			} else {
 				
 				document.getElementById("logout-div").style.display = "none";
-				document.getElementById("provider-section").style.display = "none";
+				
 			}
 		}
 
