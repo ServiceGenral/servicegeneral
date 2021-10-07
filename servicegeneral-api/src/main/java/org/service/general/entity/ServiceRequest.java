@@ -6,6 +6,8 @@ import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -21,17 +23,18 @@ public class ServiceRequest implements Serializable{
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1575675675767L;
 
 	@Id
 	@Column(name="service_req_id")
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long serviceRequestId;
 	
 	@Column(name = "customer_id")
-	private Long customerId;
+	private String customerId;
 	
 	@Column(name = "provider_id")
-	private Long providerId;
+	private String providerId;
 	
 	@Column(name = "service_name")
 	private String serviceName;
@@ -51,19 +54,19 @@ public class ServiceRequest implements Serializable{
 		this.serviceRequestId = serviceRequestId;
 	}
 
-	public Long getCustomerId() {
+	public String getCustomerId() {
 		return customerId;
 	}
 
-	public void setCustomerId(Long customerId) {
+	public void setCustomerId(String customerId) {
 		this.customerId = customerId;
 	}
 
-	public Long getProviderId() {
+	public String getProviderId() {
 		return providerId;
 	}
 
-	public void setProviderId(Long providerId) {
+	public void setProviderId(String providerId) {
 		this.providerId = providerId;
 	}
 

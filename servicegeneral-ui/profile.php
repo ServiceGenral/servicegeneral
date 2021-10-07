@@ -135,6 +135,11 @@
 		<script src="servicegeneral.js"></script>
 
 		<script>
+
+		document.getElementById("body").onload = function() {
+			checkLoggedInUser()
+		};
+		
 		document.getElementById('update-form').addEventListener('submit', updateProfile);
 
 		function checkLoggedInUser() {
