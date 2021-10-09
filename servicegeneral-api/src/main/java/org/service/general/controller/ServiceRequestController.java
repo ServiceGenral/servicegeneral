@@ -23,7 +23,10 @@ public class ServiceRequestController {
 	@Autowired
 	private ServiceRequestService serviceReq;
 
-
+	@GetMapping("/appointments/{status}/{username}/{type}")
+	public List<ServiceRequest> getByStatusAndUserAndType(@PathVariable String status, @PathVariable String username, @PathVariable String type){
+		return serviceReq.getByStatusAndUserAndType(status, username, type);
+	}
 	
 	@GetMapping("/{status}")
 	public List<ServiceRequest> getAllByStatus(@PathVariable String status){

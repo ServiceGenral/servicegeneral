@@ -16,6 +16,12 @@ function clearCookie() {
 	document.cookie = "email=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
 	document.cookie = "phoneNumber=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
 	document.cookie = "type=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+	document.cookie = "ACCEPT=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+	document.cookie = "PENDING=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+	document.cookie = "DECLINE=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+	document.cookie = "serviceType=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+	document.cookie = "serviceName=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+	document.cookie = "providers=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
 }
 
 function login(e){
@@ -639,14 +645,35 @@ function loadProviders(){
 }
 
 
+const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms))
 
-function saveRequestsToCookie(status){
+// const demo = async() => {
+//   console.log('2...')
+//   await sleep(2000)
+//   console.log('3...')
+// }
+
+const saveAndLoad = async() => {
+	   await saveRequestsToCookie('PENDING', getCookie().username, getCookie().type);
+	   await saveRequestsToCookie('ACCEPT', getCookie().username, getCookie().type);
+	   await saveRequestsToCookie('DECLINE', getCookie().username, getCookie().type);
+
+	   //await demo()
+	   await sleep(1000);
+
+	   await loadRequest('PENDING', 'requestsPENDING');
+	   await loadRequest('ACCEPT', 'requestsACCEPT');
+	   await loadRequest('DECLINE', 'requestsDECLINE');
+}
+
+
+function saveRequestsToCookie(status, username, userType){
 	var xhr = new XMLHttpRequest();
-	xhr.open("GET","http://127.0.0.1:9090/servicegeneral/api/service/request/"+status);
+	xhr.open("GET","http://127.0.0.1:9090/servicegeneral/api/service/request/appointments/"+status+"/"+username+"/"+userType);
 	xhr.send();
 	xhr.onreadystatechange = function() {	
 		if (this.readyState == 4 && this.status == 200 && this.responseText!="") {
-			console.log("Response:"+this.responseText);
+			console.log(" SAVING REQUEST TO COOKIES for "+ status + ":" + this.responseText);
 
 			var requestsCookie = status +"=" +this.responseText;
 			document.cookie = requestsCookie;
@@ -654,27 +681,29 @@ function saveRequestsToCookie(status){
 	}
 }
 
-function loadRequest(status){
+function loadRequest(status, requestId){
+	//await saveRequestsToCookie(status);
 	var requests = [];
 	var requestCookie = getCookie();
-	if(requestCookie != undefined){
-		if(status == "PENDING" || status == "pending") {
-			requests = JSON.parse(requestCookie.PENDING);
-		} else if (status == "ACCEPT" || status == "accept"){
-				requests = JSON.parse(requestCookie.ACCEPT);
-		} else {
-				requests = JSON.parse(requestCookie.DECLINE);
-		}
 	
+	if(status == "PENDING" || status == "pending") {
+		requests = JSON.parse(requestCookie.PENDING);
+	} else if (status == "ACCEPT" || status == "accept"){
+			requests = JSON.parse(requestCookie.ACCEPT);
+	} else {
+			requests = JSON.parse(requestCookie.DECLINE);
+	}
+	
+	console.log(requests.length + "is the length of the requests");
+
 	for (var j = 0; j < requests.length; j++) {
-		if((requestCookie.username == requests[j].customerId && requestCookie.type == "customer")
-			|| (requestCookie.username == requests[j].providerId && requestCookie.type == "provider")){
 				var requestName = document.createElement("h3");
 				requestName.style = "color:deepskyblue;font-weight:bold;fontSize:15px;"
 				requestName.innerHTML = retreiveServiceNameFromId(requests[j].serviceName) + " " + requests[j].customerId + " " + requests[j].providerId + " " +requests[j].date + " " + requests[j].status;
 				var hr = document.createElement("hr");
 				hr.style="border-top: 1px solid #a91515;"
-				$("#requests").append(requestName);
+				$("#"+requestId).append(requestName);
+
 				if(requestCookie.type == "provider"){
 					var acceptBtn = document.createElement("button");
 					acceptBtn.innerHTML = "Accept";
@@ -684,15 +713,15 @@ function loadRequest(status){
 					rejectBtn.innerHTML = "Decline";
 					rejectBtn.style = "margin-left:20px;background-color:#ff000069;color:white;height:50px;width:200px;border:none";
 					rejectBtn.setAttribute("onClick", "takeActionOnRequest('"+requests[j].serviceRequestId +"','DECLINE')");
-					$("#requests").append(acceptBtn);
-					$("#requests").append(rejectBtn);
-
+					if(requestId == 'requestsPENDING'){
+						$("#"+requestId).append(acceptBtn);
+						$("#"+requestId).append(rejectBtn);
+					}
 				}
-				$("#requests").append(hr);
-			}
+
+				$("#"+requestId).append(hr);
 	}
-	}
-	
+
 }
 
 function takeActionOnRequest(reqId, action){
@@ -706,8 +735,7 @@ function takeActionOnRequest(reqId, action){
 					document.cookie = "accept=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
 					document.cookie = "decline=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
 					
-					saveRequestsToCookie(action);
-					loadRequest(action);
+					saveAndLoad();
 					window.location.href = "http://127.0.0.1/servicegeneral/servicegeneral-ui/requests.php";
 				}
 			}
@@ -725,10 +753,10 @@ function checkAvailabilityOfProviders(providerId, serviceId, bookRequestId){
 			if (this.readyState == 4 && this.status == 200 && this.responseText!="") {
 				console.log("Response:"+this.responseText);
 				if(this.responseText == "true"){
-					alert("Provide is available ");
+					alert("Provider is available");
 				}
 				else{
-					alert("Provide is not available");
+					alert("Provider is not available");
 				}
 
 				if(getCookie().username !=null && this.responseText == "true") {
@@ -804,3 +832,11 @@ function retreiveServiceNameFromId(serviceId){
 	}
 }
 
+
+function wait(ms){
+   var start = new Date().getTime();
+   var end = start;
+   while(end < start + ms) {
+     end = new Date().getTime();
+  }
+}

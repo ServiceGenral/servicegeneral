@@ -50,15 +50,16 @@
 			?>
 		</div>
 
+		<h1 id="general-section" align="center">
+			Please log in to book the service providers
+		</h1>
 
 			<section class="main-container gray-bg" id="provider-section">
 				<div class="main">
 					<div class="container">
 						<h1 style ="margin-left: -15px;">
 							Please log in as customer to view all service providers
-						</h1>
-						
-						
+						</h1>						
 					</div>
 				</div>
 			</section>
@@ -143,6 +144,7 @@ function checkLoggedInUser() {
 			if(userJson.username !=null){
 				document.getElementById("register-div").style.display = "none";
 				document.getElementById("login-div").style.display = "none";
+				document.getElementById("general-section").style.display = "none";
 				document.getElementById("user-profile").innerHTML = "Hi "+userJson.firstName + " " + userJson.lastName + " !";
 				
 				if(userJson.type == "provider"){
@@ -152,9 +154,9 @@ function checkLoggedInUser() {
 				}
 
 			} else {
-				
-				document.getElementById("logout-div").style.display = "none";
 				document.getElementById("provider-section").style.display = "none";
+				document.getElementById("logout-div").style.display = "none";
+				
 			}
 		}
 
