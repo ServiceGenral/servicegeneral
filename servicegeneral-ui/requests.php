@@ -50,17 +50,32 @@
 			?>
 		</div>
 
+			<h2 align="center"> Request Status </h2>
 
-			<section class="main-container gray-bg" id="request-details">
+			<section class="main-container gray-bg" id="request-details-pending">
 				<div class="main">
 					<div class="container">
-						<div id="requests">
+						<div id="requestsPENDING">
 							
 						</div>
 					</div>
 				</div>
 			</section>
+			
+			<br>
+			<hr>
+			<br>
 
+			<h2 align="center">Upcoming Service Appointments</h2>
+			<section class="main-container gray-bg" id="request-details-accepted">
+				<div class="main">
+					<div class="container">
+						<div id="requestsACCEPT">
+							
+						</div>
+					</div>
+				</div>
+			</section>
 
 		<?php 
 			include 'footer.php';
@@ -107,47 +122,40 @@
 
 		<script>
 
-		document.getElementById("body").onload = function() {
-			checkLoggedInUser();
-			saveRequestsToCookie('PENDING');
-			saveRequestsToCookie('ACCEPT');
-			saveRequestsToCookie('DECLINE');
-			
-			loadRequest('PENDING');
-			loadRequest('ACCEPT');
-			loadRequest('DECLINE');
-			
-			window.onload = function() {
-			    if(!window.location.hash) {
-			        window.location = window.location + '#loaded';
-			        window.location.reload();
-			    }
+			saveAndLoad();
+			document.getElementById("body").onload = function() {
+				checkLoggedInUser();
+				//loadRequestSectionByUserType();
+			};
+
+			// function loadRequestSectionByUserType(){
+			// 	if(getCookie().type == "customer"){
+			// 		document.getElementById("provider-section").style.display = "none";
+			// 	}
+			// }
+
+ 			function checkLoggedInUser() {
+				console.log("Checking Login user");
+				var cookie = document.cookie;
+				
+				var userCookie = {};
+				cookie.split(/\s*;\s*/).forEach(function(pair) {
+				  pair = pair.split(/\s*=\s*/);
+				  userCookie[pair[0]] = pair.splice(1).join('=');
+				});
+
+				var userJson = JSON.parse(JSON.stringify(userCookie, null, 4));
+
+				if(userJson.username !=null){
+					document.getElementById("register-div").style.display = "none";
+					document.getElementById("login-div").style.display = "none";
+					document.getElementById("user-profile").innerHTML = "Hi "+userJson.firstName + " " + userJson.lastName + " !";
+					
+				} else {
+					document.getElementById("logout-div").style.display = "none";
+					
+				}
 			}
-		};
-
-function checkLoggedInUser() {
-			var cookie = document.cookie;
-			console.log("ON LOAD:" + cookie);
-
-			var userCookie = {};
-			cookie.split(/\s*;\s*/).forEach(function(pair) {
-			  pair = pair.split(/\s*=\s*/);
-			  userCookie[pair[0]] = pair.splice(1).join('=');
-			});
-
-			var userJson = JSON.parse(JSON.stringify(userCookie, null, 4));
-
-			if(userJson.username !=null){
-				document.getElementById("register-div").style.display = "none";
-				document.getElementById("login-div").style.display = "none";
-				document.getElementById("user-profile").innerHTML = "Hi "+userJson.firstName + " " + userJson.lastName + " !";
-				
-			} else {
-				
-				document.getElementById("logout-div").style.display = "none";
-				
-			}
-		}
 
 	    </script>
 		

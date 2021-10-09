@@ -477,12 +477,14 @@
 					<br>
 					<select class="form-control" name="input-service-type" id="input-service-type">
 					  <option name="Internet Service" value="isp">INTERNET SERVICE PROVIDER</option>
-					  <option name="Painting" value="painting">Painting</option>
-					  <option name="Repairing Electronics" value="repair">Repairing Electronics</option>
-					  <option name="Moving and Packing" value="movers">Moving and Packing</option>
-					  <option name="Laundary" value="cleaning">Laundary</option>
-					  <option name="Locksmith" value="locksmith">Locksmith</option>
+					  <option name="Painting" value="painting">LOCAL HOUSE PAINTERS</option>
+					  <option name="Repairing Electronics" value="repair">PHONE AND MOBILE REPAIRER</option>
+					  <option name="Moving and Packing" value="movers">MOVERS AND PACKERS</option>
+					  <option name="Laundary" value="cleaning">DRY CLEANING</option>
+					  <option name="Locksmith" value="locksmith">LOCKSMITH</option>
 					  <option name="Roofing" value="roofing">ROOFING</option>
+					  <option name="Roofing" value="plumbing">PLUMBING</option>
+					  <option name="Roofing" value="salon">SALON</option>
 					</select>
 				</div>
 				<button type="submit" id="submit" class="btn btn-default">Submit</button>

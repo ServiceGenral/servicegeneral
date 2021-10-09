@@ -15,4 +15,8 @@ public interface ServiceRequestRepo extends JpaRepository<ServiceRequest, Long> 
 			String serviceName, String date);
 
 	public List<ServiceRequest> findByStatus(String status);
+
+	public List<ServiceRequest> findByStatusAndCustomerId(String status, String username);
+
+	public List<ServiceRequest> findByStatusAndProviderId(String status, String username);
 }

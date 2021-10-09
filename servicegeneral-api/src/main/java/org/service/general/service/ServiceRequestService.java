@@ -54,4 +54,12 @@ public class ServiceRequestService {
 		return "Exception while taking action on request";
 	}
 
+	public List<ServiceRequest> getByStatusAndUserAndType(String status, String username, String type) {
+		if("customer".equals(type)) {
+			return serviceReqRepo.findByStatusAndCustomerId(status, username);
+		} else {
+			return serviceReqRepo.findByStatusAndProviderId(status, username);
+		}
+	}
+
 }
