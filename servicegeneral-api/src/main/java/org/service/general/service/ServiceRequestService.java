@@ -2,6 +2,7 @@ package org.service.general.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.service.general.entity.ServiceRequest;
 import org.service.general.repository.ServiceRequestRepo;
@@ -59,6 +60,35 @@ public class ServiceRequestService {
 			return serviceReqRepo.findByStatusAndCustomerId(status, username);
 		} else {
 			return serviceReqRepo.findByStatusAndProviderId(status, username);
+		}
+	}
+
+	public Float getRating(String providerId) {
+		
+		List<ServiceRequest> requests = serviceReqRepo.findByProviderId(providerId);
+		
+		requests = requests.stream()
+		  					 .filter(request -> request.getRating()!=null)
+		  					 .collect(Collectors.toList());
+		if(requests.size() ==0) {
+			return 0.0f;
+		}
+		
+		Float total = 0f;
+		for(ServiceRequest request : requests) {
+			
+			total = total + request.getRating();
+		}
+		
+		return total/requests.size();
+	}
+
+	public void submitRating(Long reqId, Float rating) {
+		Optional<ServiceRequest> req = serviceReqRepo.findById(reqId);
+		if(req.isPresent()) {
+			ServiceRequest sr = req.get();
+			sr.setRating(rating);
+			serviceReqRepo.save(sr);
 		}
 	}
 

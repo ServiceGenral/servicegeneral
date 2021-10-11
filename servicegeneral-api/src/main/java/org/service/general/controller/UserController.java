@@ -2,12 +2,14 @@ package org.service.general.controller;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import org.service.general.entity.Feedback;
 import org.service.general.entity.Login;
 import org.service.general.entity.User;
+import org.service.general.repository.FeedbackRepo;
 import org.service.general.repository.UserRepo;
 import org.service.general.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +32,9 @@ public class UserController {
 	
 	@Autowired
 	private UserRepo repo;
+	
+	@Autowired
+	private FeedbackRepo feeedbackRepo;
 	
 	@GetMapping
 	public List<User> getAllUsers(){
@@ -61,9 +66,36 @@ public class UserController {
 		return service.loginInfoFromService(login);
 	}
 	
+	@GetMapping("/feedback/{name}")
+	public Feedback userfeedbackInfo(@PathVariable String name) {
+		return feeedbackRepo.findByName(name);
+	}
+	
 	@PostMapping("/feedback")
-	public String userfeedbackInfo(@RequestBody Feedback feedback) {
+	public Feedback userfeedbackInfo(@RequestBody Feedback feedback) {
 		return service.feedbackInfoFromService(feedback);
+	}
+
+	@PostMapping("/update/feedback/{name}")
+	public Feedback updatefeedbackByName(@PathVariable String name,  @RequestBody Feedback feedback) {
+		if(feeedbackRepo.findByName(name)!=null) {
+			//update existing feedback
+			Feedback feedbackExisting = feeedbackRepo.findByName(name);
+			feedbackExisting.setMessage(feedback.getMessage());
+			feeedbackRepo.save(feedbackExisting);
+			return feedbackExisting;
+		}
+		else {
+			//if null create new feedback
+			return userfeedbackInfo(feedback);
+		}
+	}
+	
+	@PostMapping("/delete/feedback/{name}")
+	@Transactional
+	public String deletefeedbackByName(@PathVariable String name) {
+		feeedbackRepo.deleteByName(name);
+		return "Deleted feedback";
 	}
 	
 	@GetMapping("/{firstName}/{lastName}")

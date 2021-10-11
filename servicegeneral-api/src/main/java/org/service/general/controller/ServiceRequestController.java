@@ -62,4 +62,18 @@ public class ServiceRequestController {
 		return serviceReq.takeActionOnRequest(reqId, action);
 	}
 	
+	
+	@GetMapping("/rating/{providerId}")
+	public Float getRating(@PathVariable String providerId) {
+		Float rating = serviceReq.getRating(providerId);
+		return rating;
+	}
+	
+	@PostMapping("/rating/{reqId}/{rating}")
+	public String submitRating(@PathVariable Long reqId, @PathVariable Float rating) {
+		serviceReq.submitRating(reqId, rating);
+		return "Rating submitted";
+	}
+
+
 }
