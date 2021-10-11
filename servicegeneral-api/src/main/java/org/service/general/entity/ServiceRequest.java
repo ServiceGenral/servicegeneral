@@ -45,6 +45,9 @@ public class ServiceRequest implements Serializable{
 	@Column(name = "service_req_status")
 	private String status;
 	
+	@Column(name = "rating")
+	private Float rating;
+		
 
 	public Long getServiceRequestId() {
 		return serviceRequestId;
@@ -93,6 +96,15 @@ public class ServiceRequest implements Serializable{
 	public void setStatus(String status) {
 		this.status = status;
 	}
+
+	public Float getRating() {
+		return rating;
+	}
+
+	public void setRating(Float rating) {
+		this.rating = rating;
+	}
+	
 	
 	
 	

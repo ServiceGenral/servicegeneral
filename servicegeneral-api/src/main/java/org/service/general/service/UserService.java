@@ -110,9 +110,18 @@ public class UserService {
 		
 		}
 
-	public String feedbackInfoFromService(Feedback feedback) {
-		feedbackRepo.save(feedback);
-		return "Successfully submit feedback";
+	public Feedback feedbackInfoFromService(Feedback feedback) {
+		Feedback existing  = feedbackRepo.findByName(feedback.getName());
+		if(existing == null) {
+			System.out.println("Saving new feedback");
+			feedbackRepo.save(feedback);
+		}	
+		else {
+			System.out.println("Updating existing feedback");
+			existing.setMessage(feedback.getMessage());
+			feedbackRepo.save(existing);
+		}
+		return feedback;
 	}
 
 	public String updateUserInfo(User user) {

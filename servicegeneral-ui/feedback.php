@@ -82,105 +82,6 @@
 									<!-- main image -->
 									<img src="images/feedbackSlide2.jpg"  alt="slidebg1" data-bgposition="center top" data-bgfit="cover" data-bgrepeat="no-repeat" class="rev-slidebg">
 
-									<!-- LAYER NR. 1 -->
-									<!--<div class="tp-caption default_bg large tp-resizeme"
-										data-x="0"
-										data-y="70"
-										data-start="1200"
-										data-transform_idle="o:1;"
-										data-transform_in="x:[20%];sX:1;sY:1;o:0;s:600;e:Power4.linear;"
-										data-transform_out="x:[100%];s:1000;e:Power2.easeInOut;">Relocating made easy
-									</div>-->
-
-									<!-- LAYER NR. 2 -->
-									<!--<div class="tp-caption dark_gray_bg medium tp-resizeme"
-										data-x="0"
-										data-y="170"
-										data-start="1600"
-										data-transform_idle="o:1;"
-										data-transform_in="x:[-100%];sX:1;sY:1;o:0;s:600;e:Power4.linear;"
-										data-transform_out="x:[-100%];s:1000;e:Power2.easeInOut;"><i class="fa fa-check"></i>
-									</div>-->
-
-									<!-- LAYER NR. 3 -->
-									<!--<div class="tp-caption light_gray_bg medium tp-resizeme"
-										data-x="50"
-										data-y="170"
-										data-start="1600"
-										data-transform_idle="o:1;"
-										data-transform_in="y:[100%];sX:1;sY:1;o:0;s:600;e:Power4.linear;"
-										data-transform_out="y:[100%];s:1000;e:Power2.easeInOut;">Search movers and packers
-									</div>-->
-
-									<!-- LAYER NR. 4 -->
-									<!--<div class="tp-caption dark_gray_bg medium tp-resizeme"
-										data-x="0"
-										data-y="220"
-										data-start="1800"
-										data-transform_idle="o:1;"
-										data-transform_in="x:[-100%];sX:1;sY:1;o:0;s:600;e:Power4.linear;"
-										data-transform_out="x:[-100%];s:1000;e:Power2.easeInOut;"><i class="fa fa-check"></i>
-									</div>-->
-
-									<!-- LAYER NR. 5 -->
-									<!--<div class="tp-caption light_gray_bg medium tp-resizeme"
-										data-x="50"
-										data-y="220"
-										data-start="1800"
-										data-transform_idle="o:1;"
-										data-transform_in="y:[100%];sX:1;sY:1;o:0;s:600;e:Power4.linear;"
-										data-transform_out="y:[100%];s:1000;e:Power2.easeInOut;">Travel worry free
-									</div>-->
-
-									<!-- LAYER NR. 6 -->
-									<!--<div class="tp-caption dark_gray_bg medium tp-resizeme"
-										data-x="0"
-										data-y="270"
-										data-start="2000"
-										data-transform_idle="o:1;"
-										data-transform_in="x:[-100%];sX:1;sY:1;o:0;s:600;e:Power4.linear;"
-										data-transform_out="x:[-100%];s:1000;e:Power2.easeInOut;"><i class="fa fa-check"></i>
-									</div>-->
-
-									<!-- LAYER NR. 7 -->
-									<!--<div class="tp-caption light_gray_bg medium tp-resizeme"
-										data-x="50"
-										data-y="270"
-										data-start="2000"
-										data-transform_idle="o:1;"
-										data-transform_in="y:[100%];sX:1;sY:1;o:0;s:600;e:Power4.linear;"
-										data-transform_out="y:[100%];s:1000;e:Power2.easeInOut;">Delivery guaranteed
-									</div>-->
-
-									<!-- LAYER NR. 8 -->
-									<!--<div class="tp-caption dark_gray_bg medium tp-resizeme"
-										data-x="0"
-										data-y="320"
-										data-start="2200"
-										data-transform_idle="o:1;"
-										data-transform_in="x:[-100%];sX:1;sY:1;o:0;s:600;e:Power4.linear;"
-										data-transform_out="x:[-100%];s:1000;e:Power2.easeInOut;"><i class="fa fa-check"></i>
-									</div>-->
-
-									<!-- LAYER NR. 9 -->
-									<!--<div class="tp-caption light_gray_bg medium tp-resizeme"
-										data-x="50"
-										data-y="320"
-										data-start="2200"
-										data-transform_idle="o:1;"
-										data-transform_in="y:[100%];sX:1;sY:1;o:0;s:600;e:Power4.linear;"
-										data-transform_out="y:[100%];s:1000;e:Power2.easeInOut;">Packing and unpacking
-									</div>-->
-
-									<!-- LAYER NR. 10 -->
-									<!--<div class="tp-caption dark_gray_bg medium tp-resizeme"
-										data-x="0"
-										data-y="370"
-										data-start="2400"
-										data-transform_idle="o:1;"
-										data-transform_in="y:[100%];sX:1;sY:1;o:0;s:600;e:Power4.linear;"
-										data-transform_out="y:[100%];s:1000;e:Power2.easeInOut;">And Much More...
-									</div>-->
 
 									</li>
 									<!-- slide 1 end -->
@@ -191,107 +92,7 @@
 									<!-- main image -->
 									<img src="images/feedbackSlide1.jpg"  alt="slidebg1" data-bgposition="center top" data-bgfit="cover" data-bgrepeat="no-repeat" class="rev-slidebg">
 
-									<!-- LAYER NR. 1 -->
-									<!--<div class="tp-caption white_bg large tp-resizeme"
-										data-x="0"
-										data-y="70"
-										data-start="1200"
-										data-transform_idle="o:1;"
-										data-transform_in="x:[20%];sX:1;sY:1;o:0;s:600;e:Power4.linear;"
-										data-transform_out="x:[100%];s:1000;e:Power2.easeInOut;">Setting up home internet
-									</div>-->
-
-									<!-- LAYER NR. 2 -->
-									<!--<div class="tp-caption default_bg medium tp-resizeme"
-										data-x="0"
-										data-y="170"
-										data-start="1600"
-										data-transform_idle="o:1;"
-										data-transform_in="x:[-100%];sX:1;sY:1;o:0;s:600;e:Power4.linear;"
-										data-transform_out="x:[-100%];s:1000;e:Power2.easeInOut;"><i class="fa fa-check"></i>
-									</div>-->
-
-									<!-- LAYER NR. 3 -->
-									<!--<div class="tp-caption white_bg medium tp-resizeme"
-										data-x="50"
-										data-y="170"
-										data-start="1600"
-										data-transform_idle="o:1;"
-										data-transform_in="y:[100%];sX:1;sY:1;o:0;s:600;e:Power4.linear;"
-										data-transform_out="y:[100%];s:1000;e:Power2.easeInOut;">Search for ISPs
-									</div>-->
-
-									<!-- LAYER NR. 4 -->
-									<!--<div class="tp-caption default_bg medium tp-resizeme"
-										data-x="0"
-										data-y="220"
-										data-start="1800"
-										data-transform_idle="o:1;"
-										data-transform_in="x:[-100%];sX:1;sY:1;o:0;s:600;e:Power4.linear;"
-										data-transform_out="x:[-100%];s:1000;e:Power2.easeInOut;"><i class="fa fa-check"></i>
-									</div>-->
-
-									<!-- LAYER NR. 5 -->
-									<!--<div class="tp-caption white_bg medium tp-resizeme"
-										data-x="50"
-										data-y="220"
-										data-start="1800"
-										data-transform_idle="o:1;"
-										data-transform_in="y:[100%];sX:1;sY:1;o:0;s:600;e:Power4.linear;"
-										data-transform_out="y:[100%];s:1000;e:Power2.easeInOut;">Decide plans
-									</div>-->
-
-									<!-- LAYER NR. 6 -->
-									<!--<div class="tp-caption default_bg medium tp-resizeme"
-										data-x="0"
-										data-y="270"
-										data-start="2000"
-										data-transform_idle="o:1;"
-										data-transform_in="x:[-100%];sX:1;sY:1;o:0;s:600;e:Power4.linear;"
-										data-transform_out="x:[-100%];s:1000;e:Power2.easeInOut;"><i class="fa fa-check"></i>
-									</div>-->
-
-									<!-- LAYER NR. 7 -->
-									<!--<div class="tp-caption white_bg medium tp-resizeme"
-										data-x="50"
-										data-y="270"
-										data-start="2000"
-										data-transform_idle="o:1;"
-										data-transform_in="y:[100%];sX:1;sY:1;o:0;s:600;e:Power4.linear;"
-										data-transform_out="y:[100%];s:1000;e:Power2.easeInOut;">Schedule appointment with Technicians
-									</div>-->
-
-									<!-- LAYER NR. 8 -->
-									<!--<div class="tp-caption default_bg medium tp-resizeme"
-										data-x="0"
-										data-y="320"
-										data-start="2200"
-										data-transform_idle="o:1;"
-										data-transform_in="x:[-100%];sX:1;sY:1;o:0;s:600;e:Power4.linear;"
-										data-transform_out="x:[-100%];s:1000;e:Power2.easeInOut;"><i class="fa fa-check"></i>
-									</div>-->
-
-									<!-- LAYER NR. 9 -->
-									<!--<div class="tp-caption white_bg medium tp-resizeme"
-										data-x="50"
-										data-y="320"
-										data-start="2200"
-										data-transform_idle="o:1;"
-										data-transform_in="y:[100%];sX:1;sY:1;o:0;s:600;e:Power4.linear;"
-										data-transform_out="y:[100%];s:1000;e:Power2.easeInOut;">Easy and fast setup
-									</div>-->
-
-									<!-- LAYER NR. 10 -->
-									<!--<div class="tp-caption default_bg medium tp-resizeme"
-										data-x="0"
-										data-y="370"
-										data-start="2400"
-										data-transform_idle="o:1;"
-										data-transform_in="y:[100%];sX:1;sY:1;o:0;s:600;e:Power4.linear;"
-										data-transform_out="y:[100%];s:1000;e:Power2.easeInOut;">And Much More...
-									</div>-->
-
-									<!-- LAYER NR. 11 -->
+									
 									
 
 									</li>
@@ -303,105 +104,7 @@
 									<!-- main image -->
 									<img src="images/feedbackSlide3.jpg"  alt="kenburns" data-bgposition="left center" data-kenburns="on" data-duration="10000" data-ease="Linear.easeNone" data-scalestart="100" data-scaleend="120" data-rotatestart="0" data-rotateend="0" data-offsetstart="0 0" data-offsetend="0 0" data-bgparallax="10" class="rev-slidebg" data-no-retina>
 
-									<!-- LAYER NR. 1 -->
-									<!--<div class="tp-caption white_bg large tp-resizeme"
-										data-x="0"
-										data-y="70"
-										data-start="1200"
-										data-transform_idle="o:1;"
-										data-transform_in="x:[20%];sX:1;sY:1;o:0;s:600;e:Power4.linear;"
-										data-transform_out="x:[100%];s:1000;e:Power2.easeInOut;">Need local painters?
-									</div>-->
-
-									<!-- LAYER NR. 2 -->
-									<!--<div class="tp-caption dark_gray_bg medium tp-resizeme"
-										data-x="0"
-										data-y="170"
-										data-start="1600"
-										data-transform_idle="o:1;"
-										data-transform_in="x:[-100%];sX:1;sY:1;o:0;s:600;e:Power4.linear;"
-										data-transform_out="x:[-100%];s:1000;e:Power2.easeInOut;"><i class="fa fa-check"></i>
-									</div>-->
-
-									<!-- LAYER NR. 3 -->
-									<!--<div class="tp-caption white_bg medium tp-resizeme"
-										data-x="50"
-										data-y="170"
-										data-start="1600"
-										data-transform_idle="o:1;"
-										data-transform_in="y:[100%];sX:1;sY:1;o:0;s:600;e:Power4.linear;"
-										data-transform_out="y:[100%];s:1000;e:Power2.easeInOut;">Search house painters nearby
-									</div>-->
-
-									<!-- LAYER NR. 4 -->
-									<!--<div class="tp-caption dark_gray_bg medium tp-resizeme"
-										data-x="0"
-										data-y="220"
-										data-start="1800"
-										data-transform_idle="o:1;"
-										data-transform_in="x:[-100%];sX:1;sY:1;o:0;s:600;e:Power4.linear;"
-										data-transform_out="x:[-100%];s:1000;e:Power2.easeInOut;"><i class="fa fa-check"></i>
-									</div>-->
-
-									<!-- LAYER NR. 5 -->
-									<!--<div class="tp-caption white_bg medium tp-resizeme"
-										data-x="50"
-										data-y="220"
-										data-start="1800"
-										data-transform_idle="o:1;"
-										data-transform_in="y:[100%];sX:1;sY:1;o:0;s:600;e:Power4.linear;"
-										data-transform_out="y:[100%];s:1000;e:Power2.easeInOut;">Browse rates and availability
-									</div>-->
-
-									<!-- LAYER NR. 6 -->
-									<!--<div class="tp-caption dark_gray_bg medium tp-resizeme"
-										data-x="0"
-										data-y="270"
-										data-start="2000"
-										data-transform_idle="o:1;"
-										data-transform_in="x:[-100%];sX:1;sY:1;o:0;s:600;e:Power4.linear;"
-										data-transform_out="x:[-100%];s:1000;e:Power2.easeInOut;"><i class="fa fa-check"></i>
-									</div>-->
-
-									<!-- LAYER NR. 7 -->
-									<!--<div class="tp-caption white_bg medium tp-resizeme"
-										data-x="50"
-										data-y="270"
-										data-start="2000"
-										data-transform_idle="o:1;"
-										data-transform_in="y:[100%];sX:1;sY:1;o:0;s:600;e:Power4.linear;"
-										data-transform_out="y:[100%];s:1000;e:Power2.easeInOut;">Choose a day for painting
-									</div>-->
 									
-									<!-- LAYER NR. 8 -->
-									<!--<div class="tp-caption dark_gray_bg medium tp-resizeme"
-										data-x="0"
-										data-y="320"
-										data-start="2200"
-										data-transform_idle="o:1;"
-										data-transform_in="x:[-100%];sX:1;sY:1;o:0;s:600;e:Power4.linear;"
-										data-transform_out="x:[-100%];s:1000;e:Power2.easeInOut;"><i class="fa fa-check"></i>
-									</div>-->
-
-									<!-- LAYER NR. 9 -->
-									<!--<div class="tp-caption white_bg medium tp-resizeme"
-										data-x="50"
-										data-y="320"
-										data-start="2200"
-										data-transform_idle="o:1;"
-										data-transform_in="y:[100%];sX:1;sY:1;o:0;s:600;e:Power4.linear;"
-										data-transform_out="y:[100%];s:1000;e:Power2.easeInOut;">Beautify your home is easy
-									</div>-->
-
-									<!-- LAYER NR. 10 -->
-									<!--<div class="tp-caption dark_gray_bg medium tp-resizeme"
-										data-x="0"
-										data-y="370"
-										data-start="2400"
-										data-transform_idle="o:1;"
-										data-transform_in="y:[100%];sX:1;sY:1;o:0;s:600;e:Power4.linear;"
-										data-transform_out="y:[100%];s:1000;e:Power2.easeInOut;">Don't miss out!
-									</div>-->
 
 									</li>
 									<!-- slide 3 end -->
@@ -424,7 +127,7 @@
 			<div class="container">
 			<h2>We would love to hear from you!</h2>
 			<label id="feedback-message" style="font-size: 1.2em;"></label>
-			<form id = "feedback-form" action="feedback(e)">
+			<form id = "feedback-form" action="submitFeedback(e)">
 				<div class="form-group">
 					<label>Name:</label> <label class="control-label" id="feedback-nameMsg" style="color: red;"></label>
 					<input type="text" class="form-control" id="name" placeholder="Enter Name" name="Name">
@@ -434,15 +137,14 @@
 					<!--<input type="text" class="form-control" id="feedback" placeholder="Enter Feedback" name="feedback"> -->
 					<textarea class="form-control" id="feedback" placeholder="Enter Feedback" name="feedback" rows="3"></textarea>
 				</div>
-				<div class="form-group">
-					<label class="control-label" id="message" style="font-size: 1.5em;margin-left: 2%;"></label>
-				</div>
-				<button type="submit" id="submit" class="btn btn-default">Submit</button>
 				
+				<button type="submit" id="submit" class="btn btn-default">SUBMIT</button>
+				<button type="button" id="editBtn" onclick = "editFeedback()" class="btn btn-default">EDIT</button>
+				<button type="button" id="deleteBtn" onclick = "deleteFeedback()" class="btn btn-default">DELETE</button>
 			</form>
 			</div>
 			
-			
+		
 
 			<!-- Form Start -->
  
@@ -490,10 +192,15 @@
 
 		<script>
 			document.getElementById("body").onload = function() {
-				checkLoggedInUser()
+				loadFeedbackPage();				
 			};
 
-		function checkLoggedInUser() {
+		const loadFeedbackPage = async ()=> {
+			await saveAndLoadFeedback();
+			await checkLoggedInUserOnFeedback();
+		}
+
+		function checkLoggedInUserOnFeedback() {
 			var cookie = document.cookie;
 
 			var userCookie = {};
@@ -509,15 +216,42 @@
 				document.getElementById("register-div").style.display = "none";
 				document.getElementById("user-profile").innerHTML = "Hi "+userJson.firstName + " " + userJson.lastName + " !";
 				document.getElementById('name').value = userJson.username;
-				document.getElementById('name').disabled = true;
+				document.getElementById("name").disabled = true;
+				console.log(userJson.feedback);
+				if(userJson.feedback != null){
+					document.getElementById("submit").disabled = true;
+					document.getElementById("feedback").disabled = true;
+					document.getElementById("editBtn").style.display = "inline-block";
+					document.getElementById("deleteBtn").style.display = "inline-block";
+					console.log("execute edit and delete bth display")
+				} else{
+					document.getElementById("editBtn").style.display = "none";
+					document.getElementById("deleteBtn").style.display = "none";
+					console.log("execute edit and delete no display")
+				}
 
 			} else {
 				document.getElementById("logout-div").style.display = "none";
 				document.getElementById("submit").disabled = true;
+				document.getElementById("editBtn").style.display = "none";
+				document.getElementById("deleteBtn").style.display = "none";
 				document.getElementById("feedback-message").innerHTML = "Please login to provide feedback!";	
 			}
 		}
 
+		function editFeedback(){
+			document.getElementById("submit").disabled = false;
+			document.getElementById("feedback").disabled = false;
+
+		}
+
+		function deleteFeedback(){
+			deleteUserFeedback();
+			document.getElementById("editBtn").style.display = "none";
+			document.getElementById("deleteBtn").style.display = "none";
+			document.getElementById("feedback").disabled = false;			
+			window.location.href = "http://127.0.0.1/servicegeneral/servicegeneral-ui/feedback.php";
+		}
 
 		document.getElementById('feedback-form').addEventListener('submit', feedback);
 

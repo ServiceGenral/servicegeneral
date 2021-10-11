@@ -10,6 +10,9 @@ import org.springframework.stereotype.Component;
 @Component
 public interface FeedbackRepo extends JpaRepository<Feedback, String>{
 
+	public void deleteByName(String name);
+	
+	public Feedback findByName(String name);
 	
 }
 

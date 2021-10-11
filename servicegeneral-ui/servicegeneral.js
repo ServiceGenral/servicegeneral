@@ -22,6 +22,7 @@ function clearCookie() {
 	document.cookie = "serviceType=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
 	document.cookie = "serviceName=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
 	document.cookie = "providers=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+	document.cookie = "feedback=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
 }
 
 function login(e){
@@ -120,7 +121,7 @@ function login(e){
 
 function feedback(e){
 	e.preventDefault();
-
+	console.log("saving feedback to database");
 	var nameCheck = null,feebackCheck = null;
 	
 	var name = document.getElementById('name').value;
@@ -142,31 +143,30 @@ function feedback(e){
 		{
 			"name" : name,
 			"message" : feedback
-		};
-
-					
-		xhr.onreadystatechange = function() {
-			if (this.readyState == 4 && this.status == 200) {
-				console.log(this.responseText);
-				document.getElementById('message').innerHTML = this.responseText;
-				document.getElementById("feedback-message").innerHTML = "Your feedback is valuable. Thanks for your time.";
-
-				document.getElementById('feedback').value = "";
-			}
-		};
+		};					
+		
 		var json = JSON.stringify(data);
 		
-		console.log("Inside register 2")
 		xhr.open("POST","http://127.0.0.1:9090/servicegeneral/api/user/feedback");
 		xhr.setRequestHeader("Content-Type", "application/json");
-		xhr.setRequestHeader('Access-Control-Allow-Origin','*');
-		xhr.setRequestHeader('Access-Control-Allow-Methods','POST, GET');
-		xhr.setRequestHeader('Access-Control-Allow-Headers','X-Auth-Token,Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With');
-		console.log("Inside register 3")
 		xhr.send(json);
+		xhr.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				console.log("Resonse from database "+this.responseText);
+				document.getElementById("feedback-message").innerHTML = "Your feedback is valuable. Thanks for your time.";
+			}
+		};
 	}
 }
 
+const submitFeedback = async(e) => {
+	await feedback(e);
+	await sleep(1000);
+	await saveFeedbackToCookie();
+	await sleep(1000);
+	await loadFeedback();
+	await sleep(1000);
+}
 
 function updateProfile(e) {
 	e.preventDefault();
@@ -647,11 +647,6 @@ function loadProviders(){
 
 const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms))
 
-// const demo = async() => {
-//   console.log('2...')
-//   await sleep(2000)
-//   console.log('3...')
-// }
 
 const saveAndLoad = async() => {
 	   await saveRequestsToCookie('PENDING', getCookie().username, getCookie().type);
@@ -666,6 +661,27 @@ const saveAndLoad = async() => {
 	   await loadRequest('DECLINE', 'requestsDECLINE');
 }
 
+const saveAndLoadFeedback = async() => {
+	await saveFeedbackToCookie();
+	await sleep(1000);
+	await loadFeedback();
+}
+
+function saveFeedbackToCookie(){
+	console.log("saving feedback to cookie");
+	document.cookie = "feedback=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+
+	var xhr = new XMLHttpRequest();
+	xhr.open("GET","http://127.0.0.1:9090/servicegeneral/api/user/feedback/"+ getCookie().username);
+	xhr.send();
+	xhr.onreadystatechange = function() {	
+		if (this.readyState == 4 && this.status == 200 && this.responseText!="") {
+			console.log(" SAVING Feedback TO cookies :" + this.responseText);
+			var feedbackCookie = "feedback=" +this.responseText;
+			document.cookie = feedbackCookie;
+		}	
+	}
+}
 
 function saveRequestsToCookie(status, username, userType){
 	var xhr = new XMLHttpRequest();
@@ -724,21 +740,46 @@ function loadRequest(status, requestId){
 
 }
 
+function loadFeedback(){
+	 console.log("updating page from feedback cookie");
+	var feedbackCookie = getCookie().feedback;
+	if(feedbackCookie != null){
+		var feedback = JSON.parse(getCookie().feedback);
+		document.getElementById("feedback").innerHTML = feedback.message;
+		document.getElementById("feedback").disabled = true;
+		document.getElementById("submit").disabled = true;
+	}
+}
+
+function deleteUserFeedback(){
+	var xhr = new XMLHttpRequest();
+	xhr.open("POST","http://127.0.0.1:9090/servicegeneral/api/user/delete/feedback/"+getCookie().username);
+	xhr.send();
+	xhr.onreadystatechange = function() {	
+		if (this.readyState == 4 && this.status == 200 && this.responseText!="") {
+			console.log("Response:"+this.responseText);
+		}
+  	}
+  	sleep(1000);
+  	document.cookie = "feedback=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+
+}
+
 function takeActionOnRequest(reqId, action){
 	var xhr = new XMLHttpRequest();
-				xhr.open("POST","http://127.0.0.1:9090/servicegeneral/api/service/request/"+reqId+"/"+action);
-				xhr.send();
-				xhr.onreadystatechange = function() {	
-				if (this.readyState == 4 && this.status == 200 && this.responseText!="") {
-					console.log("Response:"+this.responseText);
-					document.cookie = "pending=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
-					document.cookie = "accept=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
-					document.cookie = "decline=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
-					
-					saveAndLoad();
-					window.location.href = "http://127.0.0.1/servicegeneral/servicegeneral-ui/requests.php";
-				}
-			}
+	xhr.open("POST","http://127.0.0.1:9090/servicegeneral/api/service/request/"+reqId+"/"+action);
+	xhr.send();
+	xhr.onreadystatechange = function() {	
+		if (this.readyState == 4 && this.status == 200 && this.responseText!="") {
+			console.log("Response:"+this.responseText);
+			document.cookie = "pending=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+			document.cookie = "accept=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+			document.cookie = "decline=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+			
+			saveAndLoad();
+			window.location.href = "http://127.0.0.1/servicegeneral/servicegeneral-ui/requests.php";
+		}
+	}
 }
 
 function checkAvailabilityOfProviders(providerId, serviceId, bookRequestId){
