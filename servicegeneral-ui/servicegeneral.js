@@ -632,10 +632,19 @@ function loadProviders(){
 		requestBtn.setAttribute("onClick","bookServiceProvider('"+ customerId + "','" + providers[j].username + "','" + serviceName + "')");
 		requestBtn.setAttribute("id", bookRequestId);
 
+
+
 		providerDiv.append(providerName);
-		
 		providerDiv.append(checkBtn);
 		providerDiv.append(requestBtn);
+		
+		var ratingLabel = document.createElement("label");
+		ratingLabel.id = "ratingLabel"+providers[j].username;
+		ratingLabel.style = "margin: 20px;color: #e84c3d;";
+		getProviderRating(providers[j].username);
+		providerDiv.append(ratingLabel);
+		
+
 		providerDiv.append(document.createElement("hr"));
 		providerDiv.className = "row";
 		providerDiv.style = "border-bottom: 1px solid gray;";
@@ -644,6 +653,23 @@ function loadProviders(){
 
 }
 
+function getProviderRating(providerId){
+	var xhr = new XMLHttpRequest();
+	xhr.open("GET","http://127.0.0.1:9090/servicegeneral/api/service/request/rating/"+providerId);
+	xhr.send();
+	xhr.onreadystatechange = function() {	
+		if (this.readyState == 4 && this.status == 200 && this.responseText!="") {
+			console.log(" Rating for "+ providerId + ":" + this.responseText);
+			if(this.responseText == 0.0){
+				document.getElementById("ratingLabel"+providerId).innerHTML = "Not yet rated";
+			} else {
+				document.getElementById("ratingLabel"+providerId).style = "margin: 20px;color: #1b6a91;"
+				document.getElementById("ratingLabel"+providerId).innerHTML = "Ratings: " + this.responseText;
+			}
+			return this.responseText;
+		}
+	}
+}
 
 const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms))
 
@@ -698,7 +724,6 @@ function saveRequestsToCookie(status, username, userType){
 }
 
 function loadRequest(status, requestId){
-	//await saveRequestsToCookie(status);
 	var requests = [];
 	var requestCookie = getCookie();
 	
@@ -733,11 +758,83 @@ function loadRequest(status, requestId){
 						$("#"+requestId).append(acceptBtn);
 						$("#"+requestId).append(rejectBtn);
 					}
-				}
+				} else if (requestCookie.type == "customer" && requests[j].status == "ACCEPT") {
 
+					if(isCurrentOrPastDate(new Date(), new Date(requests[j].date))) {
+						if(requests[j].rating!=null){
+							var rateLabel = document.createElement("label");
+							rateLabel.innerHTML = "You have rated this service request. Rating submitted: "+requests[j].rating;
+							$("#"+requestId).append(rateLabel);
+							$("#"+requestId).append(rateLabel);
+						} 
+						else {
+						console.log("Date: "+requests[j].date + " is current or past");
+						
+						var rateLabel = document.createElement("label");
+						rateLabel.innerHTML = "Rate this service ";
+
+						var rateBtn = createRatingButton(requests[j].serviceRequestId);
+						
+						var rateSubmitBtn  = document.createElement("button");
+						rateSubmitBtn.innerHTML = "Rate";
+						rateSubmitBtn.style = "margin-left:20px;background-color:#0080008c;color:white;height:50px;width:100px;border:none";
+						rateSubmitBtn.setAttribute("onClick",  "submitRating("+requests[j].serviceRequestId+")");
+						// "+getRatingValue(requests[j].serviceRequestId)+")";
+
+						$("#"+requestId).append(rateLabel);
+						$("#"+requestId).append(rateBtn);
+						$("#"+requestId).append(rateSubmitBtn);
+					}
+
+					} else {
+						var rateLabel = document.createElement("label");
+						rateLabel.innerHTML = "Upcoming service. You will be able to rate this service after the request is completed";
+						$("#"+requestId).append(rateLabel);
+					}
+
+				}
 				$("#"+requestId).append(hr);
 	}
 
+}
+
+function createRatingButton(ratingSelectId){
+	var ratings = ["1","2","3","4","5"];
+
+	var ratingSelect = document.createElement("select");
+	ratingSelect.id = "rating"+ratingSelectId;
+	ratingSelect.style.margin = "20px";
+
+	for (var i = 0; i < ratings.length; i++) {
+	    var option = document.createElement("option");
+	    option.value = ratings[i];
+	    option.text = ratings[i];
+	    ratingSelect.appendChild(option);
+	}
+	return ratingSelect;
+}
+
+function submitRating(ratingSelectId){
+	var ratingValue = document.getElementById("rating"+ratingSelectId).value;
+	var xhr = new XMLHttpRequest();
+	xhr.open("POST","http://127.0.0.1:9090/servicegeneral/api/service/request/rating/"+ratingSelectId+"/"+ratingValue);
+	xhr.send();
+	xhr.onreadystatechange = function() {	
+		if (this.readyState == 4 && this.status == 200 && this.responseText!="") {
+			console.log(this.responseText);
+			alert("Thanks for submitting the rating");
+			window.location.reload();
+		}
+	}
+
+}
+
+function getRatingValue(ratingSelectId){
+	return document.getElementById(ratingSelectId).value;
+}
+
+function isCurrentOrPastDate(currDate, pastDate) {
+	return currDate >= pastDate;
 }
 
 function loadFeedback(){

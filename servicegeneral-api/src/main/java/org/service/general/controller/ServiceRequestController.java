@@ -1,5 +1,6 @@
 package org.service.general.controller;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 import org.service.general.entity.ServiceRequest;
@@ -23,6 +24,8 @@ public class ServiceRequestController {
 	@Autowired
 	private ServiceRequestService serviceReq;
 
+	private static DecimalFormat df = new DecimalFormat("0.0");
+	
 	@GetMapping("/appointments/{status}/{username}/{type}")
 	public List<ServiceRequest> getByStatusAndUserAndType(@PathVariable String status, @PathVariable String username, @PathVariable String type){
 		return serviceReq.getByStatusAndUserAndType(status, username, type);
@@ -64,9 +67,9 @@ public class ServiceRequestController {
 	
 	
 	@GetMapping("/rating/{providerId}")
-	public Float getRating(@PathVariable String providerId) {
+	public String getRating(@PathVariable String providerId) {
 		Float rating = serviceReq.getRating(providerId);
-		return rating;
+		return df.format(rating);
 	}
 	
 	@PostMapping("/rating/{reqId}/{rating}")
