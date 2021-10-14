@@ -71,6 +71,7 @@
 						<p style="margin-left:0">
 							<input style="margin-left:0px" id= "date-value" value="<?php echo date('Y-m-d');?>" type="date" />
 						</p>
+
 						<div id="providerRow">
 							
 						</div>
@@ -121,6 +122,7 @@
 		<script src="js/custom.js"></script>
 
 		<script src="servicegeneral.js"></script>
+		<script src="rating.js"></script>
 
 		<script>
 	
@@ -129,7 +131,7 @@
 			loadProviders()
 		};
 
-function checkLoggedInUser() {
+	function checkLoggedInUser() {
 			var cookie = document.cookie;
 			console.log("ON LOAD:" + cookie);
 

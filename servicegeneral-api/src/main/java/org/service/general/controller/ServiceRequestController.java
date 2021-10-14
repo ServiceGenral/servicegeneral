@@ -36,6 +36,11 @@ public class ServiceRequestController {
 		return serviceReq.getAllByStatus(status);
 	}
 	
+	
+	
+	
+	
+	
 	@GetMapping("/{providerId}/{serviceName}/{date}")
 	public boolean checkAvailability(
 			
@@ -64,6 +69,15 @@ public class ServiceRequestController {
 			@PathVariable String action) {	
 		return serviceReq.takeActionOnRequest(reqId, action);
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	@GetMapping("/rating/{providerId}")

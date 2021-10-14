@@ -171,10 +171,10 @@
 					document.getElementById("usertype").style.display = "none";
 				} else {
 					if(userJson.serviceType=="isp"){
-						document.getElementById("profile-service").value = "INTERNET SERVICE PROVIDER";						
+						document.getElementById("profile-service").value = "INTERNET";						
 					}
 					if(userJson.serviceType=="painting"){
-						document.getElementById("profile-service").value = "LOCAL HOUSE PAINTERS";						
+						document.getElementById("profile-service").value = "PAINTING";						
 					}
 					if(userJson.serviceType=="roofing"){
 						document.getElementById("profile-service").value = "ROOFING";						
@@ -183,7 +183,7 @@
 						document.getElementById("profile-service").value = "MOVERS AND PACKERS";						
 					}
 					if(userJson.serviceType=="repair"){
-						document.getElementById("profile-service").value = "PHONE AND MOBILE REPAIRER";						
+						document.getElementById("profile-service").value = "PHONE AND MOBILE REPAIR";						
 					}
 					if(userJson.serviceType=="locksmith"){
 						document.getElementById("profile-service").value = "LOCKSMITH";						

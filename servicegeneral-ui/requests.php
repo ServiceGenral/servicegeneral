@@ -50,7 +50,7 @@
 			?>
 		</div>
 
-			<h2 align="center"> Request Status </h2>
+			<h2 align="center">Pending Requests</h2>
 
 			<section class="main-container gray-bg" id="request-details-pending">
 				<div class="main">
@@ -66,11 +66,22 @@
 			<hr>
 			<br>
 
-			<h2 align="center">Upcoming Service Appointments</h2>
+			<h2 align="center">Service Appointments</h2>
 			<section class="main-container gray-bg" id="request-details-accepted">
 				<div class="main">
 					<div class="container">
 						<div id="requestsACCEPT">
+							
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<h2 align="center">Declined Requests</h2>
+			<section class="main-container gray-bg" id="request-details-declined">
+				<div class="main">
+					<div class="container">
+						<div id="requestsDECLINE">
 							
 						</div>
 					</div>
