@@ -118,7 +118,6 @@ function login(e){
 	}
 }
 
-
 function feedback(e){
 	e.preventDefault();
 	console.log("saving feedback to database");
@@ -181,7 +180,7 @@ function updateProfile(e) {
 	var password = document.getElementById("profile-password").value;
 	var serviceType = document.getElementById("profile-service").value;
 
-var numbers = /[0-9]/g;
+	var numbers = /[0-9]/g;
 	var specialcharacters = /\W|_/g;
  	firstnameCheck = "&nbsp;First name cannot be empty or contain numbers, spaces or special characters";
  	if (firstName == "" || firstName == null || firstName.trim() == '') {
@@ -306,9 +305,6 @@ var numbers = /[0-9]/g;
 	}
 }
 
-
-
-
 function register(e) {
 	e.preventDefault();
 		
@@ -417,11 +413,11 @@ function register(e) {
 							document.getElementById("register-passwordMsg").innerHTML = "";
 						}
 					}
+						}
+					}
 				}
 			}
 		}
-	}
-}
 
 
 
@@ -489,7 +485,6 @@ function register(e) {
 	}
 }
 
-
 function userJsonIndexPage() {
 	var cookie = document.cookie;
 	console.log("ON LOAD:" + cookie);
@@ -503,10 +498,6 @@ function userJsonIndexPage() {
 	var userJson = JSON.parse(JSON.stringify(userCookie, null, 4));
 	return userJson;
 }
-
-
-
-
 
 function loadServiceList(){
 
@@ -571,8 +562,7 @@ function loadServiceList(){
 			    
 			}
 		}
-		}
-
+}
 
 function loadListServiceProviders(serviceName){
 			
@@ -595,8 +585,35 @@ function loadListServiceProviders(serviceName){
 		}
 }
 
+function saveFeedbackToCookie(){
+	console.log("saving feedback to cookie");
+	document.cookie = "feedback=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
 
+	var xhr = new XMLHttpRequest();
+	xhr.open("GET","http://127.0.0.1:9090/servicegeneral/api/user/feedback/"+ getCookie().username);
+	xhr.send();
+	xhr.onreadystatechange = function() {	
+		if (this.readyState == 4 && this.status == 200 && this.responseText!="") {
+			console.log(" SAVING Feedback TO cookies :" + this.responseText);
+			var feedbackCookie = "feedback=" +this.responseText;
+			document.cookie = feedbackCookie;
+		}	
+	}
+}
 
+function saveRequestsToCookie(status, username, userType){
+	var xhr = new XMLHttpRequest();
+	xhr.open("GET","http://127.0.0.1:9090/servicegeneral/api/service/request/appointments/"+status+"/"+username+"/"+userType);
+	xhr.send();
+	xhr.onreadystatechange = function() {	
+		if (this.readyState == 4 && this.status == 200 && this.responseText!="") {
+			console.log(" SAVING REQUEST TO COOKIES for "+ status + ":" + this.responseText);
+
+			var requestsCookie = status +"=" +this.responseText;
+			document.cookie = requestsCookie;
+		}	
+	}
+}
 
 function loadProviders(){
 
@@ -632,21 +649,45 @@ function loadProviders(){
 		requestBtn.setAttribute("onClick","bookServiceProvider('"+ customerId + "','" + providers[j].username + "','" + serviceName + "')");
 		requestBtn.setAttribute("id", bookRequestId);
 
+
+
 		providerDiv.append(providerName);
-		
 		providerDiv.append(checkBtn);
 		providerDiv.append(requestBtn);
+		
+		var ratingLabel = document.createElement("label");
+		ratingLabel.id = "ratingLabel"+providers[j].username;
+		ratingLabel.style = "margin: 20px;color: #e84c3d;";
+		getProviderRating(providers[j].username);
+		providerDiv.append(ratingLabel);
+		
+
 		providerDiv.append(document.createElement("hr"));
 		providerDiv.className = "row";
 		providerDiv.style = "border-bottom: 1px solid gray;";
 		$("#providerRow").append(providerDiv);
 	}
-
 }
 
+function getProviderRating(providerId){
+	var xhr = new XMLHttpRequest();
+	xhr.open("GET","http://127.0.0.1:9090/servicegeneral/api/service/request/rating/"+providerId);
+	xhr.send();
+	xhr.onreadystatechange = function() {	
+		if (this.readyState == 4 && this.status == 200 && this.responseText!="") {
+			console.log(" Rating for "+ providerId + ":" + this.responseText);
+			if(this.responseText == 0.0){
+				document.getElementById("ratingLabel"+providerId).innerHTML = "Not yet rated";
+			} else {
+				document.getElementById("ratingLabel"+providerId).style = "margin: 20px;color: #1b6a91;"
+				document.getElementById("ratingLabel"+providerId).innerHTML = "Ratings: " + this.responseText;
+			}
+			return this.responseText;
+		}
+	}
+}
 
 const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms))
-
 
 const saveAndLoad = async() => {
 	   await saveRequestsToCookie('PENDING', getCookie().username, getCookie().type);
@@ -667,38 +708,56 @@ const saveAndLoadFeedback = async() => {
 	await loadFeedback();
 }
 
-function saveFeedbackToCookie(){
-	console.log("saving feedback to cookie");
-	document.cookie = "feedback=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+
+
+
+function checkAvailabilityOfProviders(providerId, serviceId, bookRequestId){
+	var date = document.getElementById("date-value").value
+	console.log(date +"," + providerId + ", " + serviceId)
 
 	var xhr = new XMLHttpRequest();
-	xhr.open("GET","http://127.0.0.1:9090/servicegeneral/api/user/feedback/"+ getCookie().username);
-	xhr.send();
-	xhr.onreadystatechange = function() {	
+		xhr.open("GET","http://127.0.0.1:9090/servicegeneral/api/service/request/"+providerId+"/"+serviceId+"/"+date);
+		xhr.send();
+		xhr.onreadystatechange = function() {	
+		var requestBtn = document.getElementById(bookRequestId);
 		if (this.readyState == 4 && this.status == 200 && this.responseText!="") {
-			console.log(" SAVING Feedback TO cookies :" + this.responseText);
-			var feedbackCookie = "feedback=" +this.responseText;
-			document.cookie = feedbackCookie;
-		}	
+			console.log("Response:"+this.responseText);
+			if(this.responseText == "true"){
+				alert("Provider is available");
+			}
+			else{
+				alert("Provider is not available");
+			}
+
+			if(getCookie().username !=null && this.responseText == "true") {
+				requestBtn.removeAttribute("disabled");
+				requestBtn.style = "margin-left:20px;background-color:blue;color:white;height:50px;width:200px;border:none";
+			}
+			else{
+				requestBtn.disabled = true;
+				requestBtn.style = "margin-left:20px;background-color:lightblue;color:white;height:50px;width:200px;border:none";
+			}
+			
+		}
+
 	}
 }
 
-function saveRequestsToCookie(status, username, userType){
+function bookServiceProvider(customerId, providerId, serviceId){
+	var date = document.getElementById("date-value").value;
 	var xhr = new XMLHttpRequest();
-	xhr.open("GET","http://127.0.0.1:9090/servicegeneral/api/service/request/appointments/"+status+"/"+username+"/"+userType);
-	xhr.send();
-	xhr.onreadystatechange = function() {	
-		if (this.readyState == 4 && this.status == 200 && this.responseText!="") {
-			console.log(" SAVING REQUEST TO COOKIES for "+ status + ":" + this.responseText);
-
-			var requestsCookie = status +"=" +this.responseText;
-			document.cookie = requestsCookie;
-		}	
-	}
+			xhr.open("POST","http://127.0.0.1:9090/servicegeneral/api/service/request/"+customerId+"/"+providerId+"/"+serviceId+"/"+date);
+			xhr.send();
+			xhr.onreadystatechange = function() {	
+			if (this.readyState == 4 && this.status == 200 && this.responseText!="") {
+				console.log("Response:"+this.responseText);
+				alert(this.responseText);
+			}
+		}
 }
+
 
 function loadRequest(status, requestId){
-	//await saveRequestsToCookie(status);
 	var requests = [];
 	var requestCookie = getCookie();
 	
@@ -713,9 +772,52 @@ function loadRequest(status, requestId){
 	console.log(requests.length + "is the length of the requests");
 
 	for (var j = 0; j < requests.length; j++) {
-				var requestName = document.createElement("h3");
-				requestName.style = "color:deepskyblue;font-weight:bold;fontSize:15px;"
-				requestName.innerHTML = retreiveServiceNameFromId(requests[j].serviceName) + " " + requests[j].customerId + " " + requests[j].providerId + " " +requests[j].date + " " + requests[j].status;
+				var requestName = document.createElement("div");
+				requestName.style = "color:deepskyblue;font-weight:bold;font-size:20px;"
+				
+				var reqStatus = null;				
+				var reqsDate = new Date(requests[j].date);
+				reqsDate.setDate(reqsDate.getDate() + 1);
+
+				if( reqsDate < new Date()
+					&& 
+					(requests[j].status == "ACCEPT") ){
+				
+					reqStatus = "SERVED";
+				} else {
+					reqStatus = requests[j].status;
+				}
+
+
+				var requestLabel =  document.createElement("label");
+				requestLabel.innerHTML = ((requests[j].providerId).toUpperCase()) +
+				 " To Provide " + 
+				retreiveServiceNameFromId(requests[j].serviceName) + 
+				" Service To "+ 
+				(requests[j].customerId).toUpperCase() + 
+				" On " + requests[j].date;
+				requestLabel.style = "color:deepskyblue;font-weight:bold;font-size:20px;";
+
+				var requestStatusLabel = document.createElement("label");
+				
+
+				if(reqStatus == "ACCEPT"){
+					reqStatus = "APPOINTMENT CONFIRMED";
+					requestStatusLabel.style = "color:#48c548;font-weight:bold;font-size:20px;";
+				} else if(reqStatus == "SERVED"){
+					requestStatusLabel.style = "color:black;font-weight:bold;font-size:20px;";
+				} else if(reqStatus == "PENDING"){
+					reqStatus = "PENDING FOR ACCEPTANCE";
+					requestStatusLabel.style = "color:orange;font-weight:bold;font-size:20px;";
+				}	else if(reqStatus == "DECLINE"){
+ 					reqStatus = "REQUEST DECLINED";
+					requestStatusLabel.style = "color:red;font-weight:bold;font-size:20px;";
+				}
+				requestStatusLabel.innerHTML = " | Status: " + reqStatus;
+				requestName.append(requestLabel);
+				requestName.append(requestStatusLabel);
+				
+				
 				var hr = document.createElement("hr");
 				hr.style="border-top: 1px solid #a91515;"
 				$("#"+requestId).append(requestName);
@@ -733,11 +835,108 @@ function loadRequest(status, requestId){
 						$("#"+requestId).append(acceptBtn);
 						$("#"+requestId).append(rejectBtn);
 					}
-				}
+				} else if (requestCookie.type == "customer" && requests[j].status == "ACCEPT") {
 
+					if(isCurrentOrPastDate(new Date(), new Date(requests[j].date))) {
+						if(requests[j].rating!=null){
+							var rateLabel = document.createElement("label");
+							rateLabel.innerHTML = "You have rated this service request. Rating submitted: "+requests[j].rating;
+							$("#"+requestId).append(rateLabel);
+							$("#"+requestId).append(rateLabel);
+						} 
+						else {
+						console.log("Date: "+requests[j].date + " is current or past");
+						
+						var rateLabel = document.createElement("label");
+						rateLabel.innerHTML = "Rate this service ";
+
+						var rateBtn = createRatingButton(requests[j].serviceRequestId);
+						
+						var rateSubmitBtn  = document.createElement("button");
+						rateSubmitBtn.innerHTML = "Rate";
+						rateSubmitBtn.style = "margin-left:20px;background-color:#0080008c;color:white;height:50px;width:100px;border:none";
+						rateSubmitBtn.setAttribute("onClick",  "submitRating("+requests[j].serviceRequestId+")");
+						
+						if(reqStatus == "SERVED"){
+							$("#"+requestId).append(rateLabel);
+							$("#"+requestId).append(rateBtn);
+							$("#"+requestId).append(rateSubmitBtn);
+						}
+						
+						
+					}
+
+					} else {
+						var rateLabel = document.createElement("label");
+						rateLabel.innerHTML = "Upcoming service. You will be able to rate this service after the request is completed";
+						$("#"+requestId).append(rateLabel);
+					}
+
+				}
 				$("#"+requestId).append(hr);
 	}
 
+}
+
+
+function takeActionOnRequest(reqId, action){
+	var xhr = new XMLHttpRequest();
+	xhr.open("POST","http://127.0.0.1:9090/servicegeneral/api/service/request/"+reqId+"/"+action);
+	xhr.send();
+	xhr.onreadystatechange = function() {	
+		if (this.readyState == 4 && this.status == 200 && this.responseText!="") {
+			console.log("Response:"+this.responseText);
+			document.cookie = "pending=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+			document.cookie = "accept=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+			document.cookie = "decline=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+			
+			saveAndLoad();
+			window.location.href = "http://127.0.0.1/servicegeneral/servicegeneral-ui/requests.php";
+		}
+	}
+}
+
+
+
+
+
+function createRatingButton(ratingSelectId){
+	var ratings = ["1","2","3","4","5"];
+
+	var ratingSelect = document.createElement("select");
+	ratingSelect.id = "rating"+ratingSelectId;
+	ratingSelect.style.margin = "20px";
+
+	for (var i = 0; i < ratings.length; i++) {
+	    var option = document.createElement("option");
+	    option.value = ratings[i];
+	    option.text = ratings[i];
+	    ratingSelect.appendChild(option);
+	}
+	return ratingSelect;
+}
+
+function submitRating(ratingSelectId){
+	var ratingValue = document.getElementById("rating"+ratingSelectId).value;
+	var xhr = new XMLHttpRequest();
+	xhr.open("POST","http://127.0.0.1:9090/servicegeneral/api/service/request/rating/"+ratingSelectId+"/"+ratingValue);
+	xhr.send();
+	xhr.onreadystatechange = function() {	
+		if (this.readyState == 4 && this.status == 200 && this.responseText!="") {
+			console.log(this.responseText);
+			alert("Thanks for submitting the rating");
+			window.location.reload();
+		}
+	}
+
+}
+
+function getRatingValue(ratingSelectId){
+	return document.getElementById(ratingSelectId).value;
+}
+
+function isCurrentOrPastDate(currDate, pastDate) {
+	return currDate >= pastDate;
 }
 
 function loadFeedback(){
@@ -762,70 +961,6 @@ function deleteUserFeedback(){
   	}
   	sleep(1000);
   	document.cookie = "feedback=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
-
-}
-
-function takeActionOnRequest(reqId, action){
-	var xhr = new XMLHttpRequest();
-	xhr.open("POST","http://127.0.0.1:9090/servicegeneral/api/service/request/"+reqId+"/"+action);
-	xhr.send();
-	xhr.onreadystatechange = function() {	
-		if (this.readyState == 4 && this.status == 200 && this.responseText!="") {
-			console.log("Response:"+this.responseText);
-			document.cookie = "pending=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
-			document.cookie = "accept=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
-			document.cookie = "decline=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
-			
-			saveAndLoad();
-			window.location.href = "http://127.0.0.1/servicegeneral/servicegeneral-ui/requests.php";
-		}
-	}
-}
-
-function checkAvailabilityOfProviders(providerId, serviceId, bookRequestId){
-	var date = document.getElementById("date-value").value
-	console.log(date +"," + providerId + ", " + serviceId)
-
-	var xhr = new XMLHttpRequest();
-			xhr.open("GET","http://127.0.0.1:9090/servicegeneral/api/service/request/"+providerId+"/"+serviceId+"/"+date);
-			xhr.send();
-			xhr.onreadystatechange = function() {	
-			var requestBtn = document.getElementById(bookRequestId);
-			if (this.readyState == 4 && this.status == 200 && this.responseText!="") {
-				console.log("Response:"+this.responseText);
-				if(this.responseText == "true"){
-					alert("Provider is available");
-				}
-				else{
-					alert("Provider is not available");
-				}
-
-				if(getCookie().username !=null && this.responseText == "true") {
-					requestBtn.removeAttribute("disabled");
-					requestBtn.style = "margin-left:20px;background-color:blue;color:white;height:50px;width:200px;border:none";
-				}
-				else{
-					requestBtn.disabled = true;
-					requestBtn.style = "margin-left:20px;background-color:lightblue;color:white;height:50px;width:200px;border:none";
-				}
-				
-			}
-
-		}
-}
-
-
-function bookServiceProvider(customerId, providerId, serviceId){
-	var date = document.getElementById("date-value").value;
-	var xhr = new XMLHttpRequest();
-			xhr.open("POST","http://127.0.0.1:9090/servicegeneral/api/service/request/"+customerId+"/"+providerId+"/"+serviceId+"/"+date);
-			xhr.send();
-			xhr.onreadystatechange = function() {	
-			if (this.readyState == 4 && this.status == 200 && this.responseText!="") {
-				console.log("Response:"+this.responseText);
-				alert(this.responseText);
-			}
-		}
 }
 
 function getCookie(){
@@ -845,10 +980,10 @@ function getCookie(){
 
 function retreiveServiceNameFromId(serviceId){
 	if(serviceId =="isp"){
-		return "INTERNET SERVICE PROVIDER";						
+		return "INTERNET";						
 	}
 	if(serviceId =="painting"){
-		return "LOCAL HOUSE PAINTERS";						
+		return "PAINTING";						
 	}
 	if(serviceId =="roofing"){
 		return "ROOFING";						
@@ -857,7 +992,7 @@ function retreiveServiceNameFromId(serviceId){
 		return "MOVERS AND PACKERS";						
 	}
 	if(serviceId =="repair"){
-		return "PHONE AND MOBILE REPAIRER";						
+		return "PHONE AND MOBILE REPAIR";						
 	}
 	if(serviceId =="locksmith"){
 		return "LOCKSMITH";						
@@ -872,7 +1007,6 @@ function retreiveServiceNameFromId(serviceId){
 		return "DRY CLEANING";						
 	}
 }
-
 
 function wait(ms){
    var start = new Date().getTime();

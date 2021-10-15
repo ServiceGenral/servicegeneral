@@ -476,9 +476,9 @@
 					<label class="control-label">Which service do you want to provide?</label>
 					<br>
 					<select class="form-control" name="input-service-type" id="input-service-type">
-					  <option name="Internet Service" value="isp">INTERNET SERVICE PROVIDER</option>
-					  <option name="Painting" value="painting">LOCAL HOUSE PAINTERS</option>
-					  <option name="Repairing Electronics" value="repair">PHONE AND MOBILE REPAIRER</option>
+					  <option name="Internet Service" value="isp">INTERNET</option>
+					  <option name="Painting" value="painting">PAINTING</option>
+					  <option name="Repairing Electronics" value="repair">PHONE AND MOBILE REPAIR</option>
 					  <option name="Moving and Packing" value="movers">MOVERS AND PACKERS</option>
 					  <option name="Laundary" value="cleaning">DRY CLEANING</option>
 					  <option name="Locksmith" value="locksmith">LOCKSMITH</option>
