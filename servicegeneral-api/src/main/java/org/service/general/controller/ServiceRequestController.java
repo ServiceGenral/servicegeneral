@@ -71,15 +71,6 @@ public class ServiceRequestController {
 	}
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	@GetMapping("/rating/{providerId}")
 	public String getRating(@PathVariable String providerId) {
 		Float rating = serviceReq.getRating(providerId);
