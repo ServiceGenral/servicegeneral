@@ -25,6 +25,18 @@ function clearCookie() {
 	document.cookie = "feedback=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
 }
 
+
+function profileClearCookie() {
+	document.cookie = "username=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+	document.cookie = "firstName=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+    document.cookie = "lastName=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+	document.cookie = "address=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+	document.cookie = "email=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+	document.cookie = "phoneNumber=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+	
+}
+
+
 function login(e){
 	var x, y, passwordCheck=null, usernameCheck=null;
 
@@ -263,17 +275,11 @@ function updateProfile(e) {
 	 }
 
 
-
-
-
-
-
-
 	if( firstnameCheck == null && lastnameCheck == null && 
 		emailCheck == null && addressCheck == null 
 		&& phonenumberCheck == null){
 
-
+		var messageElement = document.getElementById('profile-update-message');
 		var data = 
 			{
 				"firstName" : firstName,
@@ -285,24 +291,45 @@ function updateProfile(e) {
 				"password": password,
 				"serviceType": serviceType
 			};
-
-				
-		xhr.onreadystatechange = function() {
-			if (this.readyState == 4 && this.status == 200) {
-				document.getElementById('profile-update-message').innerHTML = this.responseText;
-			}
-		};
-
+		
 		var json = JSON.stringify(data);
 		
 		xhr.open("POST","http://127.0.0.1:9090/servicegeneral/api/user/update");
 		xhr.setRequestHeader("Content-Type", "application/json");
 		xhr.setRequestHeader('Access-Control-Allow-Origin','*');
 		xhr.setRequestHeader('Access-Control-Allow-Methods','POST, GET');
-		xhr.setRequestHeader('Access-Control-Allow-Headers','X-Auth-Token,Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With');
-		
+		xhr.setRequestHeader('Access-Control-Allow-Headers','X-Auth-Token,Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With');		
 		xhr.send(json);
+
+		xhr.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				console.log(this.responseText);
+
+				profileClearCookie();
+				
+				var usernameCookie = "username="+username+";";
+			    var firstNameCookie = "firstName="+firstName+";";
+			    var lastNameCookie = "lastName="+lastName+";";
+			    var addressCookie = "address="+address+";";
+			    var emailCookie = "email="+email+";";
+			    var phoneNumberCookie = "phoneNumber="+phoneNumber+";";
+			   
+				document.cookie = usernameCookie;
+				document.cookie = firstNameCookie;
+			    document.cookie = lastNameCookie;
+				document.cookie = addressCookie;
+				document.cookie = emailCookie;
+				document.cookie = phoneNumberCookie;
+
+				alert(this.responseText);
+				location.reload();				
+
+			}
+		};			
 	}
+
+
+
 }
 
 function register(e) {
