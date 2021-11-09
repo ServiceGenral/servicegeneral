@@ -1,5 +1,6 @@
 package org.service.general.controller;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -8,8 +9,10 @@ import javax.ws.rs.core.MediaType;
 
 import org.service.general.entity.Feedback;
 import org.service.general.entity.Login;
+import org.service.general.entity.Logout;
 import org.service.general.entity.User;
 import org.service.general.repository.FeedbackRepo;
+import org.service.general.repository.LogoutRepo;
 import org.service.general.repository.UserRepo;
 import org.service.general.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +22,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -35,6 +37,9 @@ public class UserController {
 	
 	@Autowired
 	private FeedbackRepo feeedbackRepo;
+	
+	@Autowired
+	private LogoutRepo logoutRepo;
 	
 	@GetMapping
 	public List<User> getAllUsers(){
@@ -79,6 +84,7 @@ public class UserController {
 	@PostMapping("/update/feedback/{name}")
 	public Feedback updatefeedbackByName(@PathVariable String name,  @RequestBody Feedback feedback) {
 		if(feeedbackRepo.findByName(name)!=null) {
+			
 			//update existing feedback
 			Feedback feedbackExisting = feeedbackRepo.findByName(name);
 			feedbackExisting.setMessage(feedback.getMessage());
@@ -86,6 +92,7 @@ public class UserController {
 			return feedbackExisting;
 		}
 		else {
+			
 			//if null create new feedback
 			return userfeedbackInfo(feedback);
 		}
@@ -98,6 +105,7 @@ public class UserController {
 		return "Deleted feedback";
 	}
 	
+	
 	@GetMapping("/{firstName}/{lastName}")
 	public User getUserByFL(@PathVariable String firstName,@PathVariable String lastName ) {
 		return repo.findByFirstNameAndLastName(firstName, lastName);
@@ -106,4 +114,19 @@ public class UserController {
 	public String deleteUserInfo(@PathVariable String username) {
 		return service.deleteUserInfo(username);
 	}
+	
+	@PostMapping("/logout/{username}")
+	public String logoutUser(@PathVariable String username) {
+		Logout logoutsession = new Logout(username, LocalDateTime.now().toString());
+		logoutRepo.save(logoutsession);
+		return username + " logout successful";
+	}
+	
+	@GetMapping("/searchfilter/{servicetype}/{location}")
+	public List<User> getProvidersByLocation(@PathVariable String servicetype, @PathVariable String location){
+		return service.search(servicetype, location);
+	}
+		
+
+	
 }

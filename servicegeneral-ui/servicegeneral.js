@@ -3,9 +3,17 @@ var xhr = new XMLHttpRequest();
 document.getElementById('login-Form').addEventListener('submit', login);
 
 function logout(){
-	clearCookie();
-	location.reload();
-	window.location.href = "http://127.0.0.1/servicegeneral/servicegeneral-ui/index.php";
+	xhr.open("POST","http://127.0.0.1:9090/servicegeneral/api/user/logout/"+getCookie().username);
+	xhr.send();
+	xhr.onreadystatechange = function() {	
+		if (this.readyState == 4 && this.status == 200 && this.responseText!="") {
+			console.log("Response:"+this.responseText);
+			clearCookie();
+			alert("Logged Out");
+			location.reload();
+			window.location.href = "http://127.0.0.1/servicegeneral/servicegeneral-ui/index.php";
+		}
+	}
 }
 
 function clearCookie() {
@@ -25,7 +33,6 @@ function clearCookie() {
 	document.cookie = "feedback=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
 }
 
-
 function profileClearCookie() {
 	document.cookie = "username=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
 	document.cookie = "firstName=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
@@ -33,9 +40,7 @@ function profileClearCookie() {
 	document.cookie = "address=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
 	document.cookie = "email=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
 	document.cookie = "phoneNumber=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
-	
 }
-
 
 function login(e){
 	var x, y, passwordCheck=null, usernameCheck=null;
@@ -128,55 +133,6 @@ function login(e){
 		};
 		
 	}
-}
-
-function feedback(e){
-	e.preventDefault();
-	console.log("saving feedback to database");
-	var nameCheck = null,feebackCheck = null;
-	
-	var name = document.getElementById('name').value;
-	var feedback = document.getElementById('feedback').value;
-		
-	if(name == "" || name == null || name.trim() == ''){
-		nameCheck = "Name should not be empty";
-	document.getElementById("feedback-nameMsg").innerHTML = nameCheck;
-
-	}
-	if(feedback == "" || feedback == null || feedback.trim() == ''){
-		feebackCheck = "feedback should not be empty";
-	document.getElementById("feedback-feedbackMsg").innerHTML = feebackCheck;
-	}else{
-		document.getElementById("feedback-feedbackMsg").innerHTML = "";
-	}
-	if(nameCheck == null && feebackCheck == null){
-		var data = 
-		{
-			"name" : name,
-			"message" : feedback
-		};					
-		
-		var json = JSON.stringify(data);
-		
-		xhr.open("POST","http://127.0.0.1:9090/servicegeneral/api/user/feedback");
-		xhr.setRequestHeader("Content-Type", "application/json");
-		xhr.send(json);
-		xhr.onreadystatechange = function() {
-			if (this.readyState == 4 && this.status == 200) {
-				console.log("Resonse from database "+this.responseText);
-				document.getElementById("feedback-message").innerHTML = "Your feedback is valuable. Thanks for your time.";
-			}
-		};
-	}
-}
-
-const submitFeedback = async(e) => {
-	await feedback(e);
-	await sleep(1000);
-	await saveFeedbackToCookie();
-	await sleep(1000);
-	await loadFeedback();
-	await sleep(1000);
 }
 
 function updateProfile(e) {
@@ -327,9 +283,6 @@ function updateProfile(e) {
 			}
 		};			
 	}
-
-
-
 }
 
 function register(e) {
@@ -591,6 +544,73 @@ function loadServiceList(){
 		}
 }
 
+function loadAdvertisement(){
+	var advertisementList = [];
+	var xhr = new XMLHttpRequest();
+	xhr.open("GET","http://localhost:9090/servicegeneral/api/advertisment");
+	xhr.send();
+	xhr.onreadystatechange = function() {	
+		if (this.readyState == 4 && this.status == 200 && this.responseText!="") {
+				console.log("Response:"+this.responseText);
+				advertisementList = JSON.parse(this.responseText);
+			}
+		 var count = 0;
+		 for (var i = 0; i < advertisementList.length/3; i++) {
+		    	var rowElement = document.createElement("div");
+				rowElement.className = "row";
+			    rowElement.id = "advRow"+i;		
+
+				$("#advertisement-metadata").append(rowElement);
+				
+			    for (var j = 0; j<3; j++) {
+
+			        var columnElement = document.createElement("div");
+			        columnElement.className = "col-sm-4";
+					
+					var boxElement = document.createElement("div");
+			        boxElement.className = "box-style-1 white-bg object-visible";
+			        boxElement.style = "height:360px;box-shadow: 0px 0px 18px #0606068a;padding-top:35px;background: #000000c2!important;";
+
+			        var offerElement = document.createElement("h1");
+			        offerElement.style="color: #e84c3d;"
+			        var titleElement = document.createElement("h2");
+			        titleElement.style="color: white;";
+			        var serviceElement = document.createElement("h3");
+			        serviceElement.style="color: wheat;"
+			        var userElement = document.createElement("h3");
+			        userElement.style="color: antiquewhite;"
+			        var dateElement = document.createElement("h3");
+			        dateElement.style="color: aquamarine;"
+
+
+			        offerElement.innerHTML = advertisementList[count].offer + " for ";
+			        titleElement.innerHTML = advertisementList[count].title + " on ";
+			        serviceElement.innerHTML = retreiveServiceNameFromId(advertisementList[count].serviceName) + " by ";
+			        userElement.innerHTML = advertisementList[count].username + " from ";
+			        dateElement.innerHTML = advertisementList[count].startDate + " to " + advertisementList[count].endDate;
+			        
+
+			        boxElement.append(offerElement);
+			        boxElement.append(titleElement);
+			        boxElement.append(serviceElement);
+			        boxElement.append(userElement);
+			        boxElement.append(dateElement);
+
+			        boxElement.setAttribute('data-animation-effect','fadeInUpSmall');
+			        boxElement.setAttribute('data-effect-delay','0');
+
+			        columnElement.append(boxElement);
+			        $("#advRow"+i).append(columnElement);
+			    	count++;
+			    }    
+			    
+			}
+
+	}
+
+
+}
+
 function loadListServiceProviders(serviceName){
 			
 			var xhr = new XMLHttpRequest();
@@ -654,16 +674,30 @@ function loadProviders(){
 
 
 	console.log("list of providers" +providers.length);
-	document.getElementById("service-provider-title").innerHTML = retreiveServiceNameFromId(serviceName);
 	
+	if(providers.length == 0){
+		var noProvider = document.createElement("h2");
+		noProvider.innerHTML = "Providers not found";
+		$("#providerRow").append(noProvider);
+	}
+	else{
+		document.getElementById("service-provider-title").innerHTML = retreiveServiceNameFromId(serviceName);
+		document.getElementById("service-provider-title").style = "margin-left: -15px;display:block;";
+		document.getElementById("date-value").style = "margin-left: -15px;display:block;";
+
 	for (var j = 0; j < providers.length; j++) {
 		var providerDiv = document.createElement("div");
 		var providerName = document.createElement("h2");
-		
+		var providerAddress = document.createElement("h5");
+
 		providerName.style = "color:deepskyblue;font-weight:bold;fontSize:15px;"
+		providerAddress.style = "color:#045d7a;fontSize:10px;"
+
 		var checkBtn = document.createElement("button");
 		var requestBtn = document.createElement("button");
 		providerName.innerHTML = providers[j].firstName + " " + providers[j].lastName
+		providerAddress.innerHTML = "Location: " + providers[j].address;
+
 		var bookRequestId = "bookRequestId" + j;
 		checkBtn.innerHTML = "Check Availability";
 		checkBtn.style = "margin-left:0px;background-color:green;color:white;height:50px;width:200px;border:none";
@@ -679,6 +713,7 @@ function loadProviders(){
 
 
 		providerDiv.append(providerName);
+		providerDiv.append(providerAddress);
 		providerDiv.append(checkBtn);
 		providerDiv.append(requestBtn);
 		
@@ -693,6 +728,7 @@ function loadProviders(){
 		providerDiv.className = "row";
 		providerDiv.style = "border-bottom: 1px solid gray;";
 		$("#providerRow").append(providerDiv);
+	}
 	}
 }
 
@@ -734,9 +770,6 @@ const saveAndLoadFeedback = async() => {
 	await sleep(1000);
 	await loadFeedback();
 }
-
-
-
 
 function checkAvailabilityOfProviders(providerId, serviceId, bookRequestId){
 	var date = document.getElementById("date-value").value
@@ -782,7 +815,6 @@ function bookServiceProvider(customerId, providerId, serviceId){
 			}
 		}
 }
-
 
 function loadRequest(status, requestId){
 	var requests = [];
@@ -902,9 +934,7 @@ function loadRequest(status, requestId){
 				}
 				$("#"+requestId).append(hr);
 	}
-
 }
-
 
 function takeActionOnRequest(reqId, action){
 	var xhr = new XMLHttpRequest();
@@ -923,8 +953,13 @@ function takeActionOnRequest(reqId, action){
 	}
 }
 
+function getRatingValue(ratingSelectId){
+	return document.getElementById(ratingSelectId).value;
+}
 
-
+function isCurrentOrPastDate(currDate, pastDate) {
+	return currDate >= pastDate;
+}
 
 
 function createRatingButton(ratingSelectId){
@@ -943,28 +978,16 @@ function createRatingButton(ratingSelectId){
 	return ratingSelect;
 }
 
-function submitRating(ratingSelectId){
-	var ratingValue = document.getElementById("rating"+ratingSelectId).value;
-	var xhr = new XMLHttpRequest();
-	xhr.open("POST","http://127.0.0.1:9090/servicegeneral/api/service/request/rating/"+ratingSelectId+"/"+ratingValue);
-	xhr.send();
-	xhr.onreadystatechange = function() {	
-		if (this.readyState == 4 && this.status == 200 && this.responseText!="") {
-			console.log(this.responseText);
-			alert("Thanks for submitting the rating");
-			window.location.reload();
-		}
-	}
-
+const submitFeedback = async(e) => {
+	await feedback(e);
+	await sleep(1000);
+	await saveFeedbackToCookie();
+	await sleep(1000);
+	await loadFeedback();
+	await sleep(1000);
 }
 
-function getRatingValue(ratingSelectId){
-	return document.getElementById(ratingSelectId).value;
-}
 
-function isCurrentOrPastDate(currDate, pastDate) {
-	return currDate >= pastDate;
-}
 
 function loadFeedback(){
 	 console.log("updating page from feedback cookie");
@@ -974,6 +997,47 @@ function loadFeedback(){
 		document.getElementById("feedback").innerHTML = feedback.message;
 		document.getElementById("feedback").disabled = true;
 		document.getElementById("submit").disabled = true;
+	}
+}
+
+function feedback(e){
+	e.preventDefault();
+	console.log("saving feedback to database");
+	var nameCheck = null,feebackCheck = null;
+	
+	var name = document.getElementById('name').value;
+	var feedback = document.getElementById('feedback').value;
+		
+	if(name == "" || name == null || name.trim() == ''){
+		nameCheck = "Name should not be empty";
+	document.getElementById("feedback-nameMsg").innerHTML = nameCheck;
+
+	}
+	if(feedback == "" || feedback == null || feedback.trim() == ''){
+		feebackCheck = "feedback should not be empty";
+	document.getElementById("feedback-feedbackMsg").innerHTML = feebackCheck;
+	}else{
+		document.getElementById("feedback-feedbackMsg").innerHTML = "";
+	}
+	if(nameCheck == null && feebackCheck == null) {
+		
+		var data = 
+		{
+			"name" : name,
+			"message" : feedback
+		};					
+		
+		var json = JSON.stringify(data);
+		
+		xhr.open("POST","http://127.0.0.1:9090/servicegeneral/api/user/feedback");
+		xhr.setRequestHeader("Content-Type", "application/json");
+		xhr.send(json);
+		xhr.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				console.log("Resonse from database "+this.responseText);
+				document.getElementById("feedback-message").innerHTML = "Your feedback is valuable. Thanks for your time.";
+			}
+		};
 	}
 }
 
@@ -989,6 +1053,115 @@ function deleteUserFeedback(){
   	sleep(1000);
   	document.cookie = "feedback=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
 }
+
+function submitRating(ratingSelectId){
+	var ratingValue = document.getElementById("rating"+ratingSelectId).value;
+	var xhr = new XMLHttpRequest();
+	xhr.open("POST","http://127.0.0.1:9090/servicegeneral/api/service/request/rating/"+ratingSelectId+"/"+ratingValue);
+	xhr.send();
+	xhr.onreadystatechange = function() {	
+		if (this.readyState == 4 && this.status == 200 && this.responseText!="") {
+			console.log(this.responseText);
+			alert("Thanks for submitting the rating");
+			window.location.reload();
+		}
+	}
+}
+
+
+const searchProviders = async() => {
+	await saveProvidersToCookie();
+	await sleep(2000);
+	await loadProviderData();
+}
+
+function saveProvidersToCookie(){
+	console.log("inside method search");
+	
+	var serviceType = document.getElementById('input-service-type-name').selectedOptions[0].value;
+	var zipcode = document.getElementById('zipcode').value;
+	
+	
+	if(zipcode==''){
+		zipcode='empty';
+	}
+	console.log("type "+ serviceType);
+	console.log("zipcode "+ zipcode);
+
+	var xhr = new XMLHttpRequest();
+	xhr.open("GET","http://127.0.0.1:9090/servicegeneral/api/user/searchfilter/"+serviceType+"/"+zipcode);
+	xhr.send();
+	xhr.onreadystatechange = function() {	
+		if (this.readyState == 4 && this.status == 200 && this.responseText!="") {
+			var providerCookie = "providers=" +this.responseText;
+			var serviceNameCookie;
+			
+			console.log(this.responseText);
+
+			document.cookie = providerCookie;
+
+			if(serviceType != "empty"){
+				serviceNameCookie = "serviceName=" +serviceType;
+			}
+			else {
+				serviceNameCookie = "serviceName=List of providers";
+			}
+			document.cookie = serviceNameCookie;
+		}
+	}
+			
+}
+
+function advertisementSubmit(e){
+	e.preventDefault();
+	var advTitle = document.getElementById('adv-title').value;
+	var advOffer = document.getElementById('adv-offer').value;
+	var advStartDt = document.getElementById('adv-startdate').value;
+	var advEndDt = document.getElementById('adv-enddate').value;
+
+
+	if (advTitle == "" || advTitle == null || advTitle.trim() == '') {
+		document.getElementById("adv-title-lbl").innerHTML = "Title Cannot be empty";		
+	}
+
+	if (advOffer == "" || advOffer == null || advOffer.trim() == '') {
+		document.getElementById("adv-offer-lbl").innerHTML = "Offer Cannot be empty";		
+	}
+
+
+	var data = 
+				{
+					"username":getCookie().username,
+					"title" : advTitle,
+					"offer" : advOffer,
+					"startDate" : advStartDt,
+					"endDate" : advEndDt
+				};
+
+	var json = JSON.stringify(data);
+		
+		xhr.open("POST","http://localhost:9090/servicegeneral/api/advertisment");
+		xhr.setRequestHeader("Content-Type", "application/json");
+		xhr.setRequestHeader('Access-Control-Allow-Origin','*');
+		xhr.setRequestHeader('Access-Control-Allow-Methods','POST, GET');
+		xhr.setRequestHeader('Access-Control-Allow-Headers','X-Auth-Token,Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With');		
+		xhr.send(json);
+
+	xhr.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				console.log(this.responseText);
+				alert("Submitted Successfully");
+			}
+		}
+
+
+}
+
+function loadProviderData(){
+
+	window.location.href = "http://127.0.0.1/servicegeneral/servicegeneral-ui/provider.php";
+}
+
 
 function getCookie(){
 
@@ -1009,29 +1182,31 @@ function retreiveServiceNameFromId(serviceId){
 	if(serviceId =="isp"){
 		return "INTERNET";						
 	}
-	if(serviceId =="painting"){
+	else if(serviceId =="painting"){
 		return "PAINTING";						
 	}
-	if(serviceId =="roofing"){
+	else if(serviceId =="roofing"){
 		return "ROOFING";						
 	}
-	if(serviceId =="movers"){
+	else if(serviceId =="movers"){
 		return "MOVERS AND PACKERS";						
 	}
-	if(serviceId =="repair"){
+	else if(serviceId =="repair"){
 		return "PHONE AND MOBILE REPAIR";						
 	}
-	if(serviceId =="locksmith"){
+	else if(serviceId =="locksmith"){
 		return "LOCKSMITH";						
 	}
-	if(serviceId =="salon"){
+	else if(serviceId =="salon"){
 		return "SALON";						
 	}
-	if(serviceId =="plumbing"){
+	else if(serviceId =="plumbing"){
 		return "PLUMBING";						
 	}
-	if(serviceId =="cleaning"){
+	else if(serviceId =="cleaning"){
 		return "DRY CLEANING";						
+	} else{
+		return serviceId;
 	}
 }
 
@@ -1042,3 +1217,9 @@ function wait(ms){
      end = new Date().getTime();
   }
 }
+
+
+
+
+
+

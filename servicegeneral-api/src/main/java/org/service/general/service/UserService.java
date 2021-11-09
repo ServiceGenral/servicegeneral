@@ -1,19 +1,17 @@
 package org.service.general.service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 import org.service.general.entity.Feedback;
 import org.service.general.entity.Login;
 import org.service.general.entity.ProviderService;
 import org.service.general.entity.ServiceEntity;
-import org.service.general.entity.ServiceMetaData;
 import org.service.general.entity.User;
 import org.service.general.repository.FeedbackRepo;
 import org.service.general.repository.ProviderServiceRepo;
-import org.service.general.repository.ServiceMetadataRepo;
 import org.service.general.repository.ServiceRepo;
 import org.service.general.repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,9 +28,7 @@ public class UserService {
 	
 	@Autowired
 	private ServiceRepo serviceRepo;
-	
-	@Autowired
-	private ServiceMetadataRepo metadataRepo;
+
 	
 	@Autowired
 	private FeedbackRepo feedbackRepo;
@@ -165,12 +161,49 @@ public class UserService {
 	}
 	
 	
+public List<User> getProvidersByLocation(String location) {
+		
+		List<User> users = repo.findByType("Provider");
+		List<User> filteredUsers = users
+		.stream()
+		.filter(user -> user.getAddress().contains(location))
+		.collect(Collectors.toList());
+		
+		filteredUsers.forEach(user -> user.setServices(null));
+		
+		return filteredUsers;
+	}
 	
 	
 	
+	public List<User> search(String servicetype, String location){
+		if(isEmptyOrNull(servicetype) && isEmptyOrNull(location)) {
+			List<User> users = repo.findByType("provider");
+			users.forEach(user -> user.setServices(null));
+			return users.subList(0, 10);
+			//return users;
+		} 
+		
+		else if (isEmptyOrNull(servicetype) && !isEmptyOrNull(location)){
+			return getProvidersByLocation(location);
+		} 
+		
+		else if (!isEmptyOrNull(servicetype) && isEmptyOrNull(location)){
+			List<User> users = repo.findByServiceTypeAndType(servicetype, "provider");
+			users.forEach(user -> user.setServices(null));
+			return users;
+		}
+		else {
+			return getProvidersByLocation(location)
+					.stream()
+					.filter(user -> user.getServiceType().contains(servicetype))
+					.collect(Collectors.toList());
+		}
+	}
 	
-	
-	
+	private boolean isEmptyOrNull(String string) {
+		return (string.equals("empty") || string==null || string == "");
+	}
 	
 		
 }
