@@ -428,7 +428,7 @@
 			<!-- banner end -->
 			
 			<!--search-start-->
-			<div>
+			<!-- <div>
 				<div class="main-search-bar" style="padding: 0;border: none;background-color: #454343;">
 					<div class="container">
 						<form style="padding-top: 2%;"role="search" class="search-box">
@@ -439,7 +439,7 @@
 						</form>
 					</div>
 				</div>
-			</div>
+			</div> -->
 			<!--search-end-->
 
 
@@ -451,8 +451,8 @@
 				
 				<div class="sorting-filters" style="background-color: #454343!important;color: beige;border: none;">
 					<div class="container">
-						<form class="form-inline">
-							<div class="form-group">
+						<form method="GET" class="form-inline">
+							<!-- <div class="form-group">
 								<label>Sort by</label>
 								<select class="form-control">
 									<option selected="selected">Price - Low to High</option>
@@ -460,9 +460,9 @@
 									<option>Ratings</option>
 									<option>Most Viewed</option>
 								</select>
-							</div>
+							</div>-->
 							
-							<div class="form-group">
+							<!-- <div class="form-group">
 								<label>Price $ (min/max)</label>
 								<div class="row grid-space-10">
 									<div class="col-sm-6">
@@ -472,28 +472,32 @@
 										<input type="text" class="form-control col-xs-6">
 									</div>
 								</div>
-							</div>
-							<div class="form-group">
+							</div> -->
+							<div class="form-group" style="width: 35%;">
 								<label>Service Type</label>
-								<select class="form-control">
-									<option selected="selected">INTERNET SERVICE</option>
-									<option>MOBILE REPAIR</option>
-									<option>HOUSE PAINTING</option>
-									<option>LOCKSMITH</option>
-									<option>MOVING AND PACKING</option>
-									<option>LAUNDARY SERVICES</option>
+								<select class="form-control" name="input-service-type-name" id="input-service-type-name">
+									<option name="empty" value="empty">Select</option>
+									<option name="Internet Service" value="isp">INTERNET</option>
+					  				<option name="Painting" value="painting">PAINTING</option>
+					  				<option name="Repairing Electronics" value="repair">PHONE AND MOBILE REPAIR</option>
+					 			    <option name="Moving and Packing" value="movers">MOVERS AND PACKERS</option>
+					  				<option name="Laundary" value="cleaning">DRY CLEANING</option>
+					  				<option name="Locksmith" value="locksmith">LOCKSMITH</option>
+					  				<option name="Roofing" value="roofing">ROOFING</option>
+					  				<option name="Roofing" value="plumbing">PLUMBING</option>
+					 			 	<option name="Roofing" value="salon">SALON</option>
 								</select>
 							</div>
-							<div class="form-group">
-								<label>Zipcode</label>
+							<div class="form-group" style="width: 30%;">
+								<label>Location</label>
 								<div>
 									<div>
-										<input type="text" class="form-control col-xs-6">
+										<input type="text" placeholder=" NJ or 10010 " id="zipcode" class="form-control col-xs-6">
 									</div>
 								</div>
 							</div>
-							<div class="form-group">
-								<a href="#" class="btn btn-default">Filter</a>
+							<div class="form-group" style="width: 20%;">
+								<input type="button" id="search" value="Search" class="btn btn-default" onclick="searchProviders()"/>
 							</div>
 						</form>
 					</div>
@@ -501,6 +505,18 @@
 				
 			</div>
 			<!-- page-top end -->
+
+			<section class="main-container gray-bg">
+				<div class="main">
+					<div class="container">
+						<div class="row">
+							<div class="col-md-12" id="advertisement-metadata">
+							<h1 class="text-center title">Deals...</h1>	
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
 
 			<section class="main-container gray-bg">
 				<div class="main">
@@ -618,6 +634,7 @@
 		document.getElementById("body").onload = function() {
 			checkLoggedInUser()
 	    	loadServiceList()
+	    	loadAdvertisement()
 	 	};
 
 		//$(document).ready(function () {
@@ -645,7 +662,11 @@
 			if(userJson.username !=null){
 				document.getElementById("register-div").style.display = "none";
 				document.getElementById("login-div").style.display = "none";
+				if("provider" == userJson.type){
+					document.getElementById("advertisement-div").style.display = "inline-block";
+				}
 				document.getElementById("user-profile").innerHTML = "Hi "+userJson.firstName + " " + userJson.lastName + " !";
+
 			} else {
 				document.getElementById("logout-div").style.display = "none";
 			}

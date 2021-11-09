@@ -67,9 +67,9 @@
 			<section class="main-container gray-bg" id="customer-section">
 				<div class="main">
 					<div class="container">
-						<h1 style ="margin-left: -15px;" id="service-provider-title"></h1>
+						<h1 style ="margin-left: -15px;display:none;" id="service-provider-title"></h1>
 						<p style="margin-left:0">
-							<input style="margin-left:0px" id= "date-value" value="<?php echo date('Y-m-d');?>" type="date" />
+							<input style="display: none;margin-left:0px" id= "date-value" value="<?php echo date('Y-m-d');?>" type="date" />
 						</p>
 
 						<div id="providerRow">
@@ -122,7 +122,7 @@
 		<script src="js/custom.js"></script>
 
 		<script src="servicegeneral.js"></script>
-		<script src="rating.js"></script>
+		
 
 		<script>
 	

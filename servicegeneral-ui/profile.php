@@ -165,7 +165,9 @@
 				document.getElementById("profile-address").value = userJson.address;
 				document.getElementById("profile-phoneNumber").value = userJson.phoneNumber;
 				document.getElementById("profile-username").value = userJson.username;
-				
+				if("provider" == userJson.type){
+					document.getElementById("advertisement-div").style.display = "inline-block";
+				}
 				
 				if(userJson.type == "customer"){
 					document.getElementById("usertype").style.display = "none";

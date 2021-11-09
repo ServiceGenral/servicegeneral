@@ -161,7 +161,9 @@
 					document.getElementById("register-div").style.display = "none";
 					document.getElementById("login-div").style.display = "none";
 					document.getElementById("user-profile").innerHTML = "Hi "+userJson.firstName + " " + userJson.lastName + " !";
-					
+					if("provider" == userJson.type){
+						document.getElementById("advertisement-div").style.display = "inline-block";
+					}
 				} else {
 					document.getElementById("logout-div").style.display = "none";
 					

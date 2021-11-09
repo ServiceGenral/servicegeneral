@@ -9,4 +9,5 @@ public interface ServiceRepo extends JpaRepository<ServiceEntity, Long>{
 
 	ServiceEntity findByServiceName(String serviceType);
 	
+	
 }

@@ -1,7 +1,6 @@
 package org.service.general.entity;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

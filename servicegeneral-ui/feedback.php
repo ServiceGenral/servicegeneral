@@ -217,6 +217,9 @@
 				document.getElementById("user-profile").innerHTML = "Hi "+userJson.firstName + " " + userJson.lastName + " !";
 				document.getElementById('name').value = userJson.username;
 				document.getElementById("name").disabled = true;
+				if("provider" == userJson.type){
+					document.getElementById("advertisement-div").style.display = "inline-block";
+				}
 				console.log(userJson.feedback);
 				if(userJson.feedback != null){
 					document.getElementById("submit").disabled = true;

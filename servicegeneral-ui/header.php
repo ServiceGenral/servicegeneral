@@ -20,6 +20,9 @@
 					<!-- header top dropdowns start -->
 					<!-- ================ -->
 					<div class="header-top-dropdown">
+						<div class="btn-group dropdown" id="advertisement-div" style="display: none;">
+							<button onclick=" window.open('advertisement.php', '_self');" style="color: beige!important;" class="btn dropdown-toggle" data-toggle="dropdown"><u>Advertisement</u></button>
+						</div>
 						<div class="btn-group dropdown">
 							<button onclick=" window.open('feedback.php', '_self');" style="color: beige!important;" class="btn dropdown-toggle" data-toggle="dropdown"><u>Feedback</u></button>
 						</div>

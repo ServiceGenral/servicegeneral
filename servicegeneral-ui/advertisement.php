@@ -84,7 +84,7 @@
 									<li data-transition="random" data-slotamount="default" data-masterspeed="default" data-title="Relocating made easy">
 
 									<!-- main image -->
-									<img src="images/registerSlide1.jpg"  alt="slidebg1" data-bgposition="center top" data-bgfit="cover" data-bgrepeat="no-repeat" class="rev-slidebg">
+									<img src="images/adv-image5.jpeg"  alt="slidebg1" data-bgposition="center top" data-bgfit="cover" data-bgrepeat="no-repeat" class="rev-slidebg">
 
 									
 
@@ -95,7 +95,7 @@
 									<li data-transition="random" data-slotamount="7" data-masterspeed="500" data-saveperformance="on" data-title="Setting up home internet">
 
 									<!-- main image -->
-									<img src="images/registerSlide2.jpg"  alt="slidebg1" data-bgposition="center top" data-bgfit="cover" data-bgrepeat="no-repeat" class="rev-slidebg">
+									<img src="images/adv-image6.jpeg"  alt="slidebg1" data-bgposition="center top" data-bgfit="cover" data-bgrepeat="no-repeat" class="rev-slidebg">
 
 									
 
@@ -106,7 +106,7 @@
 									<li data-transition="random" data-slotamount="7" data-masterspeed="500" data-saveperformance="on" data-title="Need local painters?">
 
 									<!-- main image -->
-									<img src="images/registerSlide3.jpg"  alt="kenburns" data-bgposition="left center" data-kenburns="on" data-duration="10000" data-ease="Linear.easeNone" data-scalestart="100" data-scaleend="120" data-rotatestart="0" data-rotateend="0" data-offsetstart="0 0" data-offsetend="0 0" data-bgparallax="10" class="rev-slidebg" data-no-retina>
+									<img src="images/adv-image7.jpeg"  alt="kenburns" data-bgposition="left center" data-kenburns="on" data-duration="10000" data-ease="Linear.easeNone" data-scalestart="100" data-scaleend="120" data-rotatestart="0" data-rotateend="0" data-offsetstart="0 0" data-offsetend="0 0" data-bgparallax="10" class="rev-slidebg" data-no-retina>
 
 									
 									</li>
@@ -127,67 +127,26 @@
 			
 			<!-- Form Start -->
 
-			<div class="container" id="register-form-div">
-			<h2>Register here!</h2>
-			<form id = "register-form" action="register(e)">
+			<div class="container" id="adv-form-div">
+			<h2>Advertisement Form Details</h2>
+			<form id="adv-form" action="advertisementSubmit(e)">
 				<div class="form-group">
-					<label>First Name:</label> <label class="control-label" id="register-firstnameMsg" style="color: red;"></label>
-					<input type="text" class="form-control" id="firstName" placeholder="Enter First Name" name="firstName">
+					<label>Deal Title:</label> <label class="control-label" id="adv-title-lbl" style="color: red;"></label>
+					<input type="text" class="form-control" id="adv-title" placeholder="eg: Black Friday Sale" name="advTitle">
 					
 				</div>
 				<div class="form-group">
-					<label>Last Name:</label> <label class="control-label" id="register-lastnameMsg" style="color: red;"></label>
-					<input type="text" class="form-control" id="lastName" placeholder="Enter Last Name" name="lastName">
+					<label>Offer</label> <label class="control-label" id="adv-offer-lbl" style="color: red;"></label>
+					<input type="text" class="form-control" id="adv-offer" placeholder="eg: 50 percent off" name="advOffer">
 					
 				</div>
 				<div class="form-group">
-					<label>Email:</label> <label class="control-label" id="register-emailMsg" style="color: red;"></label>
-					<input type="text" class="form-control" id="email" placeholder="Enter Email Id" name="email">
-					
+					<label>Offer Starts From</label> <label class="control-label" id="adv-startdate-lbl" style="color: red;"></label>
+					<input type="date" class="form-control" value="<?php echo date('Y-m-d');?>"  id= "adv-startdate"/>
 				</div>
 				<div class="form-group">
-					<label>Address:</label> <label class="control-label" id="register-addressMsg" style="color: red;"></label>
-					<input type="text" class="form-control" id="address" placeholder="Enter Address" name="address">
-					
-				</div>
-				<div class="form-group">
-					<label>Phone Number:</label> <label class="control-label" id="register-phonenumberMsg" style="color: red;"></label>
-					<input type="text" class="form-control" id="phoneNumber" placeholder="Enter Phone" name="phoneNumber">
-					
-				</div>
-				<div class="form-group">
-					<label>Username:</label> <label class="control-label" id="register-usernameMsg" style="color: red;"></label>
-					<input type="text" class="form-control" id="inputUsername" placeholder="Enter Username" name="inputUsername">
-					
-				</div>
-				<div class="form-group">
-					<label>Password:</label> <label class="control-label" id="register-passwordMsg" style="color: red;"></label>
-					<input type="password" class="form-control" id="inputPassword" placeholder="Enter password" name="inputPassword">
-					
-				</div>
-				<div class="form-group form-check">
-					<input type="radio" name="service-login" class="form-check-input" id="inputCustomer"/>
-					<label class="control-label">I need service</label>
-				</div>
-				<div class="form-group form-check">
-					<input type="radio" name="service-login" class="form-check-input" id="inputProvider" 
-					 checked/>
-					<label class="control-label">I provide service</label>
-				</div>
-				<div class="form-group" id="div-service-type">
-					<label class="control-label">Which service do you want to provide?</label>
-					<br>
-					<select class="form-control" name="input-service-type" id="input-service-type">
-					  <option name="Internet Service" value="isp">INTERNET</option>
-					  <option name="Painting" value="painting">PAINTING</option>
-					  <option name="Repairing Electronics" value="repair">PHONE AND MOBILE REPAIR</option>
-					  <option name="Moving and Packing" value="movers">MOVERS AND PACKERS</option>
-					  <option name="Laundary" value="cleaning">DRY CLEANING</option>
-					  <option name="Locksmith" value="locksmith">LOCKSMITH</option>
-					  <option name="Roofing" value="roofing">ROOFING</option>
-					  <option name="Roofing" value="plumbing">PLUMBING</option>
-					  <option name="Roofing" value="salon">SALON</option>
-					</select>
+					<label>Offer Ends On</label> <label class="control-label" id="adv-enddate-lbl" style="color: red;"></label>
+					<input type="date" class="form-control" value="<?php echo date('Y-m-d');?>" id= "adv-enddate"/>
 				</div>
 				<button type="submit" id="submit" class="btn btn-default">Submit</button>
 			</form>
@@ -245,17 +204,7 @@
 			document.getElementById("body").onload = function() {
 				checkLoggedInUser()
 			};
-			document.getElementById('register-form').addEventListener('submit', register);
-
-			$(function() {
-				$("input[name='service-login']").click(function(){
-					if($("#inputProvider").is(":checked")) {
-						$("#div-service-type").show();
-					} else {
-						$("#div-service-type").hide();
-					}
-				})
-			});
+		document.getElementById('adv-form').addEventListener('submit', advertisementSubmit);
 
 		function checkLoggedInUser() {
 			var cookie = document.cookie;
@@ -271,9 +220,8 @@
 
 			if(userJson.username !=null){
 				document.getElementById("login-div").style.display = "none";
-				document.getElementById("register-form-div").style.display = "none";
-				document.getElementById("register-message").innerHTML = "Logged in user cannot register!";
-
+				document.getElementById("register-div").style.display = "none";
+				document.getElementById("adv-form-div").style.display = "block";
 				document.getElementById("user-profile").innerHTML = "Hi "+userJson.firstName + " " + userJson.lastName + " !";
 			} else{
 				document.getElementById("logout-div").style.display = "none";
