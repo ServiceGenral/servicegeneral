@@ -1,6 +1,8 @@
 package org.service.general.controller;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.service.general.entity.AdvertisementRequest;
 import org.service.general.entity.User;
@@ -39,7 +41,14 @@ public class AdvertisementController {
 	
 	@GetMapping
 	List<AdvertisementRequest> getAllRequests(){
-		return repo.findAll();
+		return repo.findAll().stream()
+				.filter(adv -> {
+					String[] date = adv.getEndDate().split("-");
+					LocalDate advDate = LocalDate.of(Integer.parseInt(date[0]), Integer.parseInt(date[1]), Integer.parseInt(date[2]));
+					LocalDate curr = LocalDate.now();
+					return advDate.isAfter(curr) || advDate.isEqual(curr);
+				})
+				.collect(Collectors.toList());
 	}
 	
 	

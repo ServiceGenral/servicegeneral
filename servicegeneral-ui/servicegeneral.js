@@ -582,9 +582,9 @@ function loadAdvertisement(){
 			        var dateElement = document.createElement("h3");
 			        dateElement.style="color: aquamarine;"
 
-
-			        offerElement.innerHTML = advertisementList[count].offer + " for ";
-			        titleElement.innerHTML = advertisementList[count].title + " on ";
+			       
+			        offerElement.innerHTML = advertisementList[count].offer;
+			        titleElement.innerHTML = " for " +advertisementList[count].title + " on ";
 			        serviceElement.innerHTML = retreiveServiceNameFromId(advertisementList[count].serviceName) + " by ";
 			        userElement.innerHTML = advertisementList[count].username + " from ";
 			        dateElement.innerHTML = advertisementList[count].startDate + " to " + advertisementList[count].endDate;
@@ -1118,43 +1118,63 @@ function advertisementSubmit(e){
 	var advOffer = document.getElementById('adv-offer').value;
 	var advStartDt = document.getElementById('adv-startdate').value;
 	var advEndDt = document.getElementById('adv-enddate').value;
-
+	let today = new Date().toISOString().slice(0, 10);
+	console.log(today);
+	console.log(" startDate :" + advStartDt);
 
 	if (advTitle == "" || advTitle == null || advTitle.trim() == '') {
 		document.getElementById("adv-title-lbl").innerHTML = "Title Cannot be empty";		
 	}
+	else{
+		document.getElementById("adv-title-lbl").innerHTML = "";
+		if (advOffer == "" || advOffer == null || advOffer.trim() == '') {
+			document.getElementById("adv-offer-lbl").innerHTML = "Offer Cannot be empty";		
+		}
+		else{
+			document.getElementById("adv-offer-lbl").innerHTML = "";
+			if(advStartDt < today){
+				document.getElementById("adv-startdate-lbl").innerHTML = "Start Date should  not be less than today's Date.";
+			}
+			else{
+				document.getElementById("adv-startdate-lbl").innerHTML = "";
 
-	if (advOffer == "" || advOffer == null || advOffer.trim() == '') {
-		document.getElementById("adv-offer-lbl").innerHTML = "Offer Cannot be empty";		
-	}
+				if(advEndDt < today){
+					document.getElementById("adv-enddate-lbl").innerHTML = "Start Date should  not be less than today's Date.";
+				}
+				else{
 
+					document.getElementById("adv-enddate-lbl").innerHTML = "";
+					if(advStartDt > advEndDt){
+						document.getElementById("adv-startdate-lbl").innerHTML = "End Date should be less than End Date.";
+					}
+					else{
+					document.getElementById("adv-startdate-lbl").innerHTML = "";
+					var data = {
+						"username":getCookie().username,
+						"title" : advTitle,
+						"offer" : advOffer,
+						"startDate" : advStartDt,
+						"endDate" : advEndDt
+					};
 
-	var data = 
-				{
-					"username":getCookie().username,
-					"title" : advTitle,
-					"offer" : advOffer,
-					"startDate" : advStartDt,
-					"endDate" : advEndDt
-				};
+					var json = JSON.stringify(data);
 
-	var json = JSON.stringify(data);
-		
-		xhr.open("POST","http://localhost:9090/servicegeneral/api/advertisment");
-		xhr.setRequestHeader("Content-Type", "application/json");
-		xhr.setRequestHeader('Access-Control-Allow-Origin','*');
-		xhr.setRequestHeader('Access-Control-Allow-Methods','POST, GET');
-		xhr.setRequestHeader('Access-Control-Allow-Headers','X-Auth-Token,Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With');		
-		xhr.send(json);
+					xhr.open("POST","http://localhost:9090/servicegeneral/api/advertisment");
+					xhr.setRequestHeader("Content-Type", "application/json");
+					xhr.send(json);
 
-	xhr.onreadystatechange = function() {
-			if (this.readyState == 4 && this.status == 200) {
-				console.log(this.responseText);
-				alert("Submitted Successfully");
+					xhr.onreadystatechange = function() {
+						if (this.readyState == 4 && this.status == 200) {
+							console.log(this.responseText);
+							alert("Submitted Successfully");
+							window.location.reload();
+						}
+					}
+				}
 			}
 		}
-
-
+	}
+}
 }
 
 function loadProviderData(){
