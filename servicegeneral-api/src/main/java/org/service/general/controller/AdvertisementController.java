@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.service.general.entity.AdvertisementRequest;
-import org.service.general.entity.User;
 import org.service.general.repository.AdvertismentRepo;
 import org.service.general.repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,6 +49,7 @@ public class AdvertisementController {
 				})
 				.collect(Collectors.toList());
 	}
+	
 	
 	
 }
