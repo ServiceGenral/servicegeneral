@@ -41,6 +41,17 @@ public class AdvertisementRequest implements Serializable{
 	@Column
 	private String serviceName;
 	
+	@Column
+	private String advStatus;
+	
+
+	public String getAdvStatus() {
+		return advStatus;
+	}
+
+	public void setAdvStatus(String advStatus) {
+		this.advStatus = advStatus;
+	}
 
 	public String getServiceName() {
 		return serviceName;

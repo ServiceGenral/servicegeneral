@@ -29,10 +29,11 @@ public class AdvertisementController {
 	
 	@PostMapping
 	public String submitAdvertismentRequest(@RequestBody AdvertisementRequest request) {
+		Ex();
 	    String serviceName = urRepo.getServiceTypeByUsername(request.getUsername());
 	
 	    request.setServiceName(serviceName);
-	 
+	    request.setAdvStatus("ACTIVE");
 	    
 		repo.save(request);
 		return "Advertisement request submitted";
@@ -40,6 +41,7 @@ public class AdvertisementController {
 	
 	@GetMapping
 	List<AdvertisementRequest> getAllRequests(){
+		Ex();
 		return repo.findAll().stream()
 				.filter(adv -> {
 					String[] date = adv.getEndDate().split("-");
@@ -48,6 +50,26 @@ public class AdvertisementController {
 					return advDate.isAfter(curr) || advDate.isEqual(curr);
 				})
 				.collect(Collectors.toList());
+		
+		
+	}
+	
+	public void Ex() {
+	
+		repo.findAll().stream().forEach(advs -> {
+			String[] date = advs.getEndDate().split("-");
+			LocalDate advDate = LocalDate.of(Integer.parseInt(date[0]), Integer.parseInt(date[1]), Integer.parseInt(date[2]));
+			LocalDate curr = LocalDate.now();
+			if(advDate.isBefore(curr)) {
+				
+				advs.setAdvStatus("CLOSED");
+
+				repo.save(advs);
+			}
+		});
+		
+		
+		
 	}
 	
 	
