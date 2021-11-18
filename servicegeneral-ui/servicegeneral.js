@@ -582,7 +582,7 @@ function loadAdvertisement(){
 			        var dateElement = document.createElement("h3");
 			        dateElement.style="color: aquamarine;"
 
-			       
+
 			        offerElement.innerHTML = advertisementList[count].offer;
 			        titleElement.innerHTML = " for " +advertisementList[count].title + " on ";
 			        serviceElement.innerHTML = retreiveServiceNameFromId(advertisementList[count].serviceName) + " by ";
@@ -1139,13 +1139,13 @@ function advertisementSubmit(e){
 				document.getElementById("adv-startdate-lbl").innerHTML = "";
 
 				if(advEndDt < today){
-					document.getElementById("adv-enddate-lbl").innerHTML = "Start Date should  not be less than today's Date.";
+					document.getElementById("adv-enddate-lbl").innerHTML = "End Date should  not be less than today's Date.";
 				}
 				else{
 
 					document.getElementById("adv-enddate-lbl").innerHTML = "";
 					if(advStartDt > advEndDt){
-						document.getElementById("adv-startdate-lbl").innerHTML = "End Date should be less than End Date.";
+						document.getElementById("adv-startdate-lbl").innerHTML = "Start Date should be less than End Date.";
 					}
 					else{
 					document.getElementById("adv-startdate-lbl").innerHTML = "";
