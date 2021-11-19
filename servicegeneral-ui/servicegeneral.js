@@ -1126,11 +1126,19 @@ function advertisementSubmit(e){
 		document.getElementById("adv-title-lbl").innerHTML = "Title Cannot be empty";		
 	}
 	else{
+		if (advTitle.length > 30 ) {
+		document.getElementById("adv-title-lbl").innerHTML = "Length should be less than 30 Character";		
+		}
+		else{
 		document.getElementById("adv-title-lbl").innerHTML = "";
 		if (advOffer == "" || advOffer == null || advOffer.trim() == '') {
 			document.getElementById("adv-offer-lbl").innerHTML = "Offer Cannot be empty";		
 		}
 		else{
+			if (advOffer.length > 30) {
+			document.getElementById("adv-offer-lbl").innerHTML = "Length should be less than 30 Character";		
+			}
+			else{
 			document.getElementById("adv-offer-lbl").innerHTML = "";
 			if(advStartDt < today){
 				document.getElementById("adv-startdate-lbl").innerHTML = "Start Date should  not be less than today's Date.";
@@ -1173,6 +1181,8 @@ function advertisementSubmit(e){
 				}
 			}
 		}
+	}
+	}
 	}
 }
 }
