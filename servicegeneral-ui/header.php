@@ -110,6 +110,9 @@
 									<a href="/servicegeneral/servicegeneral-ui/requests.php">Requests Dashboard</a>
 								</li>
 								<li>
+									<a href="/servicegeneral/servicegeneral-ui/paymentSystem.php">Payment</a>
+								</li>
+								<li>
 									<a onclick="logout()">Logout</a>
 								</li>
 								<li>
