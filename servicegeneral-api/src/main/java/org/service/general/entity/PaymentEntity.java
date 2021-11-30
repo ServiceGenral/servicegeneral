@@ -31,6 +31,14 @@ public class PaymentEntity {
 	@Column
 	private String cvvNo;
 
+	public Long getPaymentId() {
+		return paymentId;
+	}
+
+	public void setPaymentId(Long paymentId) {
+		this.paymentId = paymentId;
+	}
+
 	public String getCardName() {
 		return cardName;
 	}
