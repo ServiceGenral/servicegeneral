@@ -16,9 +16,21 @@ public class PaymentService {
 	private PaymentRepo paymentrepo;
 	
 	public String submitPayment(PaymentEntity paymententity) {
+		if(null == paymententity.getPaymentId()) {
+			paymentrepo.save(paymententity);
+			return "Record Submit Successfully";
+		}
 		
-		paymentrepo.save(paymententity);
-		
+		Optional<PaymentEntity> pay = paymentrepo.findById(paymententity.getPaymentId());
+		if(pay.isPresent()) {
+			PaymentEntity existing = pay.get();
+			existing.setCardName(paymententity.getCardName());
+			existing.setCardNumber(paymententity.getCardNumber());
+			existing.setCvvNo(paymententity.getCvvNo());
+			existing.setExpDt(paymententity.getExpDt());
+			paymentrepo.save(existing);
+			return "Payment Information is updated";
+		}
 		return "Record Submit Successfully";
 	}
 
@@ -44,10 +56,10 @@ public class PaymentService {
 	}
 
 	public String deletePayment(Long id) {
-		Optional<PaymentEntity> pay = paymentrepo.findByPaymentId(id);
+		Optional<PaymentEntity> pay = paymentrepo.findById(id);
 		if(pay.isPresent()) {
 			
-			paymentrepo.deleteByPaymentId(id);
+			paymentrepo.deleteById(id);
 			return "delete successful";
 		}else {
 			return "Error";

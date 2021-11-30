@@ -988,7 +988,6 @@ const submitFeedback = async(e) => {
 }
 
 
-
 function loadFeedback(){
 	 console.log("updating page from feedback cookie");
 	var feedbackCookie = getCookie().feedback;
@@ -1184,7 +1183,7 @@ function advertisementSubmit(e){
 	}
 	}
 	}
-}
+	}
 }
 
 function loadProviderData(){
@@ -1247,6 +1246,177 @@ function wait(ms){
      end = new Date().getTime();
   }
 }
+
+
+
+//Payment
+
+const submitPaymentInfo = async(e) => {
+	await paymentSubmit(e);
+	await sleep(1000);
+	await savePaymentToCookie();
+	await sleep(1000);
+	await loadPayment();
+	await sleep(1000);
+}
+
+function paymentSubmit(e){
+	e.preventDefault();
+	var cardname = document.getElementById('card-holder-name').value;
+	var cardnumber = document.getElementById('card-number').value;
+	var expdt = document.getElementById('month').value + document.getElementById('year').value;
+	var cvvnumber = document.getElementById('cvv-number').value;
+
+	var numbers = /[0-9]/g;
+	var specialcharacters = /\W|_/g;
+	console.log("saving payment to database");
+	if(cardname == "" || cardname == null || cardname.trim() == ""){
+		document.getElementById("payment-cardname-lbl").innerHTML = "Card Name Should Not be empty";
+	}else{
+		document.getElementById("payment-cardname-lbl").innerHTML = "";
+			if(cardname.match(numbers)){
+				document.getElementById("payment-cardname-lbl").innerHTML = "Numbers are not allowed";
+			}else{
+				document.getElementById("payment-cardname-lbl").innerHTML = "";
+				if(cardname.match(specialcharacters)){
+					document.getElementById("payment-cardname-lbl").innerHTML = "Special Characters are not allowed";
+				}else{
+					document.getElementById("payment-cardname-lbl").innerHTML = "";
+					if(cardnumber == "" || cardnumber == null || cardnumber.trim() == ""){
+						document.getElementById("payment-number-lbl").innerHTML = "Card Number Should Not be empty";
+					}else{
+						document.getElementById("payment-number-lbl").innerHTML = "";
+						if(cardnumber.trim().length > 16 || cardnumber.trim().length < 16){
+							document.getElementById("payment-number-lbl").innerHTML = "Card Number Should contain 16 Digit";
+						}else{
+							document.getElementById("payment-number-lbl").innerHTML = "";
+
+							if(cvvnumber == "" || cvvnumber == null || cvvnumber.trim() == ""){
+								document.getElementById("payment-cvv-lbl").innerHTML = "CVV Should Not be empty";
+							}else{
+								document.getElementById("payment-cvv-lbl").innerHTML = "";
+								if(cvvnumber.match(specialcharacters)){
+								document.getElementById("payment-cvv-lbl").innerHTML = "Special Characters are not allowed";
+								}else{
+									document.getElementById("payment-cvv-lbl").innerHTML = "";
+									if(cvvnumber.trim().length < 3){
+										document.getElementById("payment-cvv-lbl").innerHTML = "CVV Should contain 3 Digit";
+									}else{
+										document.getElementById("payment-cvv-lbl").innerHTML = "";
+										var data;
+										if(getCookie().payment != null){
+											var paymentCookieValue = JSON.parse(getCookie().payment);
+											if(paymentCookieValue.paymentId != null || paymentCookieValue.paymentId != undefined){
+											data = {
+												"paymentId" : paymentCookieValue.paymentId,
+												"cardName" : cardname,
+												"cardNumber" : cardnumber,
+												"expDt":expdt,
+												"username": getCookie().username,
+												"cvvNo":cvvnumber
+											};
+										} 
+										}else {
+											
+											data = {
+												"cardName" : cardname,
+												"cardNumber" : cardnumber,
+												"expDt":expdt,
+												"username": getCookie().username,
+												"cvvNo":cvvnumber
+											};
+										}
+														
+										console.log("saving payment to database" + getCookie().username);
+										var json = JSON.stringify(data);
+										
+										xhr.open("POST","http://127.0.0.1:9090/servicegeneral/api/payment");
+										xhr.setRequestHeader("Content-Type", "application/json");
+										xhr.send(json);
+										xhr.onreadystatechange = function() {
+											if (this.readyState == 4 && this.status == 200) {
+												console.log("Resonse from database "+this.responseText);
+												alert("Saved Successfully");
+												window.location.reload();
+											}
+										};
+
+									}
+								}
+
+							}
+							
+						}
+					}
+				}
+			}
+		}
+	
+	
+}
+
+function deleteUserInfoPayment(){
+	var paymentCookieValue = JSON.parse(getCookie().payment);
+	var xhr = new XMLHttpRequest();
+	xhr.open("POST","http://127.0.0.1:9090/servicegeneral/api/payment/delete/"+paymentCookieValue.paymentId);
+	xhr.send();
+	xhr.onreadystatechange = function() {	
+		if (this.readyState == 4 && this.status == 200 && this.responseText!="") {
+			console.log("Response:"+this.responseText);
+		}
+  	}
+  	sleep(1000);
+  	document.cookie = "payment=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+}
+
+const saveAndLoadPayment = async() => {
+	await savePaymentToCookie();
+	await sleep(1000);
+	await loadPayment();
+}
+
+function savePaymentToCookie(){
+	console.log("saving payment to cookie");
+	document.cookie = "payment=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+
+	var xhr = new XMLHttpRequest();
+	xhr.open("GET","http://127.0.0.1:9090/servicegeneral/api/payment/"+ getCookie().username);
+	xhr.send();
+	xhr.onreadystatechange = function() {	
+		if (this.readyState == 4 && this.status == 200 && this.responseText!="") {
+			console.log(" SAVING PAYMENT TO cookies :" + this.responseText);
+			var paymentCookie = "payment=" +this.responseText;
+			document.cookie = paymentCookie;
+		}	
+	}
+}
+
+function loadPayment(){
+	 console.log("updating page from payment cookie");
+	var paymentCookie = getCookie().payment;
+	if(paymentCookie != null){
+		var payment = JSON.parse(getCookie().payment);
+		console.log("payment card name"+ payment.cardName);
+		document.getElementById('card-holder-name').value = payment.cardName;
+		document.getElementById('card-number').value = payment.cardNumber; //012022
+		document.getElementById('month').value = payment.expDt.substring(0,2);
+		document.getElementById('year').value = payment.expDt.substring(4,6);
+		console.log(" Original "+ payment.expDt);
+		console.log(" mm "+ payment.expDt.substring(0,2));
+		console.log(" yyyy "+ document.getElementById('year').value );
+		document.getElementById('cvv-number').value = payment.cvvNo;
+
+		document.getElementById('card-holder-name').disabled = true;
+		document.getElementById('card-number').disabled = true;
+		document.getElementById('month').disabled = true;
+		document.getElementById('year').disabled = true;
+		document.getElementById('cvv-number').disabled = true;
+
+		document.getElementById("submit").disabled = true;
+	}
+}
+
+
 
 
 

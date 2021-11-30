@@ -127,25 +127,63 @@
 			
 			<!-- Form Start -->
 
-			<div class="container" id="adv-form-div">
+			<div class="container" id="payment-form-div">
 			<h2> Payment Details</h2>
-			<div>
-				<button style="background-color: blue;" id="addpayment-form" 
-				onclick="addpayment()" class="btn btn-default">Add Card</button>
-			</div>
-			<form id="payment-form" action="paymentSubmit(e)" style="display: none;">
+			
+			<form id="payment-form" action="submitPaymentInfo(e)">
 				<div class="form-group">
-					<label>Card Holder Name</label> <label class="control-label" id="adv-title-lbl" style="color: red;"></label>
-					<input type="text" class="form-control" id="card-holder-name" placeholder="eg: xxx yy zzz" name="card-holderName">
+					<label>Card Holder Name</label> <label class="control-label" id="payment-cardname-lbl" style="color: red;"></label>
+					<input type="text" class="form-control" id="card-holder-name" name="card-holderName" style="color: black;">
 					
 				</div>
 				<div class="form-group">
-					<label>Card Number</label> <label class="control-label" id="adv-title-lbl" style="color: red;"></label>
-					<input type="text" class="form-control" id="card-number" placeholder="eg: 0000 0000 0000 0000" name="cardNumber">
+					<label>Card Number</label> <label class="control-label" id="payment-number-lbl" style="color: red;"></label>
+					<input type="Number" class="form-control" id="card-number"  name="cardNumber"  style="color: black;" maxlength="16">
 					
+				</div>
+				<div class="form-group">
+					<label style="float: left;">Expiry Date</label><br><br>
+					<label class="control-label" id="payment-dt-lbl" style="color: red;"></label>
+					<select id="month" name="month" class="form-control" placeholder="MM" style="width:80px;display: inline!important;float: left!important;color: black;">
+  						<option value="01">01</option>
+  						<option value="02">02</option>
+  						<option value="03">03</option>
+  						<option value="04">04</option>
+  						<option value="05">05</option>
+  						<option value="06">06</option>
+  						<option value="07">07</option>
+  						<option value="08">08</option>
+  						<option value="09">09</option>
+  						<option value="10">10</option>
+  						<option value="11">11</option>
+  						<option value="12">12</option>
+					</select> 
+			
+					<select id="year" name="year" class="form-control" placeholder="yy" style="width:80px;display: inline!important;float: left!important;color: black;">
+  						<option value="2022">22</option>
+  						<option value="2023">23</option>
+  						<option value="2024">24</option>
+  						<option value="2025">25</option>
+  						<option value="2026">26</option>
+  						<option value="2027">27</option>
+  						<option value="2028">28</option>
+  						<option value="2029">29</option>
+  						<option value="2030">30</option>
+  						<option value="2031">31</option>
+  						<option value="2032">32</option>
+  						<option value="2033">33</option>
+					</select>
+				</div>
+				<br>
+				<div class="form-group">
+					<label style="float:left">CVV Number</label> 
+					<label class="control-label" id="payment-cvv-lbl" style="color: red;"></label><br><br>
+					<input type="text" class="form-control" id="cvv-number"  name="cardNumber" style="width:100px;color: black;" maxlength="3">
 				</div>
 				
 				<button type="submit" id="submit" class="btn btn-default">Submit</button>
+				<button type="button" id="editBtn" onclick = "editPayment()" class="btn btn-default">EDIT</button>
+				<button type="button" id="deleteBtn" onclick = "deletePayment()" class="btn btn-default">DELETE</button>
 			</form>
 			</div>
 			<div>
@@ -199,16 +237,17 @@
 		<script>
 			
 			document.getElementById("body").onload = function() {
-				checkLoggedInUser()
+				loadPaymentPage();
 			};
-			function addpayment(){
-				console.log("inside payment");
-			document.getElementById("payment-form").style.display = "block";
-	
-		}
-		document.getElementById('payment-form').addEventListener('submit', advertisementSubmit);
+		
+			const loadPaymentPage = async ()=> {
+				await saveAndLoadPayment();
+				await checkLoggedInUserOnPayment();
+			}	
 
-		function checkLoggedInUser() {
+		document.getElementById('payment-form').addEventListener('submit', paymentSubmit);
+
+		function checkLoggedInUserOnPayment() {
 			var cookie = document.cookie;
 			console.log("ON LOAD:" + cookie);
 
@@ -223,14 +262,42 @@
 			if(userJson.username !=null){
 				document.getElementById("login-div").style.display = "none";
 				document.getElementById("register-div").style.display = "none";
-				document.getElementById("adv-form-div").style.display = "block";
+				//document.getElementById("adv-form-div").style.display = "block";
 				document.getElementById("user-profile").innerHTML = "Hi "+userJson.firstName + " " + userJson.lastName + " !";
 			} else{
 				document.getElementById("logout-div").style.display = "none";
 			}
+			if(userJson.payment != null){
+					document.getElementById("submit").disabled = true;
+					//document.getElementById("feedback").disabled = true;
+					document.getElementById("editBtn").style.display = "inline-block";
+					document.getElementById("deleteBtn").style.display = "inline-block";
+					console.log("execute edit and delete bth display")
+				} else{
+					document.getElementById("editBtn").style.display = "none";
+					document.getElementById("deleteBtn").style.display = "none";
+					console.log("execute edit and delete no display")
+				}
 		}
 
+		function editPayment(){
+			document.getElementById("submit").disabled = false;
+			document.getElementById('card-holder-name').disabled = false;
+			document.getElementById('card-number').disabled = false;
+			document.getElementById('month').disabled = false;
+			document.getElementById('year').disabled = false;
+			document.getElementById('cvv-number').disabled = false;
 
+		}
+
+		function deletePayment(){
+			deleteUserInfoPayment();
+			alert("Deleted Successfully!!!");
+			document.getElementById("editBtn").style.display = "none";
+			document.getElementById("deleteBtn").style.display = "none";
+			//document.getElementById("feedback").disabled = false;			
+			window.location.href = "http://127.0.0.1/servicegeneral/servicegeneral-ui/paymentSystem.php";
+		}
 		
 
 		</script>
